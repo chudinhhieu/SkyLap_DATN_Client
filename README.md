@@ -18,7 +18,7 @@
 1. Sử dụng kiểu Camel Case cho tên biến.
 2. Đặt tên sao cho nó phản ánh mục đích và nghĩa của biến.
 3. Hạn chế việc sử dụng tên biến ngắn và tên không rõ ràng.
-*Ví dụ: userName, apiResponse, buttonSubmit.
+* Ví dụ: userName, apiResponse, buttonSubmit.
 
 ## 5. Tên Hằng Số (Constants):
 1. Sử dụng kiểu chữ in hoa với dấu gạch dưới (_) để phân tách các từ.
