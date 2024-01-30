@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SkyLap_DATN_MD03</string>
+    <string name="default_web_client_id">206926809191-de60mh57o6o0defg6969r8ruuan98aoo.apps.googleusercontent.com</string>
+    <string name="key_check_auth">id_user_auth</string>
+
 </resources>
