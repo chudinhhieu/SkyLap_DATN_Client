@@ -40,3 +40,8 @@
 1. Sử dụng kiểu chữ thường và dấu gạch dưới (_) cho tên resource.
 2. Đặt tên sao cho nó phản ánh nội dung hoặc mục đích của resource đó.
 * Ví dụ: ic_launcher.png, app_name, background_color.
+
+## 9.Tên Phương Thức (Method Names):
+1. Đặt tên phương thức sao cho nó mô tả rõ ràng về công việc mà phương thức đó thực hiện.
+2. Sử dụng động từ hoặc cụm từ mô tả hành động.
+* Ví dụ: getUserData(), validateInput(), startAnimation().
