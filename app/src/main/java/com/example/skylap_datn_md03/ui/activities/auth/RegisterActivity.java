@@ -1,9 +1,6 @@
 package com.example.skylap_datn_md03.ui.activities.auth;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,10 +10,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.skylap_datn_md03.MainActivity;
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
@@ -35,19 +32,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+public class RegisterActivity extends AppCompatActivity {
 
-public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
     private LinearLayout btnLoginGoogle;
-    private TextView tvRegister;
-    private TextView tvForgotPassword;
-
+    private TextView tvLogin;
     private TextInputLayout iplUsername;
     private TextInputLayout iplPassword;
+    private TextInputLayout iplRePassword;
     private TextInputEditText ipUsername;
     private TextInputEditText ipPassword;
-    private Button btnLogin;
+    private TextInputEditText ipRePassword;
+    private Button btnRegister;
+    private ImageView imgBack;
     private TextWatcher inputWatcher;
     private static final int RQ_CODE_GG = 20;
     private static final String TAG_ERROR_AUTH = "Error Auth";
@@ -55,39 +53,32 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (isUserLoggedIn()) {
-            gotoHomeScreen();
-            return;
-        }
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_register);
         initView();
 
-//        Kết nối firebase
         firebaseAuth = FirebaseAuth.getInstance();
+
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail().build();
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
-//        Theo dõi trạng thái của input để thực hiện validate form
         inputWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                btnLogin.setEnabled(validateForm());
+                btnRegister.setEnabled(validateForm());
             }
         };
+
         if (ipUsername != null) {
             ipUsername.addTextChangedListener(inputWatcher);
         }
@@ -96,57 +87,45 @@ public class LoginActivity extends AppCompatActivity {
             ipPassword.addTextChangedListener(inputWatcher);
         }
 
-//        Sự kiện ấn button login và xử lý chức năng đăng nhập
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        if (ipRePassword != null) {
+            ipRePassword.addTextChangedListener(inputWatcher);
+        }
+        imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomToast.showToast(LoginActivity.this, "Tài khoản hoặc mật khẩu " +
-                        "không chính xác. Vui lòng thử lại.");
+                finish();
             }
         });
-//        Sự kiện ấn vào icon google và thực hiện xử lý chức năng đăng nhập bằng google
         btnLoginGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 handleGoogleSignIn();
             }
         });
-
-//        Sự kiện ấn vào textview đăng ký và chuyển sang màn hình RegisterActivity
-        tvRegister.setOnClickListener(new View.OnClickListener() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                CustomToast.showToast(RegisterActivity.this, "Tài khoản đã tồn tại. Vui lòng nhập tài khoản khác.");
+            }
+        });
+        tvLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
 
 
-//        Sự kiện ấn vào textview quên mật khẩu và chuyển sang màn hình ForgotPasswordActivity
-        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 
-    //    Kiểm tra người dùng đã từng đăng nhập chưa
-    private boolean isUserLoggedIn() {
-        SharedPreferences sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
-        return sharedPreferences.contains("uid");
-    }
-
-    //    Định nghĩa mã requestCode cho việc đăng nhập bằng google
     private void handleGoogleSignIn() {
         Intent intent = googleSignInClient.getSignInIntent();
         startActivityForResult(intent, RQ_CODE_GG);
     }
 
-    // Dữ liệu được activity trả về khi xong 1 việc gì đó, phân biệt nhau bằng mã requestCode;
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RQ_CODE_GG) {
@@ -160,12 +139,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    // Thực hiện xử lý chức năng đăng nhập bằng google
     private void firebaseAuthGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
+            public void onComplete(Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
@@ -173,23 +151,20 @@ public class LoginActivity extends AppCompatActivity {
                         String uid = firebaseUser.getUid();
                         saveUserIdToSharedPreferences(uid);
                     }
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
                     gotoHomeScreen();
                 } else {
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(RegisterActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    //  Chuyển đến màn hình MainActivity
     private void gotoHomeScreen() {
-        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
         startActivity(intent);
     }
 
-    //  Lưu lại uid của người dùng vào SharedPreferences
     private void saveUserIdToSharedPreferences(String userId) {
         SharedPreferences sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -197,13 +172,14 @@ public class LoginActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    //    Xử lý validate form
     private boolean validateForm() {
         String username = ipUsername.getText().toString().trim();
         String password = ipPassword.getText().toString().trim();
+        String rePassword = ipRePassword.getText().toString().trim();
 
         boolean isUsernameValid = true;
         boolean isPasswordValid = true;
+        boolean isRePasswordValid = true;
 
         if (username.isEmpty()) {
             iplUsername.setError("Vui lòng nhập tài khoản");
@@ -240,19 +216,33 @@ public class LoginActivity extends AppCompatActivity {
                 iplPassword.setErrorEnabled(false);
             }
         }
-        return isUsernameValid && isPasswordValid;
+
+        if (!password.equals(rePassword)) {
+            iplRePassword.setError("Mật khẩu không khớp");
+            isRePasswordValid = false;
+        } else {
+            if (isRePasswordValid) {
+                iplRePassword.setErrorEnabled(false);
+            }
+        }
+
+        return isUsernameValid && isPasswordValid && isRePasswordValid;
     }
 
-    // Khởi tạo các biến
+
+
+
     void initView() {
-        btnLoginGoogle = findViewById(R.id.lg_btn_login_google);
-        tvRegister = findViewById(R.id.lg_tv_register);
-        tvForgotPassword = findViewById(R.id.lg_tv_forgot_password);
-        iplUsername = findViewById(R.id.lg_ipl_username);
-        iplPassword = findViewById(R.id.lg_ipl_password);
-        ipUsername = findViewById(R.id.lg_ip_username);
-        ipPassword = findViewById(R.id.lg_ip_password);
-        btnLogin = findViewById(R.id.lg_btn_login);
-        btnLogin.setEnabled(false);
+        btnLoginGoogle = findViewById(R.id.rg_btn_login_google);
+        tvLogin = findViewById(R.id.rg_btn_login);
+        iplUsername = findViewById(R.id.rg_ipl_username);
+        iplPassword = findViewById(R.id.rg_ipl_password);
+        iplRePassword = findViewById(R.id.rg_ipl_repassword);
+        ipUsername = findViewById(R.id.rg_ip_username);
+        ipPassword = findViewById(R.id.rg_ip_password);
+        ipRePassword = findViewById(R.id.rg_ip_repassword);
+        btnRegister = findViewById(R.id.rg_btn_register);
+        imgBack = findViewById(R.id.rg_img_back);
+        btnRegister.setEnabled(false);
     }
 }
