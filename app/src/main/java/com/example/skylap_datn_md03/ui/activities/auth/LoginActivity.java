@@ -91,11 +91,9 @@ public class LoginActivity extends AppCompatActivity {
         if (ipUsername != null) {
             ipUsername.addTextChangedListener(inputWatcher);
         }
-
         if (ipPassword != null) {
             ipPassword.addTextChangedListener(inputWatcher);
         }
-
 //        Sự kiện ấn button login và xử lý chức năng đăng nhập
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
