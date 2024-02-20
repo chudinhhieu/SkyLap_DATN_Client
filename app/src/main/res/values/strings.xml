@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SkyLap_DATN_MD03</string>
+    <string name="default_web_client_id">206926809191-de60mh57o6o0defg6969r8ruuan98aoo.apps.googleusercontent.com</string>
+    <string name="key_check_auth">id_user_auth</string>
+    //
+    <string name="facebook_app_id">691783929791241</string>
+    <string name="fb_login_protocol_scheme">fb691783929791241</string>
+    <string name="facebook_client_token">4e64f0a1f13db196d28297b7747aca2173af597c551cc48f58ff497d7edc4024</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
