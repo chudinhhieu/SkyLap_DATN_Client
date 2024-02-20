@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginEnd="5dp"
+    android:layout_marginTop="5dp"
+    android:elevation="2dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="2dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/item_product_img_avatar"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"/>
+        <TextView
+            android:id="@+id/item_product_txtName"
+            android:text="idepad"
+            android:textStyle="bold"
+            android:textSize="15dp"
+            android:layout_width="match_parent"
+            android:textColor="@color/main"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/item_product_txtDisplay"
+            android:text="direction"
+            android:textSize="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/item_product_txtCPU"
+            android:text="direction"
+            android:textSize="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/item_product_txtCard"
+            android:text="direction"
+            android:textSize="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableRow android:weightSum="2">
+                <TextView
+                    android:id="@+id/item_product_txtPrice"
+                    android:textStyle="bold"
+                    android:textColor="@color/red"
+                    android:textSize="15dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="12,000,000 d"
+                    android:autoSizeTextType="uniform"
+                     android:maxLines="1"
+                    android:gravity="start"/>
+                <TextView
+                    android:id="@+id/item_product_txtSold"
+                    android:textSize="10dp"
+                    android:layout_width="0dp"
+                    android:text="1,2k da ban"
+                    android:autoSizeTextType="uniform"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:layout_gravity="center"/>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
