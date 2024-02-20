@@ -81,13 +81,13 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new HomeFragment()).commit();
                 }
                 if (item.getItemId() == R.id.menu_nav_history){
-
+                    //lich su giao dich
                 }
                 if (item.getItemId() == R.id.menu_nav_notification){
-
+                    //thong bao
                 }
                 if (item.getItemId() == R.id.menu_nav_account){
-
+                    // account
                 }
 
                 return true;
