@@ -4,9 +4,10 @@ import java.util.List;
 
 public class SanPham {
     private String _id;
+    private String tenSanPham;
     private int soLuong;
     private boolean trangThai;
-    private int giaTien;
+    private double giaTien;
     private double chieuCao;
     private double chieuRong;
     private double trongLuong;
@@ -23,7 +24,18 @@ public class SanPham {
     public SanPham() {
     }
 
-    public SanPham(int soLuong, boolean trangThai, int giaTien, double chieuCao, double chieuRong, double trongLuong, String os, String cpu, String gpu, String display, String moTa, List<String> anh, String idShop, String idHangSX, String idLoaiSP) {
+    public String getTenSanPham() {
+        return tenSanPham;
+    }
+
+    public void setTenSanPham(String tenSanPham) {
+        this.tenSanPham = tenSanPham;
+    }
+
+    public SanPham(int soLuong, boolean trangThai,
+                   double giaTien, double chieuCao, double chieuRong, double trongLuong,
+                   String os, String cpu, String gpu, String display, String moTa, List<String> anh,
+                   String idShop, String idHangSX, String idLoaiSP, String tenSanPham) {
         this.soLuong = soLuong;
         this.trangThai = trangThai;
         this.giaTien = giaTien;
@@ -38,6 +50,7 @@ public class SanPham {
         this.anh = anh;
         this.idShop = idShop;
         this.idHangSX = idHangSX;
+        this.tenSanPham = tenSanPham;
         this.idLoaiSP = idLoaiSP;
     }
 
@@ -74,11 +87,11 @@ public class SanPham {
         this.trangThai = trangThai;
     }
 
-    public int getGiaTien() {
+    public double getGiaTien() {
         return giaTien;
     }
 
-    public void setGiaTien(int giaTien) {
+    public void setGiaTien(double giaTien) {
         this.giaTien = giaTien;
     }
 

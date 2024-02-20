@@ -4,12 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#efefef"
     tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/m_btn_logout"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Đăng xuất"/>
+    <FrameLayout
+        android:id="@+id/main_container"
+        android:layout_above="@id/main_bottomnavigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_bottomnavigation"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        app:menu="@menu/main_navigation_menu"
+        app:itemIconTint="@color/custom_color_item_nav_main"
+        android:layout_height="58dp"/>
 </RelativeLayout>
