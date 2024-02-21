@@ -140,7 +140,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         ipEmail = findViewById(R.id.fg_ip_email);
         btnSend = findViewById(R.id.fg_btn_send);
         imgBack = findViewById(R.id.fg_img_back);
-
         btnSend.setEnabled(false);
     }
 }
