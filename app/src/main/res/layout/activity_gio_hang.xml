@@ -6,14 +6,54 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     tools:context=".ui.activities.SanPhamActivity">
-
-
-    <FrameLayout
+    <RelativeLayout
+        android:id="@+id/agh_rl_top"
+        android:layout_alignParentTop="true"
+        android:background="@color/main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/fragment_container_gh"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="50dp"/>
+        android:layout_height="50dp"
+        android:elevation="20dp"
+        android:paddingHorizontal="12dp">
+        <ImageView
+            android:id="@+id/agh_img_back"
+            android:layout_width="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_white_back"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Giỏ Hàng"
+            android:textSize="24dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            />
+        <ImageView
+            android:id="@+id/agh_img_search"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/agh_img_messeger"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_search"/>
+        <ImageView
+            android:id="@+id/agh_img_messeger"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/dr_forum"
+            />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/agh_recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_below="@+id/agh_rl_top"
+        android:layout_above="@+id/agh_ll_bottom"
+        />
     <LinearLayout
         android:id="@+id/agh_ll_bottom"
         android:layout_alignParentBottom="true"
@@ -94,7 +134,7 @@
                 android:textColor="@color/white"
                 android:textSize="22sp"
                 android:text="MUA HÀNG"
-                android:id="@+id/id_agh_tv_muahang"/>
+                android:id="@+id/agh_tv_muahang"/>
         </LinearLayout>
     </LinearLayout>
 
