@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,8 @@ import com.example.skylap_datn_md03.data.models.SanPham;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -30,13 +34,17 @@ public class HomeFragment extends Fragment {
     private SanPhamAdapter sanPhamAdapter;
     private SlideAdapter slideAdapter;
     private View context;
+    private Timer mTimer;
+    private List<HangSX> list;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         context = inflater.inflate(R.layout.fragment_home, container, false);
         unitUI();
+        list = getListH();
         configAdapter();
+        autoSlideImage();
         return context;
     }
     private List<SanPham> getListP(){
@@ -89,12 +97,48 @@ public class HomeFragment extends Fragment {
         //
         hangSxAdapter.setList(getListH());
         sanPhamAdapter.setList(getListP());
-        slideAdapter.setList(getListH());
+        slideAdapter.setList(list);
         //
         slidePager.setAdapter(slideAdapter);
         indicator.setViewPager(slidePager);
         slideAdapter.registerDataSetObserver(indicator.getDataSetObserver());
         rcvSanPham.setAdapter(sanPhamAdapter);
         rcvHangSx.setAdapter(hangSxAdapter);
+    }
+    private void autoSlideImage (){
+        if (list == null || list.isEmpty() || slidePager == null){
+            return;
+        }
+        if (mTimer == null){
+            mTimer = new Timer();
+        }
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                new Handler(Looper.getMainLooper()).post(new TimerTask() {
+                    @Override
+                    public void run() {
+                        int currentItem = slidePager.getCurrentItem();
+                        int totalItem = list.size() -1;
+                        if (currentItem < totalItem){
+                            currentItem++;
+                            slidePager.setCurrentItem(currentItem);
+                        }
+                        else{
+                            slidePager.setCurrentItem(0);
+                        }
+                    }
+                });
+            }
+        },500,3000);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mTimer != null){
+            mTimer.cancel();
+            mTimer = null;
+        }
     }
 }
