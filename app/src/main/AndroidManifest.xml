@@ -14,11 +14,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SkyLap_DATN_MD03"
         tools:targetApi="31">
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-        <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.facebook.sdk.ClientToken"
+            android:value="@string/facebook_client_token" />
+
         <activity
             android:name=".ui.activities.SanPhamActivity"
-            android:exported="false" />  
+            android:exported="false" />
         <activity
             android:name=".ui.activities.auth.ForgotPasswordActivity"
             android:exported="false" />
@@ -28,21 +33,24 @@
         <activity
             android:name=".ui.activities.auth.LoginActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
         </activity>
-        <activity android:name=".ui.activities.GioHangActivity"
+        <activity
+            android:name=".ui.activities.GioHangActivity"
+            android:exported="true"></activity>
+
+        <activity android:name=".ui.activities.QLDonHangActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

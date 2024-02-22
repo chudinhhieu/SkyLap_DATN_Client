@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.activities.SanPhamActivity">
+    tools:context=".ui.activities.GioHangActivity">
     <RelativeLayout
         android:id="@+id/agh_rl_top"
         android:layout_alignParentTop="true"
@@ -34,7 +34,7 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_centerVertical="true"
-            android:layout_toStartOf="@id/agh_img_messeger"
+            android:layout_toStartOf="@id/aql_img_messeger"
             android:layout_marginEnd="12dp"
             android:src="@drawable/ic_search"/>
         <ImageView
