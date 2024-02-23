@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private void unitUI (){
         bottomNavigationView = findViewById(R.id.main_bottomnavigation);
-       // getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
