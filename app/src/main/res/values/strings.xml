@@ -7,5 +7,5 @@
     <string name="fb_login_protocol_scheme">fb691783929791241</string>
     <string name="facebook_client_token">4e64f0a1f13db196d28297b7747aca2173af597c551cc48f58ff497d7edc4024</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="XacNhanDonHang_fragment">Xac Nhan Don Hang fragment</string>
 </resources>

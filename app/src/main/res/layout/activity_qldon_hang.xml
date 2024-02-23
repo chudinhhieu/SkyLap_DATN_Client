@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.activities.QLDonHangActivity">
+    <RelativeLayout
+        android:id="@+id/aql_rl_top"
+        android:layout_alignParentTop="true"
+        android:background="@color/main"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:elevation="20dp"
+        android:paddingHorizontal="12dp">
+        <ImageView
+            android:id="@+id/aql_img_back"
+            android:layout_width="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_white_back"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Quản lí đơn hàng"
+            android:textSize="24dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            />
+        <ImageView
+            android:id="@+id/aql_img_search"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@id/aql_img_messeger"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/ic_search"/>
+        <ImageView
+            android:id="@+id/aql_img_messeger"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/dr_forum"
+            />
+    </RelativeLayout>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tbl_qlDonHang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/aql_rl_top"
+        >
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chờ xác nhận"
+            android:icon="@drawable/ic_box"
+
+            />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đang giao"
+            android:icon="@drawable/ic_xe"
+            />
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đã giao"
+            android:icon="@drawable/ic_dagiao"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đã huỷ"
+            android:icon="@drawable/ic_huy"/>
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/viewPager"
+        android:layout_below="@id/tbl_qlDonHang"
+        android:layout_above="@id/main_bottomnavigation" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/main_bottomnavigation"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        app:menu="@menu/main_navigation_menu"
+        app:itemIconTint="@color/custom_color_item_nav_main"
+        android:layout_height="58dp"/>
+
+</RelativeLayout>
