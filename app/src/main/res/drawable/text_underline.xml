@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <underline xmlns:android="http://schemas.android.com/apk/res/android" tools:ignore="RedundantNamespace">
+            <solid android:color="@android:color/black" />
+        </underline>
+    </item>
+</selector>

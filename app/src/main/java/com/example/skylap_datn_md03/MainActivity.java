@@ -14,6 +14,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -43,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private GoogleSignInClient googleSignInClient;
     private BottomNavigationView bottomNavigationView;
-    private FragmentTransaction fragmentTransaction;
+    private int id_itemSelected = R.id.menu_nav_home;
+    private SharedPreferences sharedPreferences;
+    private boolean canCommitFragmentTransaction = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,32 +69,31 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
     private void clearSharedPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("uid");
         editor.apply();
     }
-    private void unitUI (){
+    private void unitUI () {
+        sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
         bottomNavigationView = findViewById(R.id.main_bottomnavigation);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        bottomNavigationView.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (item.getItemId() == R.id.menu_nav_home){
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container,new HomeFragment()).commit();
+                if (item.getItemId() == R.id.menu_nav_home) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
+                } else if (item.getItemId() == R.id.menu_nav_history) {
+                    // Add your logic for history here
+                } else if (item.getItemId() == R.id.menu_nav_notification) {
+                    Intent intent = new Intent(MainActivity.this, DatHangActivity.class);
+                    startActivity(intent);
+                } else if (item.getItemId() == R.id.menu_nav_account) {
+                    // Add your logic for account here
                 }
-                if (item.getItemId() == R.id.menu_nav_history){
-                    //lich su giao dich
-                }
-                if (item.getItemId() == R.id.menu_nav_notification){
-                    //thong bao
-                }
-                if (item.getItemId() == R.id.menu_nav_account){
-                    // account
-                }
-
                 return true;
             }
         });
+
     }
 }
