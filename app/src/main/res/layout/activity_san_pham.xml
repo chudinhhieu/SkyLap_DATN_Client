@@ -25,7 +25,7 @@
             android:src="@drawable/ic_white_back" />
 
         <ImageView
-            android:id="@+id/asp_img_gio_hang"
+            android:id="@+id/asp_img_cart"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
@@ -45,19 +45,17 @@
             android:orientation="vertical">
 
             <FrameLayout
-                android:id="@+id/asp_fl_slide"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white">
-
-                <ImageView
-                    android:id="@+id/asp_img_slide"
-                    android:layout_width="match_parent"
+                <ViewFlipper
+                    android:id="@+id/viewFlipper"
+                    android:layout_width="300dp"
                     android:layout_height="200dp"
+                    android:layout_gravity="center"
                     android:padding="20dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/anh_mau" />
-
+                 />
                 <TextView
                     android:id="@+id/asp_tv_slide"
                     android:layout_width="45dp"
@@ -79,7 +77,6 @@
                 android:background="@color/white"
                 android:paddingHorizontal="12dp"
                 android:paddingVertical="5dp"
-                android:text="MacBook Pro M2 Pro 2023 14 inch (16GB/1TB SSD)"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -97,7 +94,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="10dp"
                     android:paddingVertical="5dp"
-                    android:text="59.690.000₫"
                     android:textColor="@color/red"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -186,11 +182,111 @@
                     android:layout_height="0.5dp"
                     android:background="@color/gray" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/asp_rcv_ctsp"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="35dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
 
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="CPU" />
+
+                    <TextView
+                        android:id="@+id/asp_tv_cpu"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center_vertical"
+                    android:background="#f8f8fc"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Màn hình" />
+
+                    <TextView
+                        android:id="@+id/asp_tv_man_hinh"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="RAM" />
+
+                    <TextView
+                        android:id="@+id/asp_tv_ram"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text='16GB'
+                        android:textColor="@color/black" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center_vertical"
+                    android:background="#f8f8fc"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="ROM" />
+
+                    <TextView
+                        android:id="@+id/asp_tv_rom"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text="1TB SSD"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Bảo hành" />
+
+                    <TextView
+                        android:id="@+id/asp_tv_bao_hanh"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:text='6 tháng'
+                        android:textColor="@color/black" />
+                </LinearLayout>
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0.5dp"
@@ -248,10 +344,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="12dp"
                     android:layout_marginTop="5dp"
-                    android:text="Thiết kế sang trọng - Vỏ kim loại cùng trọng lượng chỉ 1.6kg dễ dàng mang theo mọi nơi.
-Hiển thị chân thật - Kích thước màn hình 14 inch cùng tần số quét lên đến 120Hz.
-Cấu hình mạnh mẽ - Ram 16GB cùng SSD 1TB đa nhiệm mượt mà, tránh tình trạng giật lag.
-Xử lý tốt các tác vụ đồ hoạ - GPU 16 nhân giúp việc render video hay chỉnh sửa ảnh diễn ra một cách nhẹ nhàng."
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -324,6 +416,7 @@ Xử lý tốt các tác vụ đồ hoạ - GPU 16 nhân giúp việc render vid
                     android:layout_gravity="center"
                     android:layout_marginTop="12dp">
                     <TextView
+                        android:id="@+id/asp_tv_xemdg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/main"
@@ -350,6 +443,7 @@ Xử lý tốt các tác vụ đồ hoạ - GPU 16 nhân giúp việc render vid
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/asp_ll_chat"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -357,7 +451,6 @@ Xử lý tốt các tác vụ đồ hoạ - GPU 16 nhân giúp việc render vid
             android:paddingVertical="6dp">
 
             <ImageView
-                android:id="@+id/asp_img_chat"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_chat_main" />
@@ -369,6 +462,7 @@ Xử lý tốt các tác vụ đồ hoạ - GPU 16 nhân giúp việc render vid
             android:background="@color/gray" />
 
         <LinearLayout
+            android:id="@+id/asp_ll_add_cart"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="1"
@@ -376,7 +470,6 @@ Xử lý tốt các tác vụ đồ hoạ - GPU 16 nhân giúp việc render vid
             android:paddingVertical="6dp">
 
             <ImageView
-                android:id="@+id/asp_img_add_cart"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_add_cart_main" />
@@ -384,6 +477,7 @@ Xử lý tốt các tác vụ đồ hoạ - GPU 16 nhân giúp việc render vid
 
 
         <LinearLayout
+            android:id="@+id/asp_ll_mua"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="2"
