@@ -21,12 +21,6 @@ import android.widget.Toast;
 import com.example.skylap_datn_md03.MainActivity;
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
-import com.facebook.AccessToken;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -60,9 +54,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int RQ_CODE_GG = 20;
     private static final String TAG_ERROR_AUTH = "Error Auth";
-    private LoginButton btnLoginFb;
-    //
-    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +73,6 @@ public class LoginActivity extends AppCompatActivity {
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail().build();
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-
 
 //        Theo dõi trạng thái của input để thực hiện validate form
         inputWatcher = new TextWatcher() {
@@ -141,7 +131,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        LoginFacebook();
     }
 
     //    Kiểm tra người dùng đã từng đăng nhập chưa
@@ -267,63 +256,5 @@ public class LoginActivity extends AppCompatActivity {
         ipPassword = findViewById(R.id.lg_ip_password);
         btnLogin = findViewById(R.id.lg_btn_login);
         btnLogin.setEnabled(false);
-        //
-        btnLoginFb = findViewById(R.id.lg_btn_login_facebook);
-    }
-    void LoginFacebook (){
-        callbackManager = CallbackManager.Factory.create();
-        btnLoginFb.setReadPermissions("email", "public_profile");
-        btnLoginFb.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                handleFacebookAccessToken(loginResult.getAccessToken());
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(LoginActivity.this, "onCancel", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(LoginActivity.this, "onError", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-    }
-    private void handleFacebookAccessToken(AccessToken token) {
-        AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
-        firebaseAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                            Toast.makeText(LoginActivity.this, "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            updateUI(null);
-                        }
-                    }
-                });
-    }
-    private void updateUI (FirebaseUser user){
-        if (user != null){
-
-        }
-        else{
-            Toast.makeText(this, "sign to continue", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
-//        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-//        updateUI(currentUser);
     }
 }
