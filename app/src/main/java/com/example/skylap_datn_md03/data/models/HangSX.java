@@ -3,7 +3,7 @@ package com.example.skylap_datn_md03.data.models;
 public class HangSX {
     private String _id;
     private String tenHangSx;
-    private String logo;
+    private String imageLogo;
     private boolean trangThai;
 
     public HangSX() {
@@ -13,7 +13,7 @@ public class HangSX {
     public HangSX(String _id, String tenHangSx, String logo, boolean trangThai) {
         this._id = _id;
         this.tenHangSx = tenHangSx;
-        this.logo = logo;
+        this.imageLogo = logo;
         this.trangThai = trangThai;
     }
 
@@ -42,10 +42,10 @@ public class HangSX {
     }
 
     public String getLogo() {
-        return logo;
+        return imageLogo;
     }
 
     public void setLogo(String logo) {
-        this.logo = logo;
+        this.imageLogo = logo;
     }
 }

@@ -8,9 +8,9 @@ public class SanPham {
     private int soLuong;
     private boolean trangThai;
     private double giaTien;
-    private double chieuCao;
-    private double chieuRong;
-    private double trongLuong;
+    private String chieuCao;
+    private String chieuRong;
+    private String trongLuong;
     private String os;
     private String cpu;
     private String gpu;
@@ -32,10 +32,12 @@ public class SanPham {
         this.tenSanPham = tenSanPham;
     }
 
-    public SanPham(int soLuong, boolean trangThai,
-                   double giaTien, double chieuCao, double chieuRong, double trongLuong,
-                   String os, String cpu, String gpu, String display, String moTa, List<String> anh,
-                   String idShop, String idHangSX, String idLoaiSP, String tenSanPham) {
+    public SanPham(String _id, String tenSanPham, int soLuong, boolean trangThai, double giaTien,
+                   String chieuCao, String chieuRong, String trongLuong, String os, String cpu,
+                   String gpu, String display, String moTa, List<String> anh, String idShop, String
+                           idHangSX, String idLoaiSP) {
+        this._id = _id;
+        this.tenSanPham = tenSanPham;
         this.soLuong = soLuong;
         this.trangThai = trangThai;
         this.giaTien = giaTien;
@@ -50,17 +52,9 @@ public class SanPham {
         this.anh = anh;
         this.idShop = idShop;
         this.idHangSX = idHangSX;
-        this.tenSanPham = tenSanPham;
         this.idLoaiSP = idLoaiSP;
     }
 
-    public String getIdShop() {
-        return idShop;
-    }
-
-    public void setIdShop(String idShop) {
-        this.idShop = idShop;
-    }
 
     public String get_id() {
         return _id;
@@ -69,7 +63,6 @@ public class SanPham {
     public void set_id(String _id) {
         this._id = _id;
     }
-
 
     public int getSoLuong() {
         return soLuong;
@@ -95,27 +88,27 @@ public class SanPham {
         this.giaTien = giaTien;
     }
 
-    public double getChieuCao() {
+    public String getChieuCao() {
         return chieuCao;
     }
 
-    public void setChieuCao(double chieuCao) {
+    public void setChieuCao(String chieuCao) {
         this.chieuCao = chieuCao;
     }
 
-    public double getChieuRong() {
+    public String getChieuRong() {
         return chieuRong;
     }
 
-    public void setChieuRong(double chieuRong) {
+    public void setChieuRong(String chieuRong) {
         this.chieuRong = chieuRong;
     }
 
-    public double getTrongLuong() {
+    public String getTrongLuong() {
         return trongLuong;
     }
 
-    public void setTrongLuong(double trongLuong) {
+    public void setTrongLuong(String trongLuong) {
         this.trongLuong = trongLuong;
     }
 
@@ -165,6 +158,14 @@ public class SanPham {
 
     public void setAnh(List<String> anh) {
         this.anh = anh;
+    }
+
+    public String getIdShop() {
+        return idShop;
+    }
+
+    public void setIdShop(String idShop) {
+        this.idShop = idShop;
     }
 
     public String getIdHangSX() {
