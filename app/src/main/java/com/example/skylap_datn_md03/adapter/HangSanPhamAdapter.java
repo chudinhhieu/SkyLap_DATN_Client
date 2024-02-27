@@ -1,5 +1,7 @@
 package com.example.skylap_datn_md03.adapter;
 
+import static android.util.Log.d;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +39,7 @@ public class HangSanPhamAdapter extends RecyclerView.Adapter<HangSanPhamAdapter.
     @Override
     public void onBindViewHolder(@NonNull LoaiSanPhamViewHolder holder, int position) {
         HangSX hangSX = list.get(position);
+        d("ca" + "chung", "onBindViewHolder: "+hangSX.getLogo());
         if (hangSX == null) return;
         Picasso.get().load(hangSX.getLogo()).into(holder.img_anh);
     }
