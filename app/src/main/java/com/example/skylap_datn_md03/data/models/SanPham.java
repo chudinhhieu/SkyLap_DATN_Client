@@ -4,23 +4,30 @@ import java.util.List;
 
 public class SanPham {
     private String _id;
-    private String tenSanPham;
+    private String idShop;
     private int soLuong;
+
+    private String tenSanPham;
     private boolean trangThai;
     private double giaTien;
-    private double chieuCao;
-    private double chieuRong;
-    private double trongLuong;
+    private String chieuCao;
+    private String chieuRong;
+    private String chieuDoc;
+    private String trongLuong;
+    private String ram;
+    private String rom;
+    private String baohanh;
     private String os;
     private String cpu;
     private String gpu;
     private String display;
     private String moTa;
+    private String phuKien;
     private List<String> anh;
-    private String idShop;
     private String idHangSX;
     private String idLoaiSP;
-
+    private String tamNen;
+    private String tanSoQuet;
     public SanPham() {
     }
 
@@ -32,34 +39,60 @@ public class SanPham {
         this.tenSanPham = tenSanPham;
     }
 
-    public SanPham(int soLuong, boolean trangThai,
-                   double giaTien, double chieuCao, double chieuRong, double trongLuong,
-                   String os, String cpu, String gpu, String display, String moTa, List<String> anh,
-                   String idShop, String idHangSX, String idLoaiSP, String tenSanPham) {
-        this.soLuong = soLuong;
-        this.trangThai = trangThai;
-        this.giaTien = giaTien;
-        this.chieuCao = chieuCao;
-        this.chieuRong = chieuRong;
-        this.trongLuong = trongLuong;
-        this.os = os;
-        this.cpu = cpu;
-        this.gpu = gpu;
-        this.display = display;
-        this.moTa = moTa;
-        this.anh = anh;
-        this.idShop = idShop;
-        this.idHangSX = idHangSX;
-        this.tenSanPham = tenSanPham;
-        this.idLoaiSP = idLoaiSP;
+    public String getChieuDoc() {
+        return chieuDoc;
     }
 
-    public String getIdShop() {
-        return idShop;
+    public void setChieuDoc(String chieuDoc) {
+        this.chieuDoc = chieuDoc;
     }
 
-    public void setIdShop(String idShop) {
-        this.idShop = idShop;
+    public String getRam() {
+        return ram;
+    }
+
+    public void setRam(String ram) {
+        this.ram = ram;
+    }
+
+    public String getRom() {
+        return rom;
+    }
+
+    public void setRom(String rom) {
+        this.rom = rom;
+    }
+
+    public String getBaohanh() {
+        return baohanh;
+    }
+
+    public void setBaohanh(String baohanh) {
+        this.baohanh = baohanh;
+    }
+
+    public String getPhuKien() {
+        return phuKien;
+    }
+
+    public void setPhuKien(String phuKien) {
+        this.phuKien = phuKien;
+    }
+
+    public String getTamNen() {
+        return tamNen;
+    }
+
+    public void setTamNen(String tamNen) {
+        this.tamNen = tamNen;
+    }
+
+    public String getTanSoQuet() {
+        return tanSoQuet;
+    }
+
+    public void setTanSoQuet(String tanSoQuet) {
+        this.tanSoQuet = tanSoQuet;
     }
 
     public String get_id() {
@@ -69,7 +102,6 @@ public class SanPham {
     public void set_id(String _id) {
         this._id = _id;
     }
-
 
     public int getSoLuong() {
         return soLuong;
@@ -95,27 +127,27 @@ public class SanPham {
         this.giaTien = giaTien;
     }
 
-    public double getChieuCao() {
+    public String getChieuCao() {
         return chieuCao;
     }
 
-    public void setChieuCao(double chieuCao) {
+    public void setChieuCao(String chieuCao) {
         this.chieuCao = chieuCao;
     }
 
-    public double getChieuRong() {
+    public String getChieuRong() {
         return chieuRong;
     }
 
-    public void setChieuRong(double chieuRong) {
+    public void setChieuRong(String chieuRong) {
         this.chieuRong = chieuRong;
     }
 
-    public double getTrongLuong() {
+    public String getTrongLuong() {
         return trongLuong;
     }
 
-    public void setTrongLuong(double trongLuong) {
+    public void setTrongLuong(String trongLuong) {
         this.trongLuong = trongLuong;
     }
 
@@ -165,6 +197,14 @@ public class SanPham {
 
     public void setAnh(List<String> anh) {
         this.anh = anh;
+    }
+
+    public String getIdShop() {
+        return idShop;
+    }
+
+    public void setIdShop(String idShop) {
+        this.idShop = idShop;
     }
 
     public String getIdHangSX() {

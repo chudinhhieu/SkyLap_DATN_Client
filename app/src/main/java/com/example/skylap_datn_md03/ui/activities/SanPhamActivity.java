@@ -3,71 +3,88 @@ package com.example.skylap_datn_md03.ui.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.MotionEvent;
+import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.SanPham;
+import com.example.skylap_datn_md03.retrofitController.RetrofitService;
+import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.squareup.picasso.Picasso;
 
-import java.util.Arrays;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SanPhamActivity extends AppCompatActivity {
     private TextView tvGiaGocSP, tvSlideSP, tvTenSP, tvGiaSP, tvSaoSP, tvDaBan, tvMoTaSP, tvStarSP, tvSLDG, tvXemDG;
-    private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh;
+    private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh,btn_muangay;
     private ImageView imgSildeSP, imgBack, imgGioHang;
     private RecyclerView rcvCTDG;
+    private RelativeLayout view;
     private LinearLayout btnCTSP, btnCTDG, btnChat, btnThemGH, btnMua;
     private RatingBar rbSP;
     private ViewFlipper viewFlipper;
-    SanPham sanPham;
+    private SanPham sanPham;
     private Handler slideHandler;
+
+    private SanPhamRetrofit sanPhamRetrofit;
+    private RetrofitService retrofitService;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham);
         initView();
-
-        sanPham = new SanPham(
-                10,          // soLuong
-                true,        // trangThai
-                59690000,       // giaTien
-                15.0,        // chieuCao
-                8.0,         // chieuRong
-                1.5,         // trongLuong
-                "Android",   // os
-                "Apple M2 Pro", // cpu
-                "Adreno",    // gpu
-                "14.2\" (3024 x 1964)",   // display
-                "Thiết kế sang trọng - Vỏ kim loại cùng trọng lượng chỉ 1.6kg dễ dàng mang theo mọi nơi.\n" +
-                        "Hiển thị chân thật - Kích thước màn hình 14 inch cùng tần số quét lên đến 120Hz.\n" +
-                        "Cấu hình mạnh mẽ - Ram 16GB cùng SSD 1TB đa nhiệm mượt mà, tránh tình trạng giật lag.\n" +
-                        "Xử lý tốt các tác vụ đồ hoạ - GPU 16 nhân giúp việc render video hay chỉnh sửa ảnh diễn ra một cách nhẹ nhàng.", // moTa
-                Arrays.asList("https://cdn.tgdd.vn/Products/Images/44/302146/macbook-pro-14-inch-m2-pro-gray-1.jpg",
-                        "https://cdn.tgdd.vn/Products/Images/44/302146/macbook-pro-14-inch-m2-pro-gray-2.jpg",
-                        "https://cdn.tgdd.vn/Products/Images/44/302146/macbook-pro-14-inch-m2-pro-gray-3.jpg",
-                        "https://cdn.tgdd.vn/Products/Images/44/302146/macbook-pro-14-inch-m2-pro-gray-4.jpg",
-                        "https://cdn.tgdd.vn/Products/Images/44/302146/macbook-pro-14-inch-m2-pro-gray-6.jpg"), // anh
-                "idShop123", // idShop
-                "idHangSX456", // idHangSX
-                "idLoaiSP789", // idLoaiSP
-                "MacBook Pro M2 Pro 2023 14 inch (16GB/1TB SSD)"
-        );
-        updateUIWithSanPham(sanPham);
+        retrofitService = new RetrofitService();
+        getSanPham();
         slideHandler = new Handler(Looper.getMainLooper());
-        startSlideshow();
+        btn_muangay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SanPhamActivity.this,GioHangActivity.class));
+            }
+        });
+    }
+
+    private void getSanPham() {
+        showLoading();
+        sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
+        String idSanPham = getIntent().getStringExtra("idSanPham");
+        if (idSanPham != null) {
+            Call<SanPham> getSanPham = sanPhamRetrofit.getSanPhamByID(idSanPham);
+            getSanPham.enqueue(new Callback<SanPham>() {
+                @Override
+                public void onResponse(Call<SanPham> call, Response<SanPham> response) {
+                    sanPham = response.body();
+                    updateUIWithSanPham(sanPham);
+                    hideLoading(); // Ẩn ProgressBar khi tải xong
+                    view.setVisibility(View.VISIBLE); // Hiển thị view
+
+                }
+
+                @Override
+                public void onFailure(Call<SanPham> call, Throwable t) {
+                    hideLoading(); // Ẩn ProgressBar khi có lỗi
+
+                }
+            });
+        }
+
+
     }
 
     private void startSlideshow() {
@@ -119,7 +136,11 @@ public class SanPhamActivity extends AppCompatActivity {
         tvGiaSP.setText(String.format("%,.0f", sanPham.getGiaTien()));
         tvCPU.setText(sanPham.getCpu());
         tvManHinh.setText(sanPham.getDisplay());
+        tvRam.setText(sanPham.getRam());
+        tvRom.setText(sanPham.getRom());
+        tvBaoHanh.setText(sanPham.getBaohanh());
         tvMoTaSP.setText(sanPham.getMoTa());
+        startSlideshow();
     }
 
     private void initView() {
@@ -128,6 +149,7 @@ public class SanPhamActivity extends AppCompatActivity {
         tvSlideSP = findViewById(R.id.asp_tv_slide);
         tvTenSP = findViewById(R.id.asp_tv_tensp);
         tvGiaSP = findViewById(R.id.asp_tv_gia);
+        tvGiaGocSP.setVisibility(View.GONE);
         tvSaoSP = findViewById(R.id.asp_tv_danhgia);
         tvDaBan = findViewById(R.id.asp_tv_slban);
         btnCTSP = findViewById(R.id.asp_ll_xemthem_ctsp);
@@ -149,5 +171,17 @@ public class SanPhamActivity extends AppCompatActivity {
         tvRom = findViewById(R.id.asp_tv_rom);
         tvBaoHanh = findViewById(R.id.asp_tv_bao_hanh);
         viewFlipper = findViewById(R.id.viewFlipper);
+        btn_muangay = findViewById(R.id.btn_muangay);
+        progressBar = findViewById(R.id.progressBar);
+        view = findViewById(R.id.view);
     }
+
+    private void showLoading() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    private void hideLoading() {
+        progressBar.setVisibility(View.GONE);
+    }
+
 }
