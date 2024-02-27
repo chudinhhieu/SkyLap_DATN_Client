@@ -5,11 +5,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.animation.Animation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,7 +27,7 @@ import java.util.Arrays;
 
 public class SanPhamActivity extends AppCompatActivity {
     private TextView tvGiaGocSP, tvSlideSP, tvTenSP, tvGiaSP, tvSaoSP, tvDaBan, tvMoTaSP, tvStarSP, tvSLDG, tvXemDG;
-    private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh;
+    private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh,btn_muangay;
     private ImageView imgSildeSP, imgBack, imgGioHang;
     private RecyclerView rcvCTDG;
     private LinearLayout btnCTSP, btnCTDG, btnChat, btnThemGH, btnMua;
@@ -68,6 +70,12 @@ public class SanPhamActivity extends AppCompatActivity {
         updateUIWithSanPham(sanPham);
         slideHandler = new Handler(Looper.getMainLooper());
         startSlideshow();
+        btn_muangay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SanPhamActivity.this,GioHangActivity.class));
+            }
+        });
     }
 
     private void startSlideshow() {
@@ -149,5 +157,6 @@ public class SanPhamActivity extends AppCompatActivity {
         tvRom = findViewById(R.id.asp_tv_rom);
         tvBaoHanh = findViewById(R.id.asp_tv_bao_hanh);
         viewFlipper = findViewById(R.id.viewFlipper);
+        btn_muangay = findViewById(R.id.btn_muangay);
     }
 }
