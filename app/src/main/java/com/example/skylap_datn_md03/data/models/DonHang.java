@@ -5,17 +5,31 @@ import java.util.Date;
 
 public class DonHang implements Serializable {
     private String _id;
-    private int tienShip;
-    private int tongTien;
+
     private String trangThai;
-    private String idGioHang;
-    private String idShipper;
-    private String ghiChu;
-    private Date thoiGianMua;
+    private String idSanPham;
+    private String idAccount;
     private String idKhuyenMai;
-    private String idPTTT;
+    private Date thoiGianMua;
+    private String idPttt;
+    private int soLuong;
+    private long tongTien;
+    private String ghiChu;
 
     public DonHang() {
+    }
+
+    public DonHang(String _id, String trangThai, String idSanPham, String idAccount, String idKhuyenMai, Date thoiGianMua, String idPttt, int soLuong, long tongTien, String ghiChu) {
+        this._id = _id;
+        this.trangThai = trangThai;
+        this.idSanPham = idSanPham;
+        this.idAccount = idAccount;
+        this.idKhuyenMai = idKhuyenMai;
+        this.thoiGianMua = thoiGianMua;
+        this.idPttt = idPttt;
+        this.soLuong = soLuong;
+        this.tongTien = tongTien;
+        this.ghiChu = ghiChu;
     }
 
     public String get_id() {
@@ -26,22 +40,6 @@ public class DonHang implements Serializable {
         this._id = _id;
     }
 
-    public int getTienShip() {
-        return tienShip;
-    }
-
-    public void setTienShip(int tienShip) {
-        this.tienShip = tienShip;
-    }
-
-    public int getTongTien() {
-        return tongTien;
-    }
-
-    public void setTongTien(int tongTien) {
-        this.tongTien = tongTien;
-    }
-
     public String getTrangThai() {
         return trangThai;
     }
@@ -50,36 +48,20 @@ public class DonHang implements Serializable {
         this.trangThai = trangThai;
     }
 
-    public String getIdGioHang() {
-        return idGioHang;
+    public String getIdSanPham() {
+        return idSanPham;
     }
 
-    public void setIdGioHang(String idGioHang) {
-        this.idGioHang = idGioHang;
+    public void setIdSanPham(String idSanPham) {
+        this.idSanPham = idSanPham;
     }
 
-    public String getIdShipper() {
-        return idShipper;
+    public String getIdAccount() {
+        return idAccount;
     }
 
-    public void setIdShipper(String idShipper) {
-        this.idShipper = idShipper;
-    }
-
-    public String getGhiChu() {
-        return ghiChu;
-    }
-
-    public void setGhiChu(String ghiChu) {
-        this.ghiChu = ghiChu;
-    }
-
-    public Date getThoiGianMua() {
-        return thoiGianMua;
-    }
-
-    public void setThoiGianMua(Date thoiGianMua) {
-        this.thoiGianMua = thoiGianMua;
+    public void setIdAccount(String idAccount) {
+        this.idAccount = idAccount;
     }
 
     public String getIdKhuyenMai() {
@@ -90,11 +72,43 @@ public class DonHang implements Serializable {
         this.idKhuyenMai = idKhuyenMai;
     }
 
-    public String getIdPTTT() {
-        return idPTTT;
+    public Date getThoiGianMua() {
+        return thoiGianMua;
     }
 
-    public void setIdPTTT(String idPTTT) {
-        this.idPTTT = idPTTT;
+    public void setThoiGianMua(Date thoiGianMua) {
+        this.thoiGianMua = thoiGianMua;
+    }
+
+    public String getIdPttt() {
+        return idPttt;
+    }
+
+    public void setIdPttt(String idPttt) {
+        this.idPttt = idPttt;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public long getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(long tongTien) {
+        this.tongTien = tongTien;
+    }
+
+    public String getGhiChu() {
+        return ghiChu;
+    }
+
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
     }
 }
