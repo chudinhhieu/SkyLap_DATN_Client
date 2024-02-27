@@ -4,23 +4,30 @@ import java.util.List;
 
 public class SanPham {
     private String _id;
-    private String tenSanPham;
+    private String idShop;
     private int soLuong;
+
+    private String tenSanPham;
     private boolean trangThai;
     private double giaTien;
     private String chieuCao;
     private String chieuRong;
+    private String chieuDoc;
     private String trongLuong;
+    private String ram;
+    private String rom;
+    private String baohanh;
     private String os;
     private String cpu;
     private String gpu;
     private String display;
     private String moTa;
+    private String phuKien;
     private List<String> anh;
-    private String idShop;
     private String idHangSX;
     private String idLoaiSP;
-
+    private String tamNen;
+    private String tanSoQuet;
     public SanPham() {
     }
 
@@ -32,29 +39,61 @@ public class SanPham {
         this.tenSanPham = tenSanPham;
     }
 
-    public SanPham(String _id, String tenSanPham, int soLuong, boolean trangThai, double giaTien,
-                   String chieuCao, String chieuRong, String trongLuong, String os, String cpu,
-                   String gpu, String display, String moTa, List<String> anh, String idShop, String
-                           idHangSX, String idLoaiSP) {
-        this._id = _id;
-        this.tenSanPham = tenSanPham;
-        this.soLuong = soLuong;
-        this.trangThai = trangThai;
-        this.giaTien = giaTien;
-        this.chieuCao = chieuCao;
-        this.chieuRong = chieuRong;
-        this.trongLuong = trongLuong;
-        this.os = os;
-        this.cpu = cpu;
-        this.gpu = gpu;
-        this.display = display;
-        this.moTa = moTa;
-        this.anh = anh;
-        this.idShop = idShop;
-        this.idHangSX = idHangSX;
-        this.idLoaiSP = idLoaiSP;
+    public String getChieuDoc() {
+        return chieuDoc;
     }
 
+    public void setChieuDoc(String chieuDoc) {
+        this.chieuDoc = chieuDoc;
+    }
+
+    public String getRam() {
+        return ram;
+    }
+
+    public void setRam(String ram) {
+        this.ram = ram;
+    }
+
+    public String getRom() {
+        return rom;
+    }
+
+    public void setRom(String rom) {
+        this.rom = rom;
+    }
+
+    public String getBaohanh() {
+        return baohanh;
+    }
+
+    public void setBaohanh(String baohanh) {
+        this.baohanh = baohanh;
+    }
+
+    public String getPhuKien() {
+        return phuKien;
+    }
+
+    public void setPhuKien(String phuKien) {
+        this.phuKien = phuKien;
+    }
+
+    public String getTamNen() {
+        return tamNen;
+    }
+
+    public void setTamNen(String tamNen) {
+        this.tamNen = tamNen;
+    }
+
+    public String getTanSoQuet() {
+        return tanSoQuet;
+    }
+
+    public void setTanSoQuet(String tanSoQuet) {
+        this.tanSoQuet = tanSoQuet;
+    }
 
     public String get_id() {
         return _id;

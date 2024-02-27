@@ -1,6 +1,7 @@
 package com.example.skylap_datn_md03.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.SanPham;
+import com.example.skylap_datn_md03.ui.activities.SanPhamActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
@@ -22,6 +24,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
     private List<SanPham> list;
     private Context context;
 
+    private  View view;
     public SanPhamAdapter(Context context) {
         this.context = context;
     }
@@ -32,7 +35,8 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
     @NonNull
     @Override
     public SanPhamViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_product,parent,false);
+        view = LayoutInflater.from(context).inflate(R.layout.item_product,parent,false);
+        view = LayoutInflater.from(context).inflate(R.layout.item_product,parent,false);
         return new SanPhamViewHolder(view);
     }
 
@@ -46,9 +50,16 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
             holder.txt_cpu.setText("CPU: "+sanPham.getCpu());
             holder.txt_card.setText("Card: "+sanPham.getGpu());
             holder.txt_name.setText("Display: "+sanPham.getTenSanPham());
-
             holder.txt_price.setText(formatPrice(sanPham.getGiaTien())+"₫");
             holder.txt_sold.setText("Đã bán ");
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, SanPhamActivity.class);
+                intent.putExtra("idSanPham", sanPham.get_id());
+                context.startActivity(intent);
+            }
+        });
 
     }
 

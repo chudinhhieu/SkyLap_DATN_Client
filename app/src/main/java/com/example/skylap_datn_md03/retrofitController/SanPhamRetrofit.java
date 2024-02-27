@@ -7,7 +7,16 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
+
 public interface SanPhamRetrofit {
+
+    // Lấy tất cả sản phẩm
     @GET("api/sanPham")
     Call<List<SanPham>> getListSanPham();
+
+    // Lấy sản phẩm theo id
+    @GET("api/sanPham/{id}")
+    Call<SanPham> getSanPhamByID(@Path("id") String id);
+
 }
