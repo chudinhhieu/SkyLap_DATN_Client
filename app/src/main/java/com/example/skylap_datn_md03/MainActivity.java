@@ -37,8 +37,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.relex.circleindicator.CircleIndicator;
-
 public class MainActivity extends AppCompatActivity {
     Button btnLogout;
     private FirebaseAuth firebaseAuth;
