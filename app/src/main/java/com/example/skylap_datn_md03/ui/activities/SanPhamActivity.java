@@ -41,29 +41,7 @@ public class SanPhamActivity extends AppCompatActivity {
         initView();
 
         sanPham = new SanPham(
-                10,          // soLuong
-                true,        // trangThai
-                59690000,       // giaTien
-                15.0,        // chieuCao
-                8.0,         // chieuRong
-                1.5,         // trongLuong
-                "Android",   // os
-                "Apple M2 Pro", // cpu
-                "Adreno",    // gpu
-                "14.2\" (3024 x 1964)",   // display
-                "Thiết kế sang trọng - Vỏ kim loại cùng trọng lượng chỉ 1.6kg dễ dàng mang theo mọi nơi.\n" +
-                        "Hiển thị chân thật - Kích thước màn hình 14 inch cùng tần số quét lên đến 120Hz.\n" +
-                        "Cấu hình mạnh mẽ - Ram 16GB cùng SSD 1TB đa nhiệm mượt mà, tránh tình trạng giật lag.\n" +
-                        "Xử lý tốt các tác vụ đồ hoạ - GPU 16 nhân giúp việc render video hay chỉnh sửa ảnh diễn ra một cách nhẹ nhàng.", // moTa
-                Arrays.asList("https://cdn.tgdd.vn/Products/Images/44/302146/macbook-pro-14-inch-m2-pro-gray-1.jpg",
-                        "https://cdn.tgdd.vn/Products/Images/44/302146/macbook-pro-14-inch-m2-pro-gray-2.jpg",
-                        "https://cdn.tgdd.vn/Products/Images/44/302146/macbook-pro-14-inch-m2-pro-gray-3.jpg",
-                        "https://cdn.tgdd.vn/Products/Images/44/302146/macbook-pro-14-inch-m2-pro-gray-4.jpg",
-                        "https://cdn.tgdd.vn/Products/Images/44/302146/macbook-pro-14-inch-m2-pro-gray-6.jpg"), // anh
-                "idShop123", // idShop
-                "idHangSX456", // idHangSX
-                "idLoaiSP789", // idLoaiSP
-                "MacBook Pro M2 Pro 2023 14 inch (16GB/1TB SSD)"
+
         );
         updateUIWithSanPham(sanPham);
         slideHandler = new Handler(Looper.getMainLooper());
