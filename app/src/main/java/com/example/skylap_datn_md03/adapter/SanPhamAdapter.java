@@ -47,8 +47,8 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
             holder.txt_card.setText("Card: "+sanPham.getGpu());
             holder.txt_name.setText("Display: "+sanPham.getTenSanPham());
 
-            holder.txt_price.setText(formatPrice(sanPham.getGiaTien()));
-            holder.txt_sold.setText("Sold: "+sanPham.getDisplay());
+            holder.txt_price.setText(formatPrice(sanPham.getGiaTien())+"₫");
+            holder.txt_sold.setText("Đã bán ");
 
     }
 
