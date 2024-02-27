@@ -16,6 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.skylap_datn_md03.MainActivity;
 import com.example.skylap_datn_md03.R;
+import com.example.skylap_datn_md03.data.models.Account;
+import com.example.skylap_datn_md03.data.models.MyAuth;
+import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
+import com.example.skylap_datn_md03.retrofitController.RetrofitService;
+import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -31,6 +36,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -49,13 +58,15 @@ public class RegisterActivity extends AppCompatActivity {
     private TextWatcher inputWatcher;
     private static final int RQ_CODE_GG = 20;
     private static final String TAG_ERROR_AUTH = "Error Auth";
-
+    private AccountRetrofit accountRetrofit;
+    private RetrofitService retrofitService;
+    private MyAuth myAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         initView();
-
+        retrofitService = new RetrofitService();
         firebaseAuth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
@@ -105,7 +116,31 @@ public class RegisterActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomToast.showToast(RegisterActivity.this, "Tài khoản đã tồn tại. Vui lòng nhập tài khoản khác.");
+                Account account = new Account(ipUsername.getText().toString().trim(),ipPassword.getText().toString().trim());
+                accountRetrofit = retrofitService.retrofit.create(AccountRetrofit.class);
+                Call<MyAuth> register = accountRetrofit.signUp(account);
+                register.enqueue(new Callback<MyAuth>() {
+                    @Override
+                    public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
+                        myAuth = response.body();
+                       if (myAuth != null){
+                           if (myAuth.isSuccess()){
+                               CustomToast.showToast(RegisterActivity.this, myAuth.getMessage());
+                               Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                               intent.putExtra("username", ipUsername.getText().toString().trim());
+                               intent.putExtra("password", ipPassword.getText().toString().trim());
+                               startActivity(intent);
+                           }else {
+                               CustomToast.showToast(RegisterActivity.this, myAuth.getMessage());
+                           }
+                       }
+                    }
+                    @Override
+                    public void onFailure(Call<MyAuth> call, Throwable t) {
+                        Log.e("Retrofit Failure", "Lỗi: " + t.getMessage());
+                        t.printStackTrace();
+                    }
+                });
             }
         });
         tvLogin.setOnClickListener(new View.OnClickListener() {

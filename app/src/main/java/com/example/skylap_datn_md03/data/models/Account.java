@@ -13,12 +13,9 @@ public class Account implements Serializable {
     public Account() {
     }
 
-    public Account(String taiKhoan, String matKhau, String quyenTk, String avatar, Boolean trangThai) {
+    public Account(String taiKhoan, String matKhau) {
         this.taiKhoan = taiKhoan;
         this.matKhau = matKhau;
-        this.quyenTk = quyenTk;
-        this.avatar = avatar;
-        this.trangThai = trangThai;
     }
 
     public String get_id() {

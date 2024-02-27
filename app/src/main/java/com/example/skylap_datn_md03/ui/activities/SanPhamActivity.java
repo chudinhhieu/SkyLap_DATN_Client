@@ -73,7 +73,6 @@ public class SanPhamActivity extends AppCompatActivity {
                     updateUIWithSanPham(sanPham);
                     hideLoading(); // Ẩn ProgressBar khi tải xong
                     view.setVisibility(View.VISIBLE); // Hiển thị view
-
                 }
 
                 @Override
