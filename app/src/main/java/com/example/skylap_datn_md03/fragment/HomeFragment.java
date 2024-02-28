@@ -20,8 +20,10 @@ import com.example.skylap_datn_md03.adapter.HangSanPhamAdapter;
 import com.example.skylap_datn_md03.adapter.SanPhamAdapter;
 import com.example.skylap_datn_md03.adapter.SlideAdapter;
 import com.example.skylap_datn_md03.data.models.HangSX;
+import com.example.skylap_datn_md03.data.models.KhuyenMai;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.HangSxInterface;
+import com.example.skylap_datn_md03.retrofitController.KhuyenMaiRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 
@@ -44,7 +46,7 @@ public class HomeFragment extends Fragment  {
     private SlideAdapter slideAdapter;
     private View context;
     private Timer mTimer;
-    private List<HangSX> list;
+    private List<KhuyenMai> list;
     private SanPhamRetrofit sanPhamRetrofit;
     private RetrofitService retrofitService;
     private List<SanPham> dataList = new ArrayList<>();
@@ -60,11 +62,10 @@ public class HomeFragment extends Fragment  {
         context = inflater.inflate(R.layout.fragment_home, container, false);
         retrofitService = new RetrofitService();
         unitUI();
-        list = getListH();
         getListSanPham();
         getListHangSx();
-        configAdapter();
-        autoSlideImage();
+        getListKhuyenMai();
+
         return context;
     }
     private void getListSanPham() {
@@ -73,7 +74,6 @@ public class HomeFragment extends Fragment  {
             getSp.enqueue(new Callback<List<SanPham>>() {
                 @Override
                 public void onResponse(Call<List<SanPham>> call, Response<List<SanPham>> response) {
-                    isLoadingSanPham = false; // Đánh dấu đã tải xong dữ liệu
                     if (response.isSuccessful()) {
                         List<SanPham> newData = response.body();
                         // Cập nhật dữ liệu lên RecyclerView
@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment  {
                         rcvSanPham.setAdapter(sanPhamAdapter);
 
                     } else {
-                        Log.d("ca" + "chung", "onResponse: " + response.message());
+                        d("ca" + "chung", "onResponse: " + response.message());
                     }
                 }
 
@@ -90,20 +90,42 @@ public class HomeFragment extends Fragment  {
                 }
             });
     }
+    private void getListKhuyenMai (){
+        KhuyenMaiRetrofit khuyenMaiRetrofit = retrofitService.retrofit.create(KhuyenMaiRetrofit.class);
+        Call<List<KhuyenMai>> getList = khuyenMaiRetrofit.getListKhuyenMai();
+        getList.enqueue(new Callback<List<KhuyenMai>>() {
+            @Override
+            public void onResponse(Call<List<KhuyenMai>> call, Response<List<KhuyenMai>> response) {
+                if (response.isSuccessful()) {
+                    list = response.body();
+                    slideAdapter.setList(list);
+                    slidePager.setAdapter(slideAdapter);
+                    autoSlideImage(list);
+                } else {
+                    // Xử lý khi có lỗi từ server
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<KhuyenMai>> call, Throwable t) {
+
+            }
+        });
+
+    }
     private void getListHangSx() {
             HangSxInterface hangSxInterface =  retrofitService.retrofit.create(HangSxInterface.class);
             Call<List<HangSX>> getList = hangSxInterface.getListHangSx();
             getList.enqueue(new Callback<List<HangSX>>() {
                 @Override
                 public void onResponse(Call<List<HangSX>> call, Response<List<HangSX>> response) {
-                    isLoadingHangSx = false; // Đánh dấu đã tải xong dữ liệu
                     if (response.isSuccessful()) {
                         List<HangSX> newData = response.body();
                         hangSxAdapter.setList(newData);
                         rcvHangSx.setAdapter(hangSxAdapter);
                     } else {
                         // Xử lý khi có lỗi từ server
-                        Log.d("ca" + "chung", "onResponse: " + response.message());
+                        d("ca" + "chung", "onResponse: " + response.message());
                     }
                 }
 
@@ -112,35 +134,28 @@ public class HomeFragment extends Fragment  {
                 }
             });
     }
-    private List<HangSX> getListH(){
-        return list;
-    }
     private void unitUI (){
         slidePager = context.findViewById(R.id.fragment_home_viewpager_slide);
         rcvHangSx = context.findViewById(R.id.fragment_home_rcv_listHang);
         rcvSanPham = context.findViewById(R.id.fragment_home_rcv_listProduct);
         indicator = context.findViewById(R.id.fragment_home_indicator);
-
+        configAdapter();
     }
     private void configAdapter (){
         hangSxAdapter = new HangSanPhamAdapter(getContext());
         sanPhamAdapter = new SanPhamAdapter(getContext());
         slideAdapter = new SlideAdapter(getContext());
-        //
-
-        slideAdapter.setList(list);
-        //
-        slidePager.setAdapter(slideAdapter);
-        indicator.setViewPager(slidePager);
-        slideAdapter.registerDataSetObserver(indicator.getDataSetObserver());
     }
-    private void autoSlideImage (){
+    private void autoSlideImage (List<KhuyenMai> list){
         if (list == null || list.isEmpty() || slidePager == null){
+            d("ca" + "chung", "autoSlideImage: "+"0");
             return;
         }
         if (mTimer == null){
+            d("ca" + "chung", "autoSlideImage: "+"121");
             mTimer = new Timer();
         }
+        d("ca" + "chung", "autoSlideImage: ");
         mTimer.schedule(new TimerTask() {
             @Override
             public void run() {

@@ -1,5 +1,7 @@
 package com.example.skylap_datn_md03.adapter;
 
+import static android.util.Log.d;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,18 +14,19 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.bumptech.glide.Glide;
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.HangSX;
+import com.example.skylap_datn_md03.data.models.KhuyenMai;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class SlideAdapter extends PagerAdapter {
     private Context mContext;
-    private List<HangSX> list;
+    private List<KhuyenMai> list;
 
     public SlideAdapter(Context mContext) {
         this.mContext = mContext;
     }
-    public void setList(List<HangSX> list){
+    public void setList(List<KhuyenMai> list){
         this.list = list;
         notifyDataSetChanged();
 
@@ -46,9 +49,9 @@ public class SlideAdapter extends PagerAdapter {
                 .inflate(R.layout.item_slide,container,false);
         ImageView img_logo = view.findViewById(R.id.item_slide_img);
 
-        HangSX hangSX = list.get(position);
-        if (hangSX != null){
-            Picasso.get().load(hangSX.getLogo()).into(img_logo);
+        KhuyenMai khuyenMai = list.get(position);
+        if (khuyenMai != null){
+            Picasso.get().load(khuyenMai.getAnh()).into(img_logo);
         }
         // add to view group
         container.addView(view);
