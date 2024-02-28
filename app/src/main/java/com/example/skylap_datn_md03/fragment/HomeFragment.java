@@ -68,9 +68,6 @@ public class HomeFragment extends Fragment  {
         return context;
     }
     private void getListSanPham() {
-        if (!isLoadingSanPham) { // Kiểm tra xem có đang tải dữ liệu hay không
-            isLoadingSanPham = true; // Đánh dấu đang tải dữ liệu
-
             sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
             Call<List<SanPham>> getSp = sanPhamRetrofit.getListSanPham();
             getSp.enqueue(new Callback<List<SanPham>>() {
@@ -79,40 +76,21 @@ public class HomeFragment extends Fragment  {
                     isLoadingSanPham = false; // Đánh dấu đã tải xong dữ liệu
                     if (response.isSuccessful()) {
                         List<SanPham> newData = response.body();
-                        dataList.addAll(newData); // Thêm dữ liệu mới vào danh sách
-
                         // Cập nhật dữ liệu lên RecyclerView
-                        sanPhamAdapter.setList(dataList);
+                        sanPhamAdapter.setList(newData);
                         rcvSanPham.setAdapter(sanPhamAdapter);
 
-                        // Kiểm tra xem còn dữ liệu để tải tiếp không
-                        if (newData.size() == limit) {
-                            // Còn dữ liệu, tiếp tục gọi getListSanPham() để tải dữ liệu tiếp theo
-                            getListSanPham();
-                        }else {
-                            // Hiển thị dữ liệu lên RecyclerView khi đã tải xong toàn bộ dữ liệu
-                            sanPhamAdapter.setList(dataList);
-                            rcvSanPham.setAdapter(sanPhamAdapter);
-                        }
                     } else {
-                        // Xử lý khi có lỗi từ server
                         Log.d("ca" + "chung", "onResponse: " + response.message());
                     }
                 }
 
                 @Override
                 public void onFailure(Call<List<SanPham>> call, Throwable t) {
-                    isLoadingSanPham = false; // Đánh dấu đã tải xong dữ liệu
-
-                    // Xử lý khi có lỗi kết nối
                 }
             });
-        }
     }
     private void getListHangSx() {
-        if (!isLoadingHangSx) { // Kiểm tra xem có đang tải dữ liệu hay không
-            isLoadingHangSx = true; // Đánh dấu đang tải dữ liệu
-
             HangSxInterface hangSxInterface =  retrofitService.retrofit.create(HangSxInterface.class);
             Call<List<HangSX>> getList = hangSxInterface.getListHangSx();
             getList.enqueue(new Callback<List<HangSX>>() {
@@ -121,16 +99,8 @@ public class HomeFragment extends Fragment  {
                     isLoadingHangSx = false; // Đánh dấu đã tải xong dữ liệu
                     if (response.isSuccessful()) {
                         List<HangSX> newData = response.body();
-                        dataHangSx.addAll(newData);
-
-                        hangSxAdapter.setList(dataHangSx);
+                        hangSxAdapter.setList(newData);
                         rcvHangSx.setAdapter(hangSxAdapter);
-                        if (newData.size() == limit) {
-                            getListHangSx();
-                        }else {
-                            hangSxAdapter.setList(dataHangSx);
-                            rcvHangSx.setAdapter(hangSxAdapter);
-                        }
                     } else {
                         // Xử lý khi có lỗi từ server
                         Log.d("ca" + "chung", "onResponse: " + response.message());
@@ -139,10 +109,8 @@ public class HomeFragment extends Fragment  {
 
                 @Override
                 public void onFailure(Call<List<HangSX>> call, Throwable t) {
-                    isLoadingHangSx = false;
                 }
             });
-        }
     }
     private List<HangSX> getListH(){
         return list;
