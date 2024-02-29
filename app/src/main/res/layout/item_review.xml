@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp"
+    android:outlineAmbientShadowColor="@color/cardview_dark_background">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imageViewUserAvatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_account_ip"
+        android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:id="@+id/textViewReviewerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/imageViewUserAvatar"
+            android:layout_marginStart="10dp"
+            android:text="Nguyen van A"
+            android:textStyle="bold"/>
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewReviewerName"
+            android:layout_toEndOf="@id/imageViewUserAvatar"
+            android:layout_marginStart="10dp"
+            android:numStars="5"
+            android:rating="3.5"/>
+
+        <TextView
+            android:id="@+id/textViewReviewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingBar"
+            android:layout_toEndOf="@id/imageViewUserAvatar"
+            android:layout_marginStart="10dp"
+            android:text="21/02/2023"/>
+        <ImageView
+            android:id="@+id/imageViewLaptop"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/anh_mau"
+            android:layout_below="@id/textViewReviewDate"
+            android:layout_toEndOf="@id/imageViewUserAvatar"
+            />
+
+
+        <TextView
+            android:id="@+id/textViewLaptopModel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewReviewDate"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_toEndOf="@id/imageViewLaptop"
+            android:text="Laptop Lenovo Ideapad 3 15IAU7 i3" />
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="99dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/white"
+            android:drawableStart="@drawable/ic_edit"
+            android:drawablePadding="8dp"
+            android:padding="10dp"
+            android:text="Sửa"
+            android:textColor="#ff4f1f"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
