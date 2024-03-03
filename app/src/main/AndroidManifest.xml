@@ -42,8 +42,10 @@
         </activity>
         <activity
             android:name=".ui.activities.GioHangActivity"
-            android:exported="true"></activity>
-
+            android:exported="true"/>
+        <activity
+            android:name=".ui.activities.DatHangActivity"
+            android:exported="true"/>
         <activity android:name=".ui.activities.QLDonHangActivity"
             android:exported="true">
 
