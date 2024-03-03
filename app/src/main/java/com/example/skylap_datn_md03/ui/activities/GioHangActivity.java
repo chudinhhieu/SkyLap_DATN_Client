@@ -40,9 +40,9 @@ public class GioHangActivity extends AppCompatActivity {
             GioHang gioHang = new GioHang();
             List<String> listAnh = new ArrayList<>();
             listAnh.add(new String("https://cdn.tgdd.vn/Products/Images/44/231244/macbook-air-m1-2020-gold-600x600.jpg"));
-            gioHang.setAnhSanPham(listAnh);
-            gioHang.setTenSanPham("Macbook Pro");
-            gioHang.setGiaSanPham(2000000000);
+//            gioHang.setAnhSanPham(listAnh);
+//            gioHang.setTenSanPham("Macbook Pro");
+//            gioHang.setGiaSanPham(2000000000);
             gioHang.setSoLuong(99);
 
             gioHangList.add(gioHang);

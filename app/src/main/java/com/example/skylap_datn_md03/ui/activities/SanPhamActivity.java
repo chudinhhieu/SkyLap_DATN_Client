@@ -25,11 +25,15 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.example.skylap_datn_md03.R;
+import com.example.skylap_datn_md03.data.models.GioHang;
+import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPham;
+import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
+import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
@@ -39,7 +43,7 @@ import retrofit2.Response;
 
 public class SanPhamActivity extends AppCompatActivity {
     private TextView tvGiaGocSP, tvSlideSP, tvTenSP, tvGiaSP, tvSaoSP, tvDaBan, tvMoTaSP, tvStarSP, tvSLDG, tvXemDG;
-    private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh,btn_muangay;
+    private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh, btn_muangay;
     private ImageView imgSildeSP, imgBack, imgGioHang;
     private RecyclerView rcvCTDG;
     private RelativeLayout view;
@@ -53,24 +57,28 @@ public class SanPhamActivity extends AppCompatActivity {
     private RetrofitService retrofitService;
     private ProgressBar progressBar;
 
+    private SharedPreferencesManager sharedPreferencesManager;
+    private MyAuth myAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_san_pham);
         initView();
+        sharedPreferencesManager = new SharedPreferencesManager(this);
         retrofitService = new RetrofitService();
         getSanPham();
         slideHandler = new Handler(Looper.getMainLooper());
         btn_muangay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SanPhamActivity.this,DatHangActivity.class));
+                startActivity(new Intent(SanPhamActivity.this, DatHangActivity.class));
             }
         });
         imgGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SanPhamActivity.this,GioHangActivity.class));
+                startActivity(new Intent(SanPhamActivity.this, GioHangActivity.class));
             }
         });
         btnThemGH.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +92,7 @@ public class SanPhamActivity extends AppCompatActivity {
     private void showBottomSheet(SanPham sanPham) {
         int maxSL = sanPham.getSoLuong();
 
-        View view = getLayoutInflater().inflate(R.layout.bottom_sheet_sanpham,null);
+        View view = getLayoutInflater().inflate(R.layout.bottom_sheet_sanpham, null);
 
         BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
         bottomSheetDialog.setContentView(view);
@@ -99,9 +107,30 @@ public class SanPhamActivity extends AppCompatActivity {
 
 
         Picasso.get().load(sanPham.getAnh().get(0)).into(img_anhSP);
-        tvGia.setText(String.format("%,.0f", sanPham.getGiaTien())+"₫");
-        tvKho.setText("Kho: "+maxSL);
+        tvGia.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
+        tvKho.setText("Kho: " + maxSL);
         tvTen.setText(sanPham.getTenSanPham());
+        btnThemGioHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
+                String userId = sharedPreferencesManager.getUserId();
+                Call<MyAuth> getSanPham = gioHangRetrofit.themGioHang(new GioHang(sanPham.get_id(),
+                        userId, Integer.parseInt(ipSoLuong.getText().toString().trim())));
+                getSanPham.enqueue(new Callback<MyAuth>() {
+                    @Override
+                    public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
+                        myAuth = response.body();
+                        CustomToast.showToast(SanPhamActivity.this, myAuth.getMessage());
+                        bottomSheetDialog.dismiss();
+                    }
+                    @Override
+                    public void onFailure(Call<MyAuth> call, Throwable t) {
+                        CustomToast.showToast(SanPhamActivity.this, myAuth.getMessage());
+                    }
+                });
+            }
+        });
         ipSoLuong.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -125,7 +154,7 @@ public class SanPhamActivity extends AppCompatActivity {
         btnCong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ipSoLuong.getText().toString().isEmpty()){
+                if (ipSoLuong.getText().toString().isEmpty()) {
                     ipSoLuong.setText("1");
                 }
                 // Lấy số lượng hiện tại từ EditText
@@ -138,8 +167,8 @@ public class SanPhamActivity extends AppCompatActivity {
 
                     // Cập nhật số lượng mới vào EditText
                     ipSoLuong.setText(String.valueOf(currentSL));
-                }else{
-                    CustomToast.showToast(SanPhamActivity.this, "Số lượng tối đa là "+maxSL);
+                } else {
+                    CustomToast.showToast(SanPhamActivity.this, "Số lượng tối đa là " + maxSL);
                 }
             }
         });
@@ -148,7 +177,7 @@ public class SanPhamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (ipSoLuong.getText().toString().isEmpty()){
+                if (ipSoLuong.getText().toString().isEmpty()) {
                     ipSoLuong.setText("1");
                 }
                 // Lấy số lượng hiện tại từ EditText
@@ -160,7 +189,7 @@ public class SanPhamActivity extends AppCompatActivity {
 
                     // Cập nhật số lượng mới vào EditText
                     ipSoLuong.setText(String.valueOf(currentSL));
-                }else{
+                } else {
                     CustomToast.showToast(SanPhamActivity.this, "Số lượng tối thiểu là 1");
                 }
             }
@@ -178,8 +207,8 @@ public class SanPhamActivity extends AppCompatActivity {
                     // Kiểm tra xem giá trị mới có nằm trong khoảng từ 1 đến max không
                     if (input >= min && input <= max) {
                         return null; // Giá trị hợp lệ, không có thay đổi
-                    }else{
-                        CustomToast.showToast(SanPhamActivity.this, "Chỉ nhập số lượng trong khoảng từ 1 đến "+max);
+                    } else {
+                        CustomToast.showToast(SanPhamActivity.this, "Chỉ nhập số lượng trong khoảng từ 1 đến " + max);
                     }
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
@@ -265,7 +294,7 @@ public class SanPhamActivity extends AppCompatActivity {
 
     private void updateUIWithSanPham(SanPham sanPham) {
         tvTenSP.setText(sanPham.getTenSanPham());
-        tvGiaSP.setText(String.format("%,.0f", sanPham.getGiaTien())+"₫");
+        tvGiaSP.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
         tvCPU.setText(sanPham.getCpu());
         tvManHinh.setText(sanPham.getDisplay());
         tvRam.setText(sanPham.getRam());
