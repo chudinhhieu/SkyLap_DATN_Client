@@ -87,6 +87,12 @@ public class SanPhamActivity extends AppCompatActivity {
                 showBottomSheet(sanPham);
             }
         });
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void showBottomSheet(SanPham sanPham) {
@@ -115,9 +121,9 @@ public class SanPhamActivity extends AppCompatActivity {
             public void onClick(View v) {
                 GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
                 String userId = sharedPreferencesManager.getUserId();
-                Call<MyAuth> getSanPham = gioHangRetrofit.themGioHang(new GioHang(sanPham.get_id(),
+                Call<MyAuth> getGioHang = gioHangRetrofit.themGioHang(new GioHang(sanPham.get_id(),
                         userId, Integer.parseInt(ipSoLuong.getText().toString().trim())));
-                getSanPham.enqueue(new Callback<MyAuth>() {
+                getGioHang.enqueue(new Callback<MyAuth>() {
                     @Override
                     public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
                         myAuth = response.body();
@@ -244,8 +250,6 @@ public class SanPhamActivity extends AppCompatActivity {
                 }
             });
         }
-
-
     }
 
     private void startSlideshow() {

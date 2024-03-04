@@ -1,6 +1,10 @@
 package com.example.skylap_datn_md03.ui.activities;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,44 +13,69 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.adapter.GioHangAdapter;
 import com.example.skylap_datn_md03.data.models.GioHang;
+import com.example.skylap_datn_md03.data.models.SanPham;
+import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
+import com.example.skylap_datn_md03.retrofitController.RetrofitService;
+import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
+import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
+import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class GioHangActivity extends AppCompatActivity {
     private RecyclerView agh_recyclerView;
+    private TextView tvTongTien;
     private GioHangAdapter adapter ;
-
-
+    private ImageView imgBack;
+    GioHangRetrofit gioHangRetrofit;
+    RetrofitService retrofitService;
+    SharedPreferencesManager sharedPreferencesManager;
+    List<GioHang> listGioHang;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gio_hang);
-
         agh_recyclerView = findViewById(R.id.agh_recyclerView);
+        imgBack = findViewById(R.id.agh_img_back);
+        tvTongTien = findViewById(R.id.agh_tv_totalPrice);
         agh_recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-        List<GioHang> list = getDummyData();
-
-        adapter = new GioHangAdapter(list , getApplicationContext());
-        agh_recyclerView.setAdapter(adapter);
-
+        retrofitService = new RetrofitService();
+        sharedPreferencesManager = new SharedPreferencesManager(this);
+        getGioHang();
+        imgBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
-    private List<GioHang> getDummyData(){
-        List<GioHang> gioHangList = new ArrayList<>();
+    private void getGioHang() {
 
-        for (int i = 0; i< 10; i++){
-            GioHang gioHang = new GioHang();
-            List<String> listAnh = new ArrayList<>();
-            listAnh.add(new String("https://cdn.tgdd.vn/Products/Images/44/231244/macbook-air-m1-2020-gold-600x600.jpg"));
-//            gioHang.setAnhSanPham(listAnh);
-//            gioHang.setTenSanPham("Macbook Pro");
-//            gioHang.setGiaSanPham(2000000000);
-            gioHang.setSoLuong(99);
-
-            gioHangList.add(gioHang);
-        }
-        return gioHangList;
+        GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
+        String userId = sharedPreferencesManager.getUserId();
+        Call<List<GioHang>> getGioHang = gioHangRetrofit.getGioHangByIDAccount(userId);
+        getGioHang.enqueue(new Callback<List<GioHang>>() {
+            @Override
+            public void onResponse(Call<List<GioHang>> call, Response<List<GioHang>> response) {
+                listGioHang = response.body();
+                adapter = new GioHangAdapter(listGioHang , getApplicationContext());
+                agh_recyclerView.setAdapter(adapter);
+                adapter.setOnTotalPriceChangedListener(new GioHangAdapter.OnTotalPriceChangedListener() {
+                    @Override
+                    public void onTotalPriceChanged(double totalPrice) {
+                        // Cập nhật TextView với tổng tiền mới
+                        tvTongTien.setText(String.format("%,.0f", totalPrice) + "₫");
+                    }
+                });
+            }
+            @Override
+            public void onFailure(Call<List<GioHang>> call, Throwable t) {
+            }
+        });
     }
 }

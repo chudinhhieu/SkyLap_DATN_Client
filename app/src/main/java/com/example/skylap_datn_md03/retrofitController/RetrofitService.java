@@ -10,7 +10,7 @@ public class RetrofitService {
 
     public  Gson gson = new GsonBuilder().setLenient().create();
     public  Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://192.168.1.16:3000/")
+            .baseUrl("https://skylab-datn-server.onrender.com/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 }

@@ -80,7 +80,7 @@
                 />
             <EditText
                 android:id="@+id/bssp_ip_soLuong"
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:gravity="center"
                 android:layout_gravity="center_vertical"
