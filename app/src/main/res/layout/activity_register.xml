@@ -166,25 +166,12 @@
             android:id="@+id/rg_btn_login_google"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginEnd="30dp"
             android:background="@drawable/border_width_button"
             android:gravity="center">
             <ImageView
                 android:layout_width="25dp"
                 android:layout_height="25dp"
                 android:src="@drawable/ic_google"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/rg_btn_login_facebook"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/border_width_button"
-            android:gravity="center">
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/ic_facebook"
                 />
         </LinearLayout>
     </LinearLayout>

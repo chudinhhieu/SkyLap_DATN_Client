@@ -69,7 +69,7 @@
                         />
                     <TextView
                         android:id="@+id/asp_tv_slide"
-                        android:layout_width="45dp"
+                        android:layout_width="60dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="top|right"
                         android:layout_marginTop="5dp"

@@ -27,11 +27,26 @@ public class GioHangActivity extends AppCompatActivity {
         agh_recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
+        List<GioHang> list = getDummyData();
 
-
-
+        adapter = new GioHangAdapter(list , getApplicationContext());
         agh_recyclerView.setAdapter(adapter);
 
     }
+    private List<GioHang> getDummyData(){
+        List<GioHang> gioHangList = new ArrayList<>();
 
+        for (int i = 0; i< 10; i++){
+            GioHang gioHang = new GioHang();
+            List<String> listAnh = new ArrayList<>();
+            listAnh.add(new String("https://cdn.tgdd.vn/Products/Images/44/231244/macbook-air-m1-2020-gold-600x600.jpg"));
+            gioHang.setAnhSanPham(listAnh);
+            gioHang.setTenSanPham("Macbook Pro");
+            gioHang.setGiaSanPham(2000000000);
+            gioHang.setSoLuong(99);
+
+            gioHangList.add(gioHang);
+        }
+        return gioHangList;
+    }
 }

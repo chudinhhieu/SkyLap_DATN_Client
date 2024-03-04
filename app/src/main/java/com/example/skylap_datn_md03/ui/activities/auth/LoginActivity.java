@@ -20,6 +20,10 @@ import android.widget.Toast;
 
 import com.example.skylap_datn_md03.MainActivity;
 import com.example.skylap_datn_md03.R;
+import com.example.skylap_datn_md03.data.models.Account;
+import com.example.skylap_datn_md03.data.models.MyAuth;
+import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
+import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -36,6 +40,10 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -54,7 +62,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final int RQ_CODE_GG = 20;
     private static final String TAG_ERROR_AUTH = "Error Auth";
-
+    private AccountRetrofit accountRetrofit;
+    private RetrofitService retrofitService;
+    private MyAuth myAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +75,8 @@ public class LoginActivity extends AppCompatActivity {
         }
         setContentView(R.layout.activity_login);
         initView();
-
+        retrofitService = new RetrofitService();
+        fillDataToInput();
 //        Kết nối firebase
         firebaseAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
@@ -101,8 +112,31 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CustomToast.showToast(LoginActivity.this, "Tài khoản hoặc mật khẩu " +
-                        "không chính xác. Vui lòng thử lại.");
+                Account account = new Account(ipUsername.getText().toString().trim(),ipPassword.getText().toString().trim());
+                accountRetrofit = retrofitService.retrofit.create(AccountRetrofit.class);
+                Call<MyAuth> login = accountRetrofit.signIn(account);
+                login.enqueue(new Callback<MyAuth>() {
+                    @Override
+                    public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
+                        myAuth = response.body();
+                        if (myAuth != null){
+                            if (myAuth.isSuccess()){
+                                CustomToast.showToast(LoginActivity.this, myAuth.getMessage());
+                                saveUserIdToSharedPreferences(myAuth.getValue());
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }else {
+                                CustomToast.showToast(LoginActivity.this, myAuth.getMessage());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<MyAuth> call, Throwable t) {
+                        Log.e("Retrofit Failure", "Lỗi: " + t.getMessage());
+                        t.printStackTrace();
+                    }
+                });
             }
         });
 //        Sự kiện ấn vào icon google và thực hiện xử lý chức năng đăng nhập bằng google
@@ -131,6 +165,19 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void fillDataToInput() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            String username = intent.getStringExtra("username");
+            String password = intent.getStringExtra("password");
+            if (username != null && password != null && !username.isEmpty() && !password.isEmpty()) {
+                ipUsername.setText(username);
+                ipPassword.setText(password);
+                btnLogin.setEnabled(true);
+            }
+        }
     }
 
     //    Kiểm tra người dùng đã từng đăng nhập chưa
