@@ -25,9 +25,9 @@
             android:layout_height="wrap_content"
             app:tabMode="fixed"
             app:tabGravity="fill"
-            app:tabTextColor="@color/white"
-            app:tabSelectedTextColor="@color/white"
-            app:tabIndicatorColor="@color/white" />
+            app:tabTextColor="@color/black"
+            app:tabSelectedTextColor="@color/main"
+            app:tabIndicatorColor="@color/colorMain" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

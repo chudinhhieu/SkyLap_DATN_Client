@@ -58,6 +58,16 @@ public class SanPhamActivity extends AppCompatActivity {
                 startActivity(new Intent(SanPhamActivity.this,GioHangActivity.class));
             }
         });
+
+        tvXemDG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SanPhamActivity.this, DanhGiaActivity.class);
+                intent.putExtra("idSanPham", sanPham.get_id());
+
+                startActivity(intent);
+            }
+        });
     }
 
     private void getSanPham() {
