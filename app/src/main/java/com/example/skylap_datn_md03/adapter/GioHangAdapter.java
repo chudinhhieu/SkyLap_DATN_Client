@@ -40,9 +40,9 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
         GioHang gioHang = list.get(position);
 
         if (gioHang == null) return;
-        Picasso.get().load(gioHang.getAnhSanPham().get(0)).into(holder.img_sanpham_giohang);
-        holder.tv_TenSP_giohang.setText("" + gioHang.getTenSanPham());
-        holder.tv_GiaSP_giohang.setText(formatPrice(gioHang.getGiaSanPham()));
+//        Picasso.get().load(gioHang.getAnhSanPham().get(0)).into(holder.img_sanpham_giohang);
+//        holder.tv_TenSP_giohang.setText("" + gioHang.getTenSanPham());
+//        holder.tv_GiaSP_giohang.setText(formatPrice(gioHang.getGiaSanPham()));
         holder.tv_SoLuong_giohang.setText("" + gioHang.getSoLuong());
 
     }
