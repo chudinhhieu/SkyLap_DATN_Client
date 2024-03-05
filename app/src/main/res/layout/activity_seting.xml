@@ -13,7 +13,7 @@
         android:background="#0093EF">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/seting_img_chat"
             android:layout_width="27dp"
             android:layout_height="27dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,7 +43,6 @@
 
 
         <TextView
-            android:id="@+id/user_tv_ttcn"
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:layout_marginTop="3dp"
@@ -54,7 +53,6 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/user_tv_donmua"
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:layout_marginTop="73dp"
@@ -65,7 +63,6 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/user_tv_dathich"
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:layout_marginTop="143dp"
@@ -76,7 +73,6 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/user_tv_cskh"
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:layout_marginTop="213dp"
@@ -87,7 +83,6 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/user_tv_danhgia"
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:layout_marginTop="283dp"
@@ -98,7 +93,6 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
-            android:id="@+id/user_tv_dangxuat"
             android:layout_width="match_parent"
             android:layout_height="67dp"
             android:layout_marginTop="353dp"
@@ -180,6 +174,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
+            android:id="@+id/seting_tv_tltk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="76dp"
@@ -195,6 +190,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
+            android:id="@+id/seting_tv_thongbao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="76dp"
@@ -210,11 +206,12 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
+            android:id="@+id/seting_tv_ngonngu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="76dp"
             android:layout_marginTop="160dp"
-            android:text="Ngôn ngữ/ Language"
+            android:text="Ngôn ngữ/Language"
             android:textColor="#F7801A"
             android:textSize="19dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -225,6 +222,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
+            android:id="@+id/seting_tv_cskh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="76dp"
@@ -240,6 +238,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
+            android:id="@+id/seting_tv_infor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="76dp"
@@ -255,6 +254,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <TextView
+            android:id="@+id/seting_tv_huytk"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="76dp"
