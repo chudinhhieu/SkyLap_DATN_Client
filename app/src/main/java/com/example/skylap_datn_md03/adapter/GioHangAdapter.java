@@ -136,7 +136,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     // Cập nhật số lượng mới vào EditText
                     holder.ipSoLuong.setText(String.valueOf(currentSL));
                     if (onTotalPriceChangedListener != null && ischecked) {
-                        ischecked = true;
                         onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
                     }
                 } else {
@@ -150,14 +149,25 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
             @Override
             public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
                 try {
+                    if((dest.toString() + source.toString()).isEmpty()){
+                        if (onTotalPriceChangedListener != null) {
+                            onTotalPriceChangedListener.onTotalPriceChanged(0);
+                        }
+                    }
                     // Nếu người dùng nhập giá trị mới
                     int input = Integer.parseInt(dest.toString() + source.toString());
 
                     // Kiểm tra xem giá trị mới có nằm trong khoảng từ 1 đến max không
                     if (input >= min && input <= maxSL) {
+                        if (onTotalPriceChangedListener != null) {
+                            onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * input);
+                        }
                         return null; // Giá trị hợp lệ, không có thay đổi
                     } else {
                         CustomToast.showToast(context, "Chỉ nhập số lượng trong khoảng từ 1 đến " + maxSL);
+                        if (onTotalPriceChangedListener != null) {
+                            onTotalPriceChangedListener.onTotalPriceChanged(0);
+                        }
                     }
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
