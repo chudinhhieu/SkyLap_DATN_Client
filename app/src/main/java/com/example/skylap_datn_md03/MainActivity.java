@@ -86,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.menu_nav_history) {
                     // Add your logic for history here
                 } else if (item.getItemId() == R.id.menu_nav_notification) {
-                    Intent intent = new Intent(MainActivity.this, DatHangActivity.class);
-                    startActivity(intent);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ThongBaoFragment()).commit();
                 } else if (item.getItemId() == R.id.menu_nav_account) {
                     // Add your logic for account here
                 }

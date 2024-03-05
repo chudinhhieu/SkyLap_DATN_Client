@@ -2,8 +2,6 @@ package com.example.skylap_datn_md03.ui.activities;
 
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager2.widget.ViewPager2;
@@ -12,7 +10,7 @@ import com.example.skylap_datn_md03.adapter.DanhGiaTabsAdapter;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class DanhGiaActivity extends AppCompatActivity {
+public class QuanLyDanhGiaActivity extends AppCompatActivity {
 
     private TabLayout tabLayout;
     private ViewPager2 viewPager;

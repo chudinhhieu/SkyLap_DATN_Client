@@ -50,7 +50,7 @@
             android:exported="true">
 
         </activity>
-        <activity android:name=".ui.activities.DanhGiaActivity"
+        <activity android:name=".ui.activities.QuanLyDanhGiaActivity"
             android:exported="true">
 
         </activity>
