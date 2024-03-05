@@ -9,6 +9,7 @@ public class GioHang {
     private int soLuong;
     private boolean Checked;
 
+
     public GioHang() {
     }
 
