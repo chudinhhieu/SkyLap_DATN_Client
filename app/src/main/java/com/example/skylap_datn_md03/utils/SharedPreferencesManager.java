@@ -28,4 +28,9 @@ public class SharedPreferencesManager {
     public String getUserId() {
         return sharedPreferences.getString(KEY_USER_ID, "");
     }
+
+    public void clearUserId() {
+        editor.remove(KEY_USER_ID);
+        editor.apply();
+    }
 }

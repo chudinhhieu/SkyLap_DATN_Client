@@ -32,7 +32,6 @@ public class GioHangActivity extends AppCompatActivity {
     private TextView tvTongTien;
     private GioHangAdapter adapter ;
     private ImageView imgBack;
-    GioHangRetrofit gioHangRetrofit;
     RetrofitService retrofitService;
     SharedPreferencesManager sharedPreferencesManager;
     List<GioHang> listGioHang;
@@ -55,7 +54,6 @@ public class GioHangActivity extends AppCompatActivity {
         });
     }
     private void getGioHang() {
-
         GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
         String userId = sharedPreferencesManager.getUserId();
         Call<List<GioHang>> getGioHang = gioHangRetrofit.getGioHangByIDAccount(userId);

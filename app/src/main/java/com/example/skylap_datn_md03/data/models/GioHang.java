@@ -19,6 +19,10 @@ public class GioHang {
         this.soLuong = soLuong;
     }
 
+    public GioHang(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
     public boolean isChecked() {
         return Checked;
     }

@@ -23,10 +23,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.SanPham;
+import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.ui.activities.SanPhamActivity;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
+import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
@@ -110,9 +112,10 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     // Cập nhật số lượng mới vào EditText
                     holder.ipSoLuong.setText(String.valueOf(currentSL));
                     if (onTotalPriceChangedListener != null && ischecked) {
-                        ischecked = true;
                         onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
                     }
+                    holder.suaSoLuong(gioHang.get_id(),new GioHang(Integer.parseInt(holder.ipSoLuong.getText().toString().trim())));
+
                 } else {
                     CustomToast.showToast(context, "Số lượng tối đa là " + maxSL);
                 }
@@ -138,6 +141,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     if (onTotalPriceChangedListener != null && ischecked) {
                         onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
                     }
+                    holder.suaSoLuong(gioHang.get_id(),new GioHang(Integer.parseInt(holder.ipSoLuong.getText().toString().trim())));
                 } else {
                     CustomToast.showToast(context, "Số lượng tối thiểu là 1");
                 }
@@ -153,7 +157,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     int input = Integer.parseInt(dest.toString() + source.toString());
                     // Kiểm tra xem giá trị mới có nằm trong khoảng từ 1 đến max không
                     if (input >= min && input <= maxSL) {
-
                         return null; // Giá trị hợp lệ, không có thay đổi
                     } else {
                         CustomToast.showToast(context, "Chỉ nhập số lượng trong khoảng từ 1 đến " + maxSL);
@@ -225,6 +228,21 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
             ipSoLuong = itemView.findViewById(R.id.item_gh_ip_soLuong);
             tvTenSP = itemView.findViewById(R.id.item_gh_ten);
             tvGiaSP = itemView.findViewById(R.id.item_gh_gia);
+
+        }
+        private void suaSoLuong(String id,GioHang gioHang) {
+            GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
+            Call<GioHang> suaSoLuong = gioHangRetrofit.suaSoLuong(id, gioHang);
+            suaSoLuong.enqueue(new Callback<GioHang>() {
+                @Override
+                public void onResponse(Call<GioHang> call, Response<GioHang> response) {
+                }
+
+                @Override
+                public void onFailure(Call<GioHang> call, Throwable t) {
+
+                }
+            });
         }
     }
 }

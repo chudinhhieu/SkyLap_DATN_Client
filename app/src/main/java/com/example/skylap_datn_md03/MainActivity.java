@@ -26,6 +26,7 @@ import com.example.skylap_datn_md03.adapter.SlideAdapter;
 import com.example.skylap_datn_md03.data.models.HangSX;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.fragment.HomeFragment;
+import com.example.skylap_datn_md03.fragment.ThongBaoFragment;
 import com.example.skylap_datn_md03.ui.activities.DatHangActivity;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -85,8 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.menu_nav_history) {
                     // Add your logic for history here
                 } else if (item.getItemId() == R.id.menu_nav_notification) {
-                    Intent intent = new Intent(MainActivity.this, DatHangActivity.class);
-                    startActivity(intent);
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ThongBaoFragment()).commit();
                 } else if (item.getItemId() == R.id.menu_nav_account) {
                     // Add your logic for account here
                 }

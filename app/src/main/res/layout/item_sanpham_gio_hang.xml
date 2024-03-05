@@ -84,6 +84,7 @@
                     android:id="@+id/item_gh_ip_soLuong"
                     android:layout_width="50dp"
                     android:layout_height="30dp"
+                    android:enabled="false"
                     android:layout_gravity="center_vertical"
                     android:layout_marginHorizontal="5dp"
                     android:background="@drawable/border_width_button"

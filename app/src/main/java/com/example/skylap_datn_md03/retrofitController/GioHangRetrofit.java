@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface GioHangRetrofit {
@@ -19,5 +20,6 @@ public interface GioHangRetrofit {
     //    Thêm giỏ hàng
     @POST("api/gioHang/add")
     Call<MyAuth> themGioHang(@Body GioHang gioHang);
-
+    @PUT("api/gioHang/edit-soLuong/{id}")
+    Call<GioHang> suaSoLuong(@Path("id") String id,@Body GioHang gioHang);
 }
