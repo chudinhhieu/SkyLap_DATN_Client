@@ -37,6 +37,8 @@ import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -59,6 +61,8 @@ public class SanPhamActivity extends AppCompatActivity {
 
     private SharedPreferencesManager sharedPreferencesManager;
     private MyAuth myAuth;
+    public static final int start = 1;
+    private ArrayList<GioHang> listSend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +76,15 @@ public class SanPhamActivity extends AppCompatActivity {
         btn_muangay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SanPhamActivity.this, DatHangActivity.class));
+                listSend = new ArrayList<>();
+                String userId = sharedPreferencesManager.getUserId();
+                GioHang gioHang = new GioHang(sanPham.get_id(),userId,start);
+                listSend.add(gioHang);
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList("listData", listSend);
+                Intent intent = new Intent(SanPhamActivity.this, DatHangActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
         imgGioHang.setOnClickListener(new View.OnClickListener() {
