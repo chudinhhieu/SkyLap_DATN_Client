@@ -3,17 +3,15 @@ package com.example.skylap_datn_md03.fragment;
 import static android.util.Log.d;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
-
-import android.os.Handler;
-import android.os.Looper;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.adapter.HangSanPhamAdapter;
