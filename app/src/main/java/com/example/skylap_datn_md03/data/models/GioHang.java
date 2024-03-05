@@ -14,6 +14,17 @@ public class GioHang implements Parcelable {
     public GioHang() {
     }
 
+    @Override
+    public String toString() {
+        return "GioHang{" +
+                "_id='" + _id + '\'' +
+                ", idSanPham='" + idSanPham + '\'' +
+                ", idAccount='" + idAccount + '\'' +
+                ", soLuong=" + soLuong +
+                ", isChecked=" + isChecked +
+                '}';
+    }
+
     public GioHang(String idSanPham, String idAccount, int soLuong) {
         this.idSanPham = idSanPham;
         this.idAccount = idAccount;

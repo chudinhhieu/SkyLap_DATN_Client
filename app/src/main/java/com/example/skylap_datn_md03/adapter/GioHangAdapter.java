@@ -49,7 +49,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
 
     // Interface để thông báo sự kiện khi checkbox thay đổi
     public interface OnTotalPriceChangedListener {
-        void onTotalPriceChanged(double totalPrice);
+        void onTotalPriceChanged(double totalPrice, GioHang gioHang);
     }
 
 
@@ -111,7 +111,9 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     holder.ipSoLuong.setText(String.valueOf(currentSL));
                     if (onTotalPriceChangedListener != null && ischecked) {
                         ischecked = true;
-                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
+                        onTotalPriceChangedListener.onTotalPriceChanged(
+                                sanPham.getGiaTien() *
+                                        Integer.parseInt(holder.ipSoLuong.getText().toString().trim()), gioHang);
                     }
                 } else {
                     CustomToast.showToast(context, "Số lượng tối đa là " + maxSL);
@@ -136,7 +138,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     // Cập nhật số lượng mới vào EditText
                     holder.ipSoLuong.setText(String.valueOf(currentSL));
                     if (onTotalPriceChangedListener != null && ischecked) {
-                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
+                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()), gioHang);
                     }
                 } else {
                     CustomToast.showToast(context, "Số lượng tối thiểu là 1");
@@ -188,12 +190,12 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                 if (isChecked) {
                     if (onTotalPriceChangedListener != null) {
                         ischecked = true;
-                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
+                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()),gioHang);
                     }
                 } else {
                     if (onTotalPriceChangedListener != null) {
                         ischecked = false;
-                        onTotalPriceChangedListener.onTotalPriceChanged(0);
+                        onTotalPriceChangedListener.onTotalPriceChanged(0,new GioHang());
                     }
                 }
                 notifyDataSetChanged();
