@@ -51,7 +51,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
 
     // Interface để thông báo sự kiện khi checkbox thay đổi
     public interface OnTotalPriceChangedListener {
-        void onTotalPriceChanged(double totalPrice);
+        void onTotalPriceChanged(double totalPrice, GioHang gioHang);
     }
 
 
@@ -112,7 +112,14 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     // Cập nhật số lượng mới vào EditText
                     holder.ipSoLuong.setText(String.valueOf(currentSL));
                     if (onTotalPriceChangedListener != null && ischecked) {
+<<<<<<< HEAD
                         onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
+=======
+                        ischecked = true;
+                        onTotalPriceChangedListener.onTotalPriceChanged(
+                                sanPham.getGiaTien() *
+                                        Integer.parseInt(holder.ipSoLuong.getText().toString().trim()), gioHang);
+>>>>>>> cachung
                     }
                     holder.suaSoLuong(gioHang.get_id(),new GioHang(Integer.parseInt(holder.ipSoLuong.getText().toString().trim())));
 
@@ -139,7 +146,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     // Cập nhật số lượng mới vào EditText
                     holder.ipSoLuong.setText(String.valueOf(currentSL));
                     if (onTotalPriceChangedListener != null && ischecked) {
-                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
+                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()), gioHang);
                     }
                     holder.suaSoLuong(gioHang.get_id(),new GioHang(Integer.parseInt(holder.ipSoLuong.getText().toString().trim())));
                 } else {
@@ -191,12 +198,12 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                 if (isChecked) {
                     if (onTotalPriceChangedListener != null) {
                         ischecked = true;
-                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
+                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()),gioHang);
                     }
                 } else {
                     if (onTotalPriceChangedListener != null) {
                         ischecked = false;
-                        onTotalPriceChangedListener.onTotalPriceChanged(0);
+                        onTotalPriceChangedListener.onTotalPriceChanged(0,new GioHang());
                     }
                 }
                 notifyDataSetChanged();

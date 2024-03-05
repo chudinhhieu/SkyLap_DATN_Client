@@ -84,13 +84,11 @@
             android:background="@color/main"
             android:gravity="center"
             android:layout_weight="1">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:textColor="@color/white"
-                android:textSize="19sp"
                 android:text="Mua hàng"
-                android:textStyle="bold"
                 android:id="@+id/agh_tv_muahang"/>
         </LinearLayout>
     </LinearLayout>

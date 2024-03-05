@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#efefef"
-    tools:context=".DatHangActivity">
+    tools:context=".ui.activities.DatHangActivity">
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/datHang_toolBar"
         android:background="@color/main"
@@ -20,6 +20,7 @@
               android:layout_gravity="center"
               android:gravity="center">
                       <ImageView
+                          android:id="@+id/datHang_imgBack"
                           android:layout_width="0dp"
                           android:layout_weight="1"
                           android:background="@drawable/dr_back_white"
@@ -101,6 +102,7 @@
         android:id="@+id/datHang_rcv_listProduct"
         android:layout_below="@id/datHang_L1"
         android:background="@color/white"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_marginVertical="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
@@ -121,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
-                android:text="10%"
+                android:text="null"
                 android:layout_width="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_height="wrap_content"/>
@@ -149,12 +151,13 @@
                         android:textColor="@color/black"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
-                    <TextView
+                    <Spinner
+                        android:id="@+id/datHang_spinner_vanChuyen"
                         android:text="Nhanh"
                         android:textSize="13dp"
                         android:paddingEnd="10dp"
                         android:drawableEnd="@drawable/dr_more"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
                     <TextView
                         android:textSize="10dp"
@@ -162,10 +165,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
                 </LinearLayout>
+                <ProgressBar
+                    android:id="@+id/datHang_loading_giaTien"
+                    android:layout_width="0dp"
+                    android:visibility="gone"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"/>
+
                 <TextView
+                    android:id="@+id/datHang_txt_giaVanChuyen"
                     android:maxLines="1"
-                    android:text="12.190.000₫"
-                    android:textSize="20dp"
+                    android:gravity="end"
                     android:layout_gravity="center"
                     android:autoSizeTextType="uniform"
                     android:layout_width="0dp"
@@ -192,9 +202,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"/>
                 <TextView
-                    android:text="12.190.000₫"
+                    android:id="@+id/datHang_tongTienVanChuyen"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="end"
                     android:layout_gravity="center"
                     android:autoSizeTextType="uniform"
                     android:textSize="20dp"
@@ -230,11 +240,12 @@
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
-            <TextView
+            <Spinner
+                android:id="@+id/datHang_spinner_thanhToan"
                 android:text="Thanh toán khi nhận hàng"
                 android:textColor="@color/red"
                 android:drawableEnd="@drawable/dr_more"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:textSize="14dp"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -254,7 +265,12 @@
                 android:drawablePadding="5dp"
                 android:textColor="@color/black"
                 android:drawableStart="@drawable/dr_detail"/>
+            <ProgressBar
+                android:id="@+id/datHang_Loading_chiTietThanhToan"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"/>
             <TableLayout
+                android:id="@+id/datHang_view_chiTietThanhToan"
                 android:layout_width="match_parent"
                 android:weightSum="2"
                 android:layout_height="wrap_content">
@@ -264,7 +280,7 @@
                         android:layout_weight="1"
                         android:layout_width="0dp"/>
                     <TextView
-                        android:text="12.190.000₫"
+                        android:id="@+id/datHang_txt_tongTienHang"
                         android:gravity="end|center"
                         android:maxLines="1"
                         android:autoSizeTextType="uniform"
@@ -277,7 +293,7 @@
                         android:layout_weight="1"
                         android:layout_width="0dp"/>
                     <TextView
-                        android:text="112.000₫"
+                        android:id="@+id/datHang_tongTienPhiVanChuyen"
                         android:gravity="end|center"
                         android:maxLines="1"
                         android:autoSizeTextType="uniform"
@@ -292,7 +308,7 @@
                         android:layout_weight="1"
                         android:layout_width="0dp"/>
                     <TextView
-                        android:text="12.340.000₫"
+                        android:id="@+id/datHang_txtTongThanhToan_1"
                         android:gravity="end|center"
                         android:maxLines="1"
                         android:textSize="20dp"
@@ -327,7 +343,7 @@
                         android:maxLines="1"
                         android:text="Tổng thanh toán"/>
                     <TextView
-                        android:text="12.190.000₫"
+                        android:id="@+id/datHang_txtTongThanhToan_2"
                         android:gravity="center"
                         android:textColor="@color/red"
                         android:maxLines="1"
