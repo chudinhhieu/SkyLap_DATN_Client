@@ -31,21 +31,17 @@ public class GioHang implements Parcelable {
         this.soLuong = soLuong;
     }
 
-<<<<<<< HEAD
     public GioHang(int soLuong) {
         this.soLuong = soLuong;
     }
 
-    public boolean isChecked() {
-        return Checked;
-=======
+
     protected GioHang(Parcel in) {
         _id = in.readString();
         idSanPham = in.readString();
         idAccount = in.readString();
         soLuong = in.readInt();
         isChecked = in.readByte() != 0;
->>>>>>> cachung
     }
 
     public static final Creator<GioHang> CREATOR = new Creator<GioHang>() {
