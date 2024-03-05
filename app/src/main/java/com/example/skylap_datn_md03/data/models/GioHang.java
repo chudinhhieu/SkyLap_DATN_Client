@@ -7,6 +7,7 @@ public class GioHang {
     private String idSanPham;
     private String idAccount;
     private int soLuong;
+    private boolean Checked;
 
     public GioHang() {
     }
@@ -15,6 +16,14 @@ public class GioHang {
         this.idSanPham = idSanPham;
         this.idAccount = idAccount;
         this.soLuong = soLuong;
+    }
+
+    public boolean isChecked() {
+        return Checked;
+    }
+
+    public void setChecked(boolean checked) {
+        Checked = checked;
     }
 
     public String get_id() {

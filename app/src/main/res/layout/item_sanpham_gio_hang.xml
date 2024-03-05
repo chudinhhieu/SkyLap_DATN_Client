@@ -6,19 +6,11 @@
     android:layout_marginBottom="5dp"
     android:paddingVertical="10dp"
     android:elevation="8dp">
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:visibility="visible"/>
     <RelativeLayout
-        android:id="@+id/item_gh_views"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginHorizontal="16dp"
-        android:visibility="gone"
         android:orientation="horizontal">
 
         <CheckBox

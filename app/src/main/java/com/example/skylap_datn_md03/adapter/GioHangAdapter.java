@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -42,6 +43,9 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
     private RetrofitService retrofitService;
     private SanPham sanPham;
     private int maxSL;
+    private boolean ischecked = false;
+    private int lastCheckedPosition = -1;
+
 
     // Interface để thông báo sự kiện khi checkbox thay đổi
     public interface OnTotalPriceChangedListener {
@@ -54,7 +58,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
     public void setOnTotalPriceChangedListener(OnTotalPriceChangedListener listener) {
         this.onTotalPriceChangedListener = listener;
     }
-
 
     public GioHangAdapter(List<GioHang> list, Context context) {
         this.list = list;
@@ -71,7 +74,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
     @Override
     public void onBindViewHolder(@NonNull GioHangAdapter.GioHangViewHolder holder, int position) {
         GioHang gioHang = list.get(position);
-        holder.showProgressBar(); // Hiển thị ProgressBar
+        int index = position;
         holder.ipSoLuong.setText(gioHang.getSoLuong() + "");
         retrofitService = new RetrofitService();
         sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
@@ -84,7 +87,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                 holder.tvGiaSP.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
                 holder.tvTenSP.setText(sanPham.getTenSanPham());
                 Picasso.get().load(sanPham.getAnh().get(0)).into(holder.imgAnhSP);
-                holder.hideProgressBar(); // Ẩn ProgressBar sau khi dữ liệu đã tải xong
             }
 
             @Override
@@ -107,8 +109,9 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
 
                     // Cập nhật số lượng mới vào EditText
                     holder.ipSoLuong.setText(String.valueOf(currentSL));
-                    if (onTotalPriceChangedListener != null) {
-                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien()* Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
+                    if (onTotalPriceChangedListener != null && ischecked) {
+                        ischecked = true;
+                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
                     }
                 } else {
                     CustomToast.showToast(context, "Số lượng tối đa là " + maxSL);
@@ -132,8 +135,9 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
 
                     // Cập nhật số lượng mới vào EditText
                     holder.ipSoLuong.setText(String.valueOf(currentSL));
-                    if (onTotalPriceChangedListener != null) {
-                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien()* Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
+                    if (onTotalPriceChangedListener != null && ischecked) {
+                        ischecked = true;
+                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
                     }
                 } else {
                     CustomToast.showToast(context, "Số lượng tối thiểu là 1");
@@ -165,9 +169,35 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
         };
 // Thiết lập InputFilter cho EditText
         holder.ipSoLuong.setFilters(new InputFilter[]{filter});
-        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (onTotalPriceChangedListener != null) {
-                onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien()* Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
+
+//        Theo dõi trạng thái checkbox
+        holder.checkBox.setOnCheckedChangeListener(null); // Remove previous listener to prevent recursive calls
+
+        holder.checkBox.setChecked(list.get(index).isChecked());
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                for (int i = 0; i < list.size(); i++) {
+                    if (i != index) {
+                        list.get(i).setChecked(false);
+                    }
+                }
+
+                list.get(index).setChecked(isChecked);
+                if (isChecked) {
+                    if (onTotalPriceChangedListener != null) {
+                        ischecked = true;
+                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()));
+                    }
+                } else {
+                    if (onTotalPriceChangedListener != null) {
+                        ischecked = false;
+                        onTotalPriceChangedListener.onTotalPriceChanged(0);
+                    }
+                }
+                notifyDataSetChanged();
             }
         });
     }
@@ -196,18 +226,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
             ipSoLuong = itemView.findViewById(R.id.item_gh_ip_soLuong);
             tvTenSP = itemView.findViewById(R.id.item_gh_ten);
             tvGiaSP = itemView.findViewById(R.id.item_gh_gia);
-            progressBar = itemView.findViewById(R.id.progressBar);
-            views = itemView.findViewById(R.id.item_gh_views);
-        }
-
-        public void showProgressBar() {
-            progressBar.setVisibility(View.VISIBLE);
-            views.setVisibility(View.GONE);
-        }
-
-        public void hideProgressBar() {
-            progressBar.setVisibility(View.GONE);
-            views.setVisibility(View.VISIBLE);
         }
     }
 }
