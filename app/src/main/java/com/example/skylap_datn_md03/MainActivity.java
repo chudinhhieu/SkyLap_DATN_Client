@@ -5,12 +5,16 @@ import static android.util.Log.d;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import android.view.MenuItem;
+
 import android.widget.Button;
+
 
 import com.example.skylap_datn_md03.fragment.HomeFragment;
 import com.example.skylap_datn_md03.fragment.ThongBaoFragment;
@@ -21,7 +25,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import com.google.firebase.auth.FirebaseAuth;
+
 
 public class MainActivity extends AppCompatActivity {
     Button btnLogout;
@@ -31,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private int id_itemSelected = R.id.menu_nav_home;
     private SharedPreferences sharedPreferences;
     private boolean canCommitFragmentTransaction = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,13 +59,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     private void clearSharedPreferences() {
         sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("uid");
         editor.apply();
     }
-    private void unitUI () {
+
+    private void unitUI() {
         sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
         bottomNavigationView = findViewById(R.id.main_bottomnavigation);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
