@@ -5,28 +5,16 @@ import java.util.List;
 public class GioHang {
     private String _id;
     private String idSanPham;
-    private String idNguoiMua;
+    private String idAccount;
     private int soLuong;
-    private boolean trangThai;
-
-    private String tenSanPham;
-    private double giaSanPham;
-    private List<String> anhSanPham;
-
 
     public GioHang() {
     }
 
-    public GioHang(String idSanPham, String idNguoiMua, int soLuong, boolean trangThai,
-                   String tenSanPham, double giaSanPham, List<String> anhSanPham) {
+    public GioHang(String idSanPham, String idAccount, int soLuong) {
         this.idSanPham = idSanPham;
-        this.idNguoiMua = idNguoiMua;
+        this.idAccount = idAccount;
         this.soLuong = soLuong;
-        this.trangThai = trangThai;
-        //
-        this.tenSanPham = tenSanPham;
-        this.giaSanPham = giaSanPham;
-        this.anhSanPham = anhSanPham;
     }
 
     public String get_id() {
@@ -45,12 +33,12 @@ public class GioHang {
         this.idSanPham = idSanPham;
     }
 
-    public String getIdNguoiMua() {
-        return idNguoiMua;
+    public String getIdAccount() {
+        return idAccount;
     }
 
-    public void setIdNguoiMua(String idNguoiMua) {
-        this.idNguoiMua = idNguoiMua;
+    public void setIdAccount(String idAccount) {
+        this.idAccount = idAccount;
     }
 
     public int getSoLuong() {
@@ -59,37 +47,5 @@ public class GioHang {
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
-    }
-
-    public boolean isTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(boolean trangThai) {
-        this.trangThai = trangThai;
-    }
-
-    public String getTenSanPham() {
-        return tenSanPham;
-    }
-
-    public void setTenSanPham(String tenSanPham) {
-        this.tenSanPham = tenSanPham;
-    }
-
-    public double getGiaSanPham() {
-        return giaSanPham;
-    }
-
-    public void setGiaSanPham(double giaSanPham) {
-        this.giaSanPham = giaSanPham;
-    }
-
-    public List<String> getAnhSanPham() {
-        return anhSanPham;
-    }
-
-    public void setAnhSanPham(List<String> anhSanPham) {
-        this.anhSanPham = anhSanPham;
     }
 }

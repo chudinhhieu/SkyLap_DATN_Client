@@ -1,30 +1,20 @@
 package com.example.skylap_datn_md03;
 
-import static android.util.Log.d;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
-import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
-import com.example.skylap_datn_md03.adapter.HangSanPhamAdapter;
-import com.example.skylap_datn_md03.adapter.SanPhamAdapter;
-import com.example.skylap_datn_md03.adapter.SlideAdapter;
-import com.example.skylap_datn_md03.data.models.HangSX;
-import com.example.skylap_datn_md03.data.models.SanPham;
+import android.view.MenuItem;
+
+import android.widget.Button;
+
+
 import com.example.skylap_datn_md03.fragment.HomeFragment;
 import com.example.skylap_datn_md03.ui.activities.DatHangActivity;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
@@ -32,11 +22,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
+
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     Button btnLogout;
@@ -46,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private int id_itemSelected = R.id.menu_nav_home;
     private SharedPreferences sharedPreferences;
     private boolean canCommitFragmentTransaction = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,13 +56,15 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
     private void clearSharedPreferences() {
         sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.remove("uid");
         editor.apply();
     }
-    private void unitUI () {
+
+    private void unitUI() {
         sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
         bottomNavigationView = findViewById(R.id.main_bottomnavigation);
         getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
