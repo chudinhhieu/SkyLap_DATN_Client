@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface MessageRetrofit {
-   @POST("api/message/send")
+   @POST("/api/mess/send")
     Call<Void> CreateMess(@Body Message message);
 
 }

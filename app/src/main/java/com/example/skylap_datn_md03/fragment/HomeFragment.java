@@ -79,7 +79,6 @@ public class HomeFragment extends Fragment {
                 chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
                 String userId = sharedPreferencesManager.getUserId();
                 Call<String> addChat = chatRetrofit.CreateConverSation(userId);
-                d("check", "onClick: " + userId);
                 addChat.enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {

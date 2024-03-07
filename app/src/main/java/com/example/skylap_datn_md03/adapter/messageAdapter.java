@@ -45,9 +45,9 @@ Context context;
     public void onBindViewHolder( messageAdapterViewHolder holder, int position) {
         sharedPreferencesManager = new SharedPreferencesManager(context);
         String userId = sharedPreferencesManager.getUserId();
-        Log.d("id", "onBindViewHolder:" + userId);
         Drawable backgroundSender = ContextCompat.getDrawable(context, R.drawable.custom_message_sender);
         Drawable backgroundPa = ContextCompat.getDrawable(context, R.drawable.custom_message_recipients);
+        Drawable backgroundUnsent = ContextCompat.getDrawable(context, R.drawable.custom_message_unsent);
         RelativeLayout.LayoutParams layoutParamsStart = (RelativeLayout.LayoutParams) holder.message_ativity_item_mess.getLayoutParams();
         RelativeLayout.LayoutParams layoutParamsEnd = (RelativeLayout.LayoutParams) holder.message_ativity_item_mess.getLayoutParams();
 
@@ -60,14 +60,33 @@ Context context;
               layoutParamsEnd.addRule(RelativeLayout.ALIGN_PARENT_END);
               holder.message_ativity_item_mess.setBackground(backgroundSender);
               holder.message_ativity_item_mess.setLayoutParams(layoutParamsEnd);
+
              holder.text_message.setTextColor(Color.WHITE);
+             holder.message_ativity_item_mess.setOnLongClickListener(new View.OnLongClickListener() {
+                 @Override
+                 public boolean onLongClick(View v) {
+                     Log.d("check", "onLongClick: " +  mess.getId());
+                     return true;
+                 }
+             });
           }else {
               layoutParamsStart.addRule(RelativeLayout.ALIGN_PARENT_START);
               holder.message_ativity_item_mess.setBackground(backgroundPa);
               holder.message_ativity_item_mess.setLayoutParams(layoutParamsStart);
-        holder.text_message.setTextColor(Color.BLACK);
+         holder.text_message.setTextColor(Color.BLACK);
           }
-            holder.text_message.setText(mess.getContent());
+
+          if (mess.isThuHoi()){
+              holder.message_ativity_item_mess.setBackground(backgroundUnsent);
+              holder.text_message.setText("unsent message");
+              holder.text_message.setTextColor(Color.GRAY);
+          }else {
+              holder.text_message.setText(mess.getContent());
+          }
+
+
+
+
     }
 
     @Override
