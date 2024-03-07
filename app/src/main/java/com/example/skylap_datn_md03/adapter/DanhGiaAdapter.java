@@ -1,5 +1,6 @@
 package com.example.skylap_datn_md03.adapter;
 
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,25 +33,18 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
 
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
-        DanhGia review = reviews.get(position);
-//        ToDo:
-//        holder.textViewReviewerName.setText(review.get_id());
+//        DanhGia review = reviews.get(position);
+//
+//        holder.textViewReviewerName.setText(review.get_idNguoiMua());
 //        holder.ratingBar.setRating(review.getSoSao());
-//        holder.textViewReviewDate.setText(review.getThoiGianDG());
+//        holder.textViewReviewDate.setText((CharSequence) review.getThoiGianDG());
 //
-//        Picasso.get().load(review.getAnhDG()).placeholder(R.drawable.ic_account_ip).into(holder.imageViewUserAvatar);
+//        Picasso.get().load((Uri) review.getAnhDG()).placeholder(R.drawable.ic_account_ip).into(holder.imageViewUserAvatar);
+//        Picasso.get().load((Uri) review.getAnhDG()).placeholder(R.drawable.anh_mau).into(holder.imageViewLaptop);
 //
-//        Picasso.get().load(review.getAnhDG()).placeholder(R.drawable.ic_placeholder_image).into(holder.imageViewLaptop);
 //        holder.textViewLaptopModel.setText(review.get_idSanPham());
-
-        // Handle Edit Button click here, if necessary
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle edit action, e.g., open an edit review activity or dialog
-            }
-        });
     }
+
 
 
     @Override
@@ -65,7 +59,6 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
         TextView textViewReviewDate;
         ImageView imageViewLaptop;
         TextView textViewLaptopModel;
-        Button editButton;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);
@@ -75,7 +68,6 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
             textViewReviewDate = itemView.findViewById(R.id.textViewReviewDate);
             imageViewLaptop = itemView.findViewById(R.id.imageViewLaptop);
             textViewLaptopModel = itemView.findViewById(R.id.textViewLaptopModel);
-            editButton = itemView.findViewById(R.id.editButton);
         }
     }
 }
