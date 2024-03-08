@@ -49,25 +49,53 @@
         </TableLayout>
     </androidx.appcompat.widget.Toolbar>
 
-    <LinearLayout
-        android:id="@+id/adg_ln_item1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/adg_toolBar"
-        android:padding="16dp">
+   <androidx.cardview.widget.CardView
+       android:id="@+id/cardView"
+       android:layout_below="@id/adg_toolBar"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_margin="4dp"
+       app:cardCornerRadius="8dp"
+       app:cardElevation="4dp"
+       >
+       <LinearLayout
+           android:id="@+id/adg_ln_item1"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:layout_below="@id/adg_toolBar"
+           android:orientation="vertical"
+           android:layout_margin="4dp"
+           android:background="@drawable/circle_background">
+           <LinearLayout
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@color/white"
+               >
+               <ImageView
+                   android:layout_width="100dp"
+                   android:layout_height="100dp"
+                   android:layout_below="@id/adg_toolBar"
+                   android:id="@+id/imgSanPhamDG"
+                   android:src="@drawable/anh_mau"/>
+               <TextView
+                   android:id="@+id/tvSanPhamDG"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="Laptop"
+                   android:textColor="@color/black"
+                   android:textStyle="bold"
+                   android:textSize="16dp"/>
+           </LinearLayout>
+       </LinearLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/adg_view1"/>
-    </LinearLayout>
+   </androidx.cardview.widget.CardView>
     <View
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:id="@+id/adg_ln_item2"
-        android:layout_below="@+id/adg_ln_item1"
+        android:layout_below="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
