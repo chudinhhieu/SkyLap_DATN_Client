@@ -7,17 +7,12 @@ public class DanhGia {
     private String _id;
     private String _idNguoiMua;
     private String _idSanPham;
+    private String danhGiaSanPham;
     private Date thoiGianDG;
     private int soSao;
     private List<String> anhDG;
 
-    public DanhGia(String _idNguoiMua, String _idSanPham, Date thoiGianDG, int soSao, List<String> anhDG) {
-        this._idNguoiMua = _idNguoiMua;
-        this._idSanPham = _idSanPham;
-        this.thoiGianDG = thoiGianDG;
-        this.soSao = soSao;
-        this.anhDG = anhDG;
-    }
+
 
     public DanhGia() {
     }
@@ -44,6 +39,14 @@ public class DanhGia {
 
     public void set_idSanPham(String _idSanPham) {
         this._idSanPham = _idSanPham;
+    }
+
+    public String getDanhGiaSanPham() {
+        return danhGiaSanPham;
+    }
+
+    public void setDanhGiaSanPham(String danhGiaSanPham) {
+        this.danhGiaSanPham = danhGiaSanPham;
     }
 
     public Date getThoiGianDG() {

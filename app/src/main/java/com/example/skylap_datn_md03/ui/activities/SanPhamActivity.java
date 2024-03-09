@@ -105,6 +105,13 @@ public class SanPhamActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        tvXemDG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SanPhamActivity.this, QuanLyDanhGiaActivity.class));
+            }
+        });
     }
 
     private void showBottomSheet(SanPham sanPham) {
