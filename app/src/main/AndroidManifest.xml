@@ -10,24 +10,13 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.SkyLap_DATN_MD03"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.activities.SetingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.SanPhamActivity"
-            android:exported="true"></activity>
-        <activity
-            android:name=".ui.activities.auth.ForgotPasswordActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.auth.RegisterActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ui.activities.auth.LoginActivity"
             android:exported="true">
@@ -38,28 +27,37 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.SetingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.SanPhamActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.auth.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.auth.RegisterActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.GioHangActivity"
-            android:exported="true"></activity>
-
-        <activity android:name=".ui.activities.QLDonHangActivity"
-            android:exported="true">
-
-        </activity>
-        <activity android:name=".ui.activities.QuanLyDanhGiaActivity"
-            android:exported="true">
-
-        </activity>
-        <activity android:name=".ui.activities.MessageAcitvity"
-            android:exported="true">
-
-        </activity>
-        <activity android:name=".ui.activities.DanhGiaActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.QLDonHangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.DanhGiaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.QuanLyDanhGiaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.MessageAcitvity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.DatHangActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
