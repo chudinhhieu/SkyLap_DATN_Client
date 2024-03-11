@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -18,10 +19,12 @@ import android.widget.TextView;
 
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.adapter.GioHangAdapter2;
+import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
+import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 
 import java.util.ArrayList;
 
@@ -51,12 +54,19 @@ public class DatHangActivity extends AppCompatActivity implements View.OnClickLi
     private TableLayout viewChiTietThanhToan;
     private double giaVC = 0;
     private ImageView img_back;
+    private Button btn_datHang;
+    private DonHang donHang;
+    private String idUser;
+    private SharedPreferencesManager sharedPreferencesManager;
+    private long tongTien;
+    private boolean trangThaiThanhToan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dat_hang);
         unitUI();
+        donHang = new DonHang();
         adapterConfig();
         Bundle bundle = getIntent().getExtras();
         if (bundle == null){
@@ -69,6 +79,8 @@ public class DatHangActivity extends AppCompatActivity implements View.OnClickLi
         spVanChuyen.setAdapter(adaperVanChuyen);
         spThanhToan.setAdapter(adaperThanhToan);
         //
+
+        //
         spVanChuyen.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -78,6 +90,18 @@ public class DatHangActivity extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 tinhTienVanChuyen(VAN_CHUYEN_THUONG, gioHang);
+            }
+        });
+        spThanhToan.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) trangThaiThanhToan = false;
+                else  trangThaiThanhToan = true;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                trangThaiThanhToan = false;
             }
         });
 
@@ -102,6 +126,10 @@ public class DatHangActivity extends AppCompatActivity implements View.OnClickLi
         txt_totalPay = findViewById(R.id.datHang_txtTongThanhToan_2);
         img_back = findViewById(R.id.datHang_imgBack);
         img_back.setOnClickListener(this);
+        btn_datHang = findViewById(R.id.datHang_btn_datHang);
+        btn_datHang.setOnClickListener(this);
+        sharedPreferencesManager = new SharedPreferencesManager(this);
+        idUser = sharedPreferencesManager.getUserId();
 
 
     }
@@ -173,6 +201,7 @@ public class DatHangActivity extends AppCompatActivity implements View.OnClickLi
     }
     void updateTotalPay (double totalMoney){
         txt_totalPay.setText(String.format("%,.0f", totalMoney)+"₫");
+        tongTien = (long) totalMoney;
     }
 
     @Override
@@ -180,6 +209,21 @@ public class DatHangActivity extends AppCompatActivity implements View.OnClickLi
         if (v.getId() == R.id.datHang_imgBack){
            finish();
         }
-
+        else if (v.getId() == R.id.datHang_btn_datHang){
+            donHang.setIdSanPham(gioHang.getIdSanPham());
+            donHang.setIdAccount(idUser);
+            donHang.setSoLuong(gioHang.getSoLuong());
+            donHang.setTongTien(tongTien);
+            donHang.setThanhToan(trangThaiThanhToan);
+            donHang.setTrangThai("Chờ xác nhận");
+            datHangListener(donHang);
+        }
+    }
+    void datHangListener(DonHang donHang){
+        Intent intent = new Intent(this, DatHangThanhCongActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("donHang", donHang);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

@@ -17,6 +17,8 @@ public interface SanPhamRetrofit {
     // Lấy sản phẩm theo id
     @GET("api/sanPham/{id}")
     Call<SanPham> getSanPhamByID(@Path("id") String id);
+    @GET("api/sanPham/cpu/{cpu}")
+    Call<List<SanPham>> getListSanPhamByIdNhaSX(@Path("idNhaSX") String cpu);
 
 
 
