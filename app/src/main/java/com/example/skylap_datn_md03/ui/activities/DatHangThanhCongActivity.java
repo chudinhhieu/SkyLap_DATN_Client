@@ -49,7 +49,6 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
         setContentView(R.layout.activity_dat_hang_thanh_cong);
         unitUI();
         getDonHang();
-        getListProduct(donHang.getIdSanPham());
         createDonHang();
     }
     void unitUI(){
@@ -64,12 +63,14 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
         txtDonMua.setOnClickListener(this);
         view = findViewById(R.id.datHangTC_view);
         loading = findViewById(R.id.datHangTC_loading);
+        retrofitService = new RetrofitService();
         showLoading();
     }
     void getDonHang (){
         intent = getIntent();
         Bundle bundle = intent.getExtras();
         donHang = (DonHang) bundle.getSerializable("donHang");
+        getListProduct(donHang.getIdSanPham());
     }
     @Override
     public void onClick(View v) {
@@ -97,6 +98,7 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
     }
 
     void getListProduct (String idSP){
+        sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
         Call<SanPham> getSP = sanPhamRetrofit.getSanPhamByID(idSP);
         getSP.enqueue(new Callback<SanPham>() {
             @Override

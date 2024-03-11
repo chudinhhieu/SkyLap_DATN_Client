@@ -120,4 +120,21 @@ public class DonHang implements Serializable {
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
     }
+
+    @Override
+    public String toString() {
+        return "DonHang{" +
+                "_id='" + _id + '\'' +
+                ", trangThai='" + trangThai + '\'' +
+                ", idSanPham='" + idSanPham + '\'' +
+                ", idAccount='" + idAccount + '\'' +
+                ", idKhuyenMai='" + idKhuyenMai + '\'' +
+                ", thoiGianMua=" + thoiGianMua +
+                ", idPttt='" + idPttt + '\'' +
+                ", soLuong=" + soLuong +
+                ", tongTien=" + tongTien +
+                ", ghiChu='" + ghiChu + '\'' +
+                ", thanhToan=" + thanhToan +
+                '}';
+    }
 }
