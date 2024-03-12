@@ -46,10 +46,10 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
             if (sanPham == null) return;
             //set value
             Picasso.get().load(sanPham.getAnhSanPham()).into(holder.img_anh);
-            holder.txt_display.setText(sanPham.getDisplay());
+            holder.txt_display.setText("Display: "+sanPham.getDisplay());
             holder.txt_cpu.setText("CPU: "+sanPham.getCpu());
             holder.txt_card.setText("Card: "+sanPham.getGpu());
-            holder.txt_name.setText("Display: "+sanPham.getTenSanPham());
+            holder.txt_name.setText(sanPham.getTenSanPham());
             holder.txt_price.setText(formatPrice(sanPham.getGiaTien())+"₫");
             holder.txt_sold.setText("Đã bán ");
         view.setOnClickListener(new View.OnClickListener() {
