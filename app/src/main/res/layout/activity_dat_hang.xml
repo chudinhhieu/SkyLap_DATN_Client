@@ -353,6 +353,7 @@
                         android:autoSizeTextType="uniform"/>
                 </LinearLayout>
                 <Button
+                    android:id="@+id/datHang_btn_datHang"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

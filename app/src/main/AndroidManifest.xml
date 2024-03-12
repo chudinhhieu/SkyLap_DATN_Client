@@ -50,6 +50,9 @@
             android:name=".ui.activities.QLDonHangActivity"
             android:exported="false" />
         <activity
+            android:name=".ui.activities.DatHangThanhCongActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.DanhGiaActivity"
             android:exported="false" />
         <activity

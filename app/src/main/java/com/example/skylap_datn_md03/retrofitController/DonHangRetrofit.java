@@ -14,7 +14,7 @@ public interface DonHangRetrofit {
     @GET("api/donHang")
     Call<List<DonHang>>GetAllDonHang();
     @POST("api/donHang/add")
-    Call<Void>addDonHang(@Body DonHang donHang);
+    Call<DonHang>addDonHang(@Body DonHang donHang);
     @POST("api/donHang/add-trang-thai/{id}")
     Call<Void>themTrangThai(@Part("id") String id);
 }

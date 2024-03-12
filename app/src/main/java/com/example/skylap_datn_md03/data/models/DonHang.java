@@ -5,7 +5,6 @@ import java.util.Date;
 
 public class DonHang implements Serializable {
     private String _id;
-
     private String trangThai;
     private String idSanPham;
     private String idAccount;
@@ -15,11 +14,20 @@ public class DonHang implements Serializable {
     private int soLuong;
     private long tongTien;
     private String ghiChu;
+    private boolean thanhToan;
+
+    public boolean isThanhToan() {
+        return thanhToan;
+    }
+
+    public void setThanhToan(boolean thanhToan) {
+        this.thanhToan = thanhToan;
+    }
 
     public DonHang() {
     }
 
-    public DonHang(String _id, String trangThai, String idSanPham, String idAccount, String idKhuyenMai, Date thoiGianMua, String idPttt, int soLuong, long tongTien, String ghiChu) {
+    public DonHang(String _id, String trangThai, String idSanPham, String idAccount, String idKhuyenMai, Date thoiGianMua, String idPttt, int soLuong, long tongTien, String ghiChu, boolean thanhToan) {
         this._id = _id;
         this.trangThai = trangThai;
         this.idSanPham = idSanPham;
@@ -30,6 +38,7 @@ public class DonHang implements Serializable {
         this.soLuong = soLuong;
         this.tongTien = tongTien;
         this.ghiChu = ghiChu;
+        this.thanhToan = thanhToan;
     }
 
     public String get_id() {
@@ -110,5 +119,22 @@ public class DonHang implements Serializable {
 
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
+    }
+
+    @Override
+    public String toString() {
+        return "DonHang{" +
+                "_id='" + _id + '\'' +
+                ", trangThai='" + trangThai + '\'' +
+                ", idSanPham='" + idSanPham + '\'' +
+                ", idAccount='" + idAccount + '\'' +
+                ", idKhuyenMai='" + idKhuyenMai + '\'' +
+                ", thoiGianMua=" + thoiGianMua +
+                ", idPttt='" + idPttt + '\'' +
+                ", soLuong=" + soLuong +
+                ", tongTien=" + tongTien +
+                ", ghiChu='" + ghiChu + '\'' +
+                ", thanhToan=" + thanhToan +
+                '}';
     }
 }
