@@ -74,26 +74,31 @@ public class HomeFragment extends Fragment {
         fragment_home_toolbar.findViewById(R.id.fragment_home_img_chat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
-                String userId = sharedPreferencesManager.getUserId();
-                Call<String> addChat = chatRetrofit.CreateConverSation(userId);
-                addChat.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.code() == 206) {
-                            d("check", "onResponse: " + response.body());
-                            Intent intent = new Intent(context.getContext(), MessageActivity.class);
-                            intent.putExtra("conversation_key", response.body());
-                            startActivity(intent);
+                try {
+                    chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
+                    String userId = sharedPreferencesManager.getUserId();
+                    Call<String> addChat = chatRetrofit.CreateConverSation(userId);
+                    addChat.enqueue(new Callback<String>() {
+                        @Override
+                        public void onResponse(Call<String> call, Response<String> response) {
+                            if (response.code() == 206) {
+                                d("check", "onResponse: " + response.body());
+                                Intent intent = new Intent(context.getContext(), MessageActivity.class);
+                                intent.putExtra("conversation_key", response.body());
+                                startActivity(intent);
+                            }
+
                         }
 
-                    }
+                        @Override
+                        public void onFailure(Call<String> call, Throwable t) {
 
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
+                        }
+                    });
+                }catch (Throwable t){
+                    d("err", "onClick: " +  t.getMessage());
+                }
 
-                    }
-                });
 
             }
         });

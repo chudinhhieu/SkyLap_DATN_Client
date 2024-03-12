@@ -53,7 +53,7 @@
             android:name=".ui.activities.QuanLyDanhGiaActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.MessageAcitvity"
+            android:name=".ui.activities.MessageActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.DatHangActivity"
