@@ -98,6 +98,7 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
     }
 
     void getListProduct (String idSP){
+        showLoading();
         sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
         Call<SanPham> getSP = sanPhamRetrofit.getSanPhamByID(idSP);
         getSP.enqueue(new Callback<SanPham>() {
@@ -110,6 +111,7 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
                         productAdapter = new SanPhamAdapter(DatHangThanhCongActivity.this);
                         productAdapter.setList(response.body());
                         listProduct.setAdapter(productAdapter);
+                        hideLoading();
                     }
 
                     @Override
@@ -147,7 +149,6 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
                 hideLoading();
                 d("ca" + "chung", "onResponse: "+response.body().toString());
             }
-
             @Override
             public void onFailure(Call<DonHang> call, Throwable t) {
                 CustomToast.showToast(DatHangThanhCongActivity.this,"Có gì đó sai sai");

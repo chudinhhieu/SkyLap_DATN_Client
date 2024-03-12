@@ -10,7 +10,7 @@ public class KhuyenMai {
     //        "moTa": "Giảm ngay 500k cho bạn mới",
     //        "soLuong": -1,
     //        "soTienGiam": 500000,
-    //        "trangThai": true,
+    //        "TrangThai": true,
     //        "anh": "https://storage.googleapis.com/skylap-md03.appspot.com/KhuyenMai/1708940027246_cf67d9174b22e67cbf33.jpg",
     //        "__v": 0
     private String _id, thoiGianBatDau, thoiGianKetThuc, code, moTa;
