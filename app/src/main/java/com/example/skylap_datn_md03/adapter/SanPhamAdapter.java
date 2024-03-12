@@ -45,8 +45,8 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
             SanPham sanPham = list.get(position);
             if (sanPham == null) return;
             //set value
-            Picasso.get().load(sanPham.getAnh().get(0)).into(holder.img_anh);
-            holder.txt_display.setText("Display: "+sanPham.getDisplay());
+            Picasso.get().load(sanPham.getAnhSanPham()).into(holder.img_anh);
+            holder.txt_display.setText(sanPham.getDisplay());
             holder.txt_cpu.setText("CPU: "+sanPham.getCpu());
             holder.txt_card.setText("Card: "+sanPham.getGpu());
             holder.txt_name.setText("Display: "+sanPham.getTenSanPham());

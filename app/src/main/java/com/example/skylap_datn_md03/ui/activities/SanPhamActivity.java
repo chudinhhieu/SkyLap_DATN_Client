@@ -105,6 +105,16 @@ public class SanPhamActivity extends AppCompatActivity {
                 finish();
             }
         });
+        btnCTSP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SanPhamActivity.this, ChiTietSanPhamActivity.class);
+
+                intent.putExtra("SanPham", sanPham);
+
+                startActivity(intent);
+            }
+        });
     }
 
     private void showBottomSheet(SanPham sanPham) {
