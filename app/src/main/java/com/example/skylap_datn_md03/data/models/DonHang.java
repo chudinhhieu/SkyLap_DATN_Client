@@ -1,11 +1,12 @@
 package com.example.skylap_datn_md03.data.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class DonHang implements Serializable {
     private String _id;
-    private String trangThai;
+    private ArrayList<TrangThai> trangThai;
     private String idSanPham;
     private String idAccount;
     private String idKhuyenMai;
@@ -27,7 +28,18 @@ public class DonHang implements Serializable {
     public DonHang() {
     }
 
-    public DonHang(String _id, String trangThai, String idSanPham, String idAccount, String idKhuyenMai, Date thoiGianMua, String idPttt, int soLuong, long tongTien, String ghiChu, boolean thanhToan) {
+
+
+    public String get_id() {
+        return _id;
+    }
+
+    public void set_id(String _id) {
+        this._id = _id;
+    }
+
+    public DonHang(String _id, ArrayList<TrangThai> trangThai, String idSanPham, String idAccount, String idKhuyenMai,
+                   Date thoiGianMua, String idPttt, int soLuong, long tongTien, String ghiChu, boolean thanhToan) {
         this._id = _id;
         this.trangThai = trangThai;
         this.idSanPham = idSanPham;
@@ -39,22 +51,6 @@ public class DonHang implements Serializable {
         this.tongTien = tongTien;
         this.ghiChu = ghiChu;
         this.thanhToan = thanhToan;
-    }
-
-    public String get_id() {
-        return _id;
-    }
-
-    public void set_id(String _id) {
-        this._id = _id;
-    }
-
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
     }
 
     public String getIdSanPham() {
@@ -93,6 +89,14 @@ public class DonHang implements Serializable {
         return idPttt;
     }
 
+    public ArrayList<TrangThai> getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(ArrayList<TrangThai> trangThai) {
+        this.trangThai = trangThai;
+    }
+
     public void setIdPttt(String idPttt) {
         this.idPttt = idPttt;
     }
@@ -125,7 +129,7 @@ public class DonHang implements Serializable {
     public String toString() {
         return "DonHang{" +
                 "_id='" + _id + '\'' +
-                ", trangThai='" + trangThai + '\'' +
+                ", TrangThai='" + trangThai + '\'' +
                 ", idSanPham='" + idSanPham + '\'' +
                 ", idAccount='" + idAccount + '\'' +
                 ", idKhuyenMai='" + idKhuyenMai + '\'' +

@@ -215,7 +215,6 @@ public class DatHangActivity extends AppCompatActivity implements View.OnClickLi
             donHang.setSoLuong(gioHang.getSoLuong());
             donHang.setTongTien(tongTien);
             donHang.setThanhToan(trangThaiThanhToan);
-            donHang.setTrangThai("Chờ xác nhận");
             datHangListener(donHang);
         }
     }
@@ -225,5 +224,6 @@ public class DatHangActivity extends AppCompatActivity implements View.OnClickLi
         bundle.putSerializable("donHang", donHang);
         intent.putExtras(bundle);
         startActivity(intent);
+        finish();
     }
 }

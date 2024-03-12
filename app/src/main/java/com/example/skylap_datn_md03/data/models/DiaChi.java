@@ -3,7 +3,7 @@ package com.example.skylap_datn_md03.data.models;
 public class DiaChi {
     //tenDiaChi : "Công ty"
     //diaChi : "Trịnh Văn Bô"
-    //trangThai : true
+    //TrangThai : true
     //_id : "65e5cc8a5cbf37d3549d60db"
     private String tenDiaChi, diaChi, _id;
     private Boolean trangThai;
