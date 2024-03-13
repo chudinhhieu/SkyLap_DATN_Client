@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -91,9 +90,9 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
 
     private void gotoDetailOder(String donHangID) {
         Bundle bundle = new Bundle();
-        intent = new Intent(this,ChiTietDonDonHang.class);
-        bundle.putString("donHangID", donHangID);
-        intent.putExtras(bundle);
+        intent = new Intent(this,QuanLyDonHangActivity.class);
+//        bundle.putString("donHangID", donHangID);
+//        intent.putExtras(bundle);
         startActivity(intent);
     }
 
@@ -128,7 +127,7 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
 
     }
     void cartOnClickListener(){
-        intent = new Intent(this, GioHangActivity.class);
+        intent = new Intent(this, QuanLyDonHangActivity.class);
         startActivity(intent);
     }
     void showLoading(){

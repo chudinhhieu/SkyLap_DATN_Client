@@ -1,4 +1,4 @@
-package com.example.skylap_datn_md03.fragment;
+package com.example.skylap_datn_md03.fragment.home;
 
 import android.content.Intent;
 import android.os.Bundle;

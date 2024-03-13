@@ -2,9 +2,10 @@ package com.example.skylap_datn_md03.data.models;
 
 public class TrangThai {
     private String  trangThai;
-    private String isNow, thoiGian;
+    private String  thoiGian;
+    private Boolean isNow;
 
-    public TrangThai(String trangThai, String isNow, String thoiGian) {
+    public TrangThai(String trangThai, Boolean isNow, String thoiGian) {
         this.trangThai = trangThai;
         this.isNow = isNow;
         this.thoiGian = thoiGian;
@@ -18,11 +19,11 @@ public class TrangThai {
         this.trangThai = trangThai;
     }
 
-    public String getIsNow() {
+    public Boolean getIsNow() {
         return isNow;
     }
 
-    public void setIsNow(String isNow) {
+    public void setIsNow(Boolean isNow) {
         this.isNow = isNow;
     }
 

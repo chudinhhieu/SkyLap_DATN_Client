@@ -13,7 +13,7 @@ public class DonHang implements Serializable {
     private Date thoiGianMua;
     private String idPttt;
     private int soLuong;
-    private long tongTien;
+    private double tongTien;
     private String ghiChu;
     private boolean thanhToan;
 
@@ -109,11 +109,11 @@ public class DonHang implements Serializable {
         this.soLuong = soLuong;
     }
 
-    public long getTongTien() {
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void setTongTien(long tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
 

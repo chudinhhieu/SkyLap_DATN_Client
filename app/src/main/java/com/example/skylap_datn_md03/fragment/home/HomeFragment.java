@@ -1,4 +1,4 @@
-package com.example.skylap_datn_md03.fragment;
+package com.example.skylap_datn_md03.fragment.home;
 
 import static android.util.Log.d;
 
@@ -81,7 +81,6 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         if (response.code() == 206) {
-                            d("check", "onResponse: " + response.body());
                             Intent intent = new Intent(context.getContext(), MessageActivity.class);
                             intent.putExtra("conversation_key", response.body());
                             startActivity(intent);
