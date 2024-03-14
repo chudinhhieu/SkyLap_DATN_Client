@@ -5,8 +5,7 @@
     app:cardCornerRadius="15dp"
     app:cardElevation="5dp"
     app:cardBackgroundColor="@color/white"
-    android:layout_marginBottom="5dp"
-    android:layout_marginStart="5dp"
+    android:layout_margin="2.5dp"
     android:layout_height="30dp">
     <LinearLayout
         android:layout_width="match_parent"
