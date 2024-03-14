@@ -4,101 +4,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#efefef"
+    android:background="#f6f6f6"
     tools:context=".fragment.home.HomeFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/fragment_home_toolbar"
+    <FrameLayout
+        android:id="@+id/fmh_view"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@color/main">
-
-        <TableLayout
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/main_slide"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:stretchColumns="7">
-
-            <TableRow
-                android:layout_gravity="center"
-                android:gravity="center">
-
+            android:layout_height="180dp">
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/fragment_home_viewpager_slide"
+                android:layout_width="match_parent"
+                android:layout_height="180dp" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_marginEnd="5dp"
+                android:layout_width="0dp"
+                android:layout_height="35dp"
+                android:layout_weight="5">
                 <EditText
-                    android:id="@+id/fragment_home_edtSearch"
+                    android:id="@+id/editText"
+                    android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:layout_weight="5"
-                    android:width="0dp"
                     android:background="@color/white"
                     android:drawableStart="@drawable/dr_search"
-                    android:drawablePadding="5dp"
-                    android:hint="Search"
+                    android:hint="Tìm kiếm ngay..."
                     android:paddingHorizontal="5dp"
                     android:textSize="15dp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
 
                 <ImageView
-                    android:id="@+id/fragment_home_img_cart"
-                    android:layout_width="10dp"
-                    android:layout_height="35dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/dr_car" />
+                    android:id="@+id/imageView1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_cart"
+                    android:scaleType="fitCenter"/>
 
-                <RelativeLayout
-                    android:layout_marginEnd="10dp"
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="50dp">
+                    android:layout_height="match_parent">
                     <ImageView
-                        android:id="@+id/fragment_home_img_chat"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:src="@drawable/dr_forum" />
+                        android:id="@+id/imageView2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center_vertical|end"
+                        android:src="@drawable/chat"
+                        android:scaleType="fitCenter"/>
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginBottom="5dp"
-                        android:text="99"
-                        android:textColor="@color/red" />
-                </RelativeLayout>
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:background="@drawable/bo_tron"
+                        android:layout_gravity="end"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:text="69"/>
+                </FrameLayout>
 
-            </TableRow>
-        </TableLayout>
-    </androidx.appcompat.widget.Toolbar>
+            </LinearLayout>
+        </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/main_slide"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/fragment_home_toolbar">
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/fragment_home_viewpager_slide"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <me.relex.circleindicator.CircleIndicator
-            android:id="@+id/fragment_home_indicator"
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerInParent="true"
-            android:visibility="gone"
-            app:ci_drawable="@drawable/bg_circle_red" />
-    </RelativeLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/main_slide"
+        android:layout_below="@id/fmh_view"
         android:gravity="center"
         android:orientation="vertical">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/white" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_home_rcv_listHang"
@@ -106,16 +101,14 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:layout_marginBottom="5dp"
             android:orientation="horizontal"
+            android:elevation="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:background="@color/white"
+            android:paddingStart="5dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/white" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_home_rcv_listProduct"

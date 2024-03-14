@@ -41,7 +41,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/dr_car"/>
+                        android:background="@drawable/ic_cart"/>
                 </RelativeLayout>
                 <LinearLayout
                     android:orientation="vertical"

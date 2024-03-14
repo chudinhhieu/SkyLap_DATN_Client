@@ -44,7 +44,6 @@ import retrofit2.Response;
 public class HomeFragment extends Fragment {
     private ViewPager slidePager;
     private RecyclerView rcvHangSx, rcvSanPham;
-    private CircleIndicator indicator;
     private HangSanPhamAdapter hangSxAdapter;
     private SanPhamAdapter sanPhamAdapter;
     private SlideAdapter slideAdapter;
@@ -55,7 +54,6 @@ public class HomeFragment extends Fragment {
     private SharedPreferencesManager sharedPreferencesManager;
     private ChatRetrofit chatRetrofit;
     private RetrofitService retrofitService;
-    private Toolbar fragment_home_toolbar;
     private List<SanPham> dataList = new ArrayList<>();
     private List<HangSX> dataHangSx = new ArrayList<>();
     private int limit = 10; // Số lượng dữ liệu muốn tải trong mỗi lần
@@ -71,31 +69,31 @@ public class HomeFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(context.getContext());
         unitUI();
 
-        fragment_home_toolbar.findViewById(R.id.fragment_home_img_chat).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
-                String userId = sharedPreferencesManager.getUserId();
-                Call<String> addChat = chatRetrofit.CreateConverSation(userId);
-                addChat.enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        if (response.code() == 206) {
-                            Intent intent = new Intent(context.getContext(), MessageActivity.class);
-                            intent.putExtra("conversation_key", response.body());
-                            startActivity(intent);
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-
-                    }
-                });
-
-            }
-        });
+//        fragment_home_toolbar.findViewById(R.id.fragment_home_img_chat).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
+//                String userId = sharedPreferencesManager.getUserId();
+//                Call<String> addChat = chatRetrofit.CreateConverSation(userId);
+//                addChat.enqueue(new Callback<String>() {
+//                    @Override
+//                    public void onResponse(Call<String> call, Response<String> response) {
+//                        if (response.code() == 206) {
+//                            Intent intent = new Intent(context.getContext(), MessageActivity.class);
+//                            intent.putExtra("conversation_key", response.body());
+//                            startActivity(intent);
+//                        }
+//
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<String> call, Throwable t) {
+//
+//                    }
+//                });
+//
+//            }
+//        });
         getListSanPham();
         getListHangSx();
         getListKhuyenMai();
@@ -176,8 +174,6 @@ public class HomeFragment extends Fragment {
         slidePager = context.findViewById(R.id.fragment_home_viewpager_slide);
         rcvHangSx = context.findViewById(R.id.fragment_home_rcv_listHang);
         rcvSanPham = context.findViewById(R.id.fragment_home_rcv_listProduct);
-        indicator = context.findViewById(R.id.fragment_home_indicator);
-        fragment_home_toolbar = context.findViewById(R.id.fragment_home_toolbar);
         configAdapter();
     }
 
