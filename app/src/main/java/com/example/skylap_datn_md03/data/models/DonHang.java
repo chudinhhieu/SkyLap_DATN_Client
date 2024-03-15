@@ -111,4 +111,34 @@ public class DonHang implements Serializable {
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
     }
+<<<<<<< Updated upstream
+=======
+
+    @Override
+    public String toString() {
+        return "DonHang{" +
+                "_id='" + _id + '\'' +
+                ", TrangThai='" + trangThai + '\'' +
+                ", idSanPham='" + idSanPham + '\'' +
+                ", idAccount='" + idAccount + '\'' +
+                ", idKhuyenMai='" + idKhuyenMai + '\'' +
+                ", thoiGianMua=" + thoiGianMua +
+                ", idPttt='" + idPttt + '\'' +
+                ", soLuong=" + soLuong +
+                ", tongTien=" + tongTien +
+                ", ghiChu='" + ghiChu + '\'' +
+                ", thanhToan=" + thanhToan +
+                '}';
+    }
+    private DanhGia danhGia;
+
+    // Thêm getter và setter cho DanhGia
+    public DanhGia getDanhGia() {
+        return danhGia;
+    }
+
+    public void setDanhGia(DanhGia danhGia) {
+        this.danhGia = danhGia;
+    }
+>>>>>>> Stashed changes
 }
