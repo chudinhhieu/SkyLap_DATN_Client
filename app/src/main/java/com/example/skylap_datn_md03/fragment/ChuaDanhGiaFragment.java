@@ -32,13 +32,9 @@ public class ChuaDanhGiaFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-<<<<<<< Updated upstream:app/src/main/java/com/example/skylap_datn_md03/fragment/ChuaDanhGiaFragment.java
-        View view = inflater.inflate(R.layout.fragment_chua_danh_gia, container, false);
-        recyclerView = view.findViewById(R.id.recycler_view_chua_danh_gia);
-=======
         View view = inflater.inflate(R.layout.fragment_danh_gia, container, false);
         recyclerView = view.findViewById(R.id.recycler_view_danh_gia);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // Đảm bảo đã set LayoutManager
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String userId = sharedPreferencesManager.getUserId();
@@ -66,7 +62,6 @@ public class ChuaDanhGiaFragment extends Fragment {
             }
         });
 
->>>>>>> Stashed changes:app/src/main/java/com/example/skylap_datn_md03/fragment/danhgia/DanhGiaFragment.java
         return view;
     }
 }

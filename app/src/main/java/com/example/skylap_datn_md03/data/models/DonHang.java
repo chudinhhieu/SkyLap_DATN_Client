@@ -111,8 +111,6 @@ public class DonHang implements Serializable {
     public void setGhiChu(String ghiChu) {
         this.ghiChu = ghiChu;
     }
-<<<<<<< Updated upstream
-=======
 
     @Override
     public String toString() {
@@ -130,15 +128,4 @@ public class DonHang implements Serializable {
                 ", thanhToan=" + thanhToan +
                 '}';
     }
-    private DanhGia danhGia;
-
-    // Thêm getter và setter cho DanhGia
-    public DanhGia getDanhGia() {
-        return danhGia;
-    }
-
-    public void setDanhGia(DanhGia danhGia) {
-        this.danhGia = danhGia;
-    }
->>>>>>> Stashed changes
 }
