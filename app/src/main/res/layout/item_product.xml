@@ -1,74 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginEnd="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
+    android:layout_marginEnd="5dp"
+    android:elevation="10dp"
     app:cardCornerRadius="5dp"
-    app:cardElevation="2dp"
-    android:layout_height="wrap_content">
+    app:cardElevation="2dp">
+
     <LinearLayout
-        android:padding="5dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/item_product_img_avatar"
-            android:padding="5dp"
-            android:scaleType="centerCrop"
-            android:layout_width="match_parent"
-            android:layout_height="90dp"/>
-        <TextView
-            android:id="@+id/item_product_txtName"
-            android:text="idepad"
-            android:textStyle="bold"
-            android:textSize="15dp"
-            android:layout_width="match_parent"
-            android:textColor="@color/main"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/item_product_txtDisplay"
-            android:text="direction"
-            android:textSize="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/item_product_txtCPU"
-            android:text="direction"
-            android:textSize="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/item_product_txtCard"
-            android:text="direction"
-            android:textSize="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <TableLayout
+        android:paddingHorizontal="5dp"
+        android:paddingBottom="5dp">
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TableRow android:weightSum="2"
-                >
+
+            <ImageView
+                android:id="@+id/item_product_img_avatar"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginVertical="20dp"
+                android:padding="5dp"
+                android:scaleType="centerCrop" />
+
+            <FrameLayout
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="end"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_star" />
+
                 <TextView
-                    android:id="@+id/item_product_txtPrice"
-                    android:textStyle="bold"
-                    android:textColor="@color/red"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:text="12,000,000 d"
-                    android:autoSizeTextType="uniform"
-                     android:maxLines="1"
-                    android:gravity="start"/>
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:text="4.8"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/item_product_txtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:paddingHorizontal="10dp"
+            android:text="idepad"
+            android:textSize="15dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/border_view7dp"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_cpu" />
+
                 <TextView
-                    android:id="@+id/item_product_txtSold"
+                    android:id="@+id/item_product_txtCPU"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="11dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_gpu" />
+
+                <TextView
+                    android:id="@+id/item_product_txtCard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="11dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_man_hinh" />
+
+                <TextView
+                    android:id="@+id/item_product_txtDisplay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="11dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:text="1,2k da ban"
-                    android:textSize="10dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="1.5"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_rom" />
+
+                    <TextView
+                        android:id="@+id/item_product_txtRom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textSize="11dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center|end"
-                    android:layout_gravity="center_vertical"/>
-            </TableRow>
-        </TableLayout>
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_ram" />
+
+                    <TextView
+                        android:id="@+id/item_product_txtRam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="1"
+                        android:textSize="11dp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="5dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_bao_hanh" />
+
+                <TextView
+                    android:id="@+id/item_product_txtBaoHanh"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="11dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/item_product_txtPrice"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:gravity="start"
+                android:maxLines="1"
+                android:textColor="@color/red"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/item_product_txtDaBan"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_weight="1"
+                android:autoSizeTextType="uniform"
+                android:textSize="11sp"
+                android:gravity="end"
+                android:text="Đã bán 69" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -16,10 +16,9 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 
-import com.example.skylap_datn_md03.fragment.HomeFragment;
-import com.example.skylap_datn_md03.fragment.ThongBaoFragment;
-import com.example.skylap_datn_md03.ui.activities.DatHangActivity;
-import com.example.skylap_datn_md03.fragment.UserFragment;
+import com.example.skylap_datn_md03.fragment.home.HomeFragment;
+import com.example.skylap_datn_md03.fragment.home.ThongBaoFragment;
+import com.example.skylap_datn_md03.fragment.home.UserFragment;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

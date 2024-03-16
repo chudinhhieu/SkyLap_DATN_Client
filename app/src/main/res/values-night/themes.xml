@@ -1,12 +1,26 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.SkyLap_DATN_MD03_Night" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+
+    <!-- Màu chính của ứng dụng -->
+    <color name="colorMain">@color/main</color>
+    <color name="transparent">#00FFFFFF</color>
+    <!-- Base application theme -->
+    <style name="Base.Theme.SkyLap_DATN_MD03" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Màu chính của app -->
+        <item name="colorPrimary">@color/colorMain</item>
+
+        <!-- Màu của AppBar -->
+        <item name="colorPrimaryVariant">@color/colorMain</item>
+
+        <!-- Màu của border input -->
+        <item name="colorControlNormal">@color/colorMain</item>
+
+        <!-- Màu của checkbox -->
+        <item name="colorControlActivated">@color/colorMain</item>
+
+        <!-- Màu của radiobox -->
+        <item name="colorControlHighlight">@color/colorMain</item>
     </style>
-  <!-- Base application theme. -->
-    <style name="Base.Theme.SkyLap_DATN_MD03" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
-    </style>
+
+    <style name="Theme.SkyLap_DATN_MD03" parent="Base.Theme.SkyLap_DATN_MD03" />
+
 </resources>

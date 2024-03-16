@@ -36,18 +36,17 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
         DonHang donHang = reviews.get(position);
 
         if (donHang.getDanhGia() != null) {
+            //Todo: name ++
             holder.ratingBar.setRating(donHang.getDanhGia().getSoSao());
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            holder.textViewReviewDate.setText(dateFormat.format(donHang.getDanhGia().getThoiGianDG()));
-            // Assuming you want to display the first image if available
-            if (!donHang.getDanhGia().getAnhDG().isEmpty()) {
-                Picasso.get().load(donHang.getDanhGia().getAnhDG().get(0)).into(holder.imageViewReview);
+            holder.textViewReviewDate.setText(dateFormat.format(donHang.getDanhGia().getThoiGian()));
+            //Display the first image if available
+            if (!donHang.getDanhGia().getAnh().isEmpty()) {
+                Picasso.get().load(donHang.getDanhGia().getAnh().get(0)).into(holder.imageViewReview);
             }
-            holder.textViewDanhGia.setText(donHang.getDanhGia().get());
+            holder.textViewDanhGia.setText(donHang.getDanhGia().getNoiDung());
         }
 
-        // Here, you might also want to set other information like the product name and user name.
-        // This will likely involve additional Retrofit calls unless this information is already included in your DonHang model.
     }
 
     @Override
@@ -64,7 +63,7 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
 
         public ReviewViewHolder(View itemView) {
             super(itemView);
-            imageViewReview = itemView.findViewById(R.id.imageViewReview);
+            imageViewReview = itemView.findViewById(R.id.imageViewUserAvatar);
             textViewReviewerName = itemView.findViewById(R.id.textViewReviewerName);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             textViewReviewDate = itemView.findViewById(R.id.textViewReviewDate);

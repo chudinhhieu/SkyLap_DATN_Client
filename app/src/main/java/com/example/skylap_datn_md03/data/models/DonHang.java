@@ -1,35 +1,80 @@
 package com.example.skylap_datn_md03.data.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class DonHang implements Serializable {
     private String _id;
-
-    private String trangThai;
+    private ArrayList<TrangThai> trangThai;
     private String idSanPham;
     private String idAccount;
     private String idKhuyenMai;
     private Date thoiGianMua;
     private String idPttt;
     private int soLuong;
-    private long tongTien;
+    private double tongTien;
     private String ghiChu;
+    private boolean thanhToan;
+    private DanhGia danhGia;
+    public static class DanhGia implements Serializable {
+        private int soSao;
+        private List<String> anh = new ArrayList<>();
+        private String noiDung;
+        private Date thoiGian;
 
-    public DonHang() {
+        public DanhGia() {
+        }
+
+        public DanhGia(int soSao, List<String> anh, String noiDung, Date thoiGian) {
+            this.soSao = soSao;
+            this.anh = anh;
+            this.noiDung = noiDung;
+            this.thoiGian = thoiGian;
+        }
+
+        public int getSoSao() {
+            return soSao;
+        }
+
+        public void setSoSao(int soSao) {
+            this.soSao = soSao;
+        }
+
+        public List<String> getAnh() {
+            return anh;
+        }
+
+        public void setAnh(List<String> anh) {
+            this.anh = anh;
+        }
+
+        public String getNoiDung() {
+            return noiDung;
+        }
+
+        public void setNoiDung(String noiDung) {
+            this.noiDung = noiDung;
+        }
+
+        public Date getThoiGian() {
+            return thoiGian;
+        }
+
+        public void setThoiGian(Date thoiGian) {
+            this.thoiGian = thoiGian;
+        }
+    }
+    public boolean isThanhToan() {
+        return thanhToan;
     }
 
-    public DonHang(String _id, String trangThai, String idSanPham, String idAccount, String idKhuyenMai, Date thoiGianMua, String idPttt, int soLuong, long tongTien, String ghiChu) {
-        this._id = _id;
-        this.trangThai = trangThai;
-        this.idSanPham = idSanPham;
-        this.idAccount = idAccount;
-        this.idKhuyenMai = idKhuyenMai;
-        this.thoiGianMua = thoiGianMua;
-        this.idPttt = idPttt;
-        this.soLuong = soLuong;
-        this.tongTien = tongTien;
-        this.ghiChu = ghiChu;
+    public void setThanhToan(boolean thanhToan) {
+        this.thanhToan = thanhToan;
+    }
+
+    public DonHang() {
     }
 
     public String get_id() {
@@ -40,12 +85,19 @@ public class DonHang implements Serializable {
         this._id = _id;
     }
 
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(String trangThai) {
+    public DonHang(String _id, ArrayList<TrangThai> trangThai, String idSanPham, String idAccount, String idKhuyenMai,
+                   Date thoiGianMua, String idPttt, int soLuong, long tongTien, String ghiChu, boolean thanhToan) {
+        this._id = _id;
         this.trangThai = trangThai;
+        this.idSanPham = idSanPham;
+        this.idAccount = idAccount;
+        this.idKhuyenMai = idKhuyenMai;
+        this.thoiGianMua = thoiGianMua;
+        this.idPttt = idPttt;
+        this.soLuong = soLuong;
+        this.tongTien = tongTien;
+        this.ghiChu = ghiChu;
+        this.thanhToan = thanhToan;
     }
 
     public String getIdSanPham() {
@@ -84,6 +136,14 @@ public class DonHang implements Serializable {
         return idPttt;
     }
 
+    public ArrayList<TrangThai> getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(ArrayList<TrangThai> trangThai) {
+        this.trangThai = trangThai;
+    }
+
     public void setIdPttt(String idPttt) {
         this.idPttt = idPttt;
     }
@@ -96,11 +156,11 @@ public class DonHang implements Serializable {
         this.soLuong = soLuong;
     }
 
-    public long getTongTien() {
+    public double getTongTien() {
         return tongTien;
     }
 
-    public void setTongTien(long tongTien) {
+    public void setTongTien(double tongTien) {
         this.tongTien = tongTien;
     }
 
@@ -127,5 +187,13 @@ public class DonHang implements Serializable {
                 ", ghiChu='" + ghiChu + '\'' +
                 ", thanhToan=" + thanhToan +
                 '}';
+    }
+
+    public DanhGia getDanhGia() {
+        return danhGia;
+    }
+
+    public void setDanhGia(DanhGia danhGia) {
+        this.danhGia = danhGia;
     }
 }

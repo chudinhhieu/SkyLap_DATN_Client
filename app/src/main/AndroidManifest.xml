@@ -11,17 +11,17 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.SkyLap_DATN_MD03"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
         <activity
             android:name=".ui.activities.auth.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -44,7 +44,7 @@
             android:name=".ui.activities.GioHangActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.QLDonHangActivity"
+            android:name=".ui.activities.DatHangThanhCongActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.DanhGiaActivity"
@@ -53,10 +53,16 @@
             android:name=".ui.activities.QuanLyDanhGiaActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.MessageAcitvity"
+            android:name=".ui.activities.MessageActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.DatHangActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.QuanLyDonHangActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".ui.activities.ChiTietSanPhamActivity"
             android:exported="false" />
     </application>
 

@@ -105,11 +105,14 @@ public class SanPhamActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-        tvXemDG.setOnClickListener(new View.OnClickListener() {
+        btnCTSP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SanPhamActivity.this, QuanLyDanhGiaActivity.class));
+                Intent intent = new Intent(SanPhamActivity.this, ChiTietSanPhamActivity.class);
+
+                intent.putExtra("SanPham", sanPham);
+
+                startActivity(intent);
             }
         });
     }

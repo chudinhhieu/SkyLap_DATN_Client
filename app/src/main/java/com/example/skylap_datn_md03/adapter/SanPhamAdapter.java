@@ -36,7 +36,6 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
     @Override
     public SanPhamViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         view = LayoutInflater.from(context).inflate(R.layout.item_product,parent,false);
-        view = LayoutInflater.from(context).inflate(R.layout.item_product,parent,false);
         return new SanPhamViewHolder(view);
     }
 
@@ -45,13 +44,15 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
             SanPham sanPham = list.get(position);
             if (sanPham == null) return;
             //set value
-            Picasso.get().load(sanPham.getAnh().get(0)).into(holder.img_anh);
-            holder.txt_display.setText("Display: "+sanPham.getDisplay());
-            holder.txt_cpu.setText("CPU: "+sanPham.getCpu());
-            holder.txt_card.setText("Card: "+sanPham.getGpu());
-            holder.txt_name.setText("Display: "+sanPham.getTenSanPham());
+            Picasso.get().load(sanPham.getAnhSanPham()).into(holder.img_anh);
+            holder.txt_display.setText(sanPham.getDisplay());
+            holder.txt_cpu.setText(sanPham.getCpu());
+            holder.txt_card.setText(sanPham.getGpu());
+        holder.txt_name.setText(sanPham.getTenSanPham());
+        holder.txtBaoHanh.setText(sanPham.getBaohanh());
+        holder.txtRam.setText(sanPham.getRam());
+        holder.txtRom.setText(sanPham.getRom());
             holder.txt_price.setText(formatPrice(sanPham.getGiaTien())+"₫");
-            holder.txt_sold.setText("Đã bán ");
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +72,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
 
     public final class SanPhamViewHolder extends RecyclerView.ViewHolder{
         ImageView img_anh;
-        TextView txt_display, txt_cpu, txt_card, txt_name,txt_price, txt_sold;
+        TextView txt_display, txt_cpu, txt_card, txt_name,txt_price, txtBaoHanh,txtRam,txtRom;
 
         public SanPhamViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,7 +82,9 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
             txt_card = itemView.findViewById(R.id.item_product_txtCard);
             txt_name = itemView.findViewById(R.id.item_product_txtName);
             txt_price = itemView.findViewById(R.id.item_product_txtPrice);
-            txt_sold = itemView.findViewById(R.id.item_product_txtSold);
+            txtBaoHanh = itemView.findViewById(R.id.item_product_txtBaoHanh);
+            txtRam = itemView.findViewById(R.id.item_product_txtRam);
+            txtRom = itemView.findViewById(R.id.item_product_txtRom);
 
         }
     }

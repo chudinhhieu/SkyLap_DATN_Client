@@ -5,16 +5,14 @@ import java.util.List;
 
 public class DanhGia {
     private String _id;
-    private String _idNguoiMua;
-    private String _idSanPham;
-    private String danhGiaSanPham;
-    private Date thoiGianDG;
+    private Date thoiGian;
+    private  String noiDung;
     private int soSao;
-    private List<String> anhDG;
+    private List<String> anh;
 
-
-
-    public DanhGia() {
+    public DanhGia(String noiDung, int soSao) {
+        this.noiDung = noiDung;
+        this.soSao = soSao;
     }
 
     public String get_id() {
@@ -25,36 +23,20 @@ public class DanhGia {
         this._id = _id;
     }
 
-    public String get_idNguoiMua() {
-        return _idNguoiMua;
+    public Date getThoiGian() {
+        return thoiGian;
     }
 
-    public void set_idNguoiMua(String _idNguoiMua) {
-        this._idNguoiMua = _idNguoiMua;
+    public void setThoiGian(Date thoiGian) {
+        this.thoiGian = thoiGian;
     }
 
-    public String get_idSanPham() {
-        return _idSanPham;
+    public String getNoiDung() {
+        return noiDung;
     }
 
-    public void set_idSanPham(String _idSanPham) {
-        this._idSanPham = _idSanPham;
-    }
-
-    public String getDanhGiaSanPham() {
-        return danhGiaSanPham;
-    }
-
-    public void setDanhGiaSanPham(String danhGiaSanPham) {
-        this.danhGiaSanPham = danhGiaSanPham;
-    }
-
-    public Date getThoiGianDG() {
-        return thoiGianDG;
-    }
-
-    public void setThoiGianDG(Date thoiGianDG) {
-        this.thoiGianDG = thoiGianDG;
+    public void setNoiDung(String noiDung) {
+        this.noiDung = noiDung;
     }
 
     public int getSoSao() {
@@ -65,11 +47,11 @@ public class DanhGia {
         this.soSao = soSao;
     }
 
-    public List<String> getAnhDG() {
-        return anhDG;
+    public List<String> getAnh() {
+        return anh;
     }
 
-    public void setAnhDG(List<String> anhDG) {
-        this.anhDG = anhDG;
+    public void setAnh(List<String> anh) {
+        this.anh = anh;
     }
 }
