@@ -41,16 +41,16 @@
         </RelativeLayout>
 
         <ImageView
-            android:id="@+id/gmu_setting"
+            android:id="@+id/fmu_setting"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="20dp"
-            android:layout_toLeftOf="@id/gmu_gioHang"
+            android:layout_toLeftOf="@id/fmu_gioHang"
             android:scaleType="fitCenter"
             android:src="@drawable/outline_settings_24" />
 
         <ImageView
-            android:id="@+id/gmu_gioHang"
+            android:id="@+id/fmu_gioHang"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginEnd="20dp"
@@ -135,6 +135,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/fmu_qldh2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="1.5dp"
@@ -144,6 +145,7 @@
             android:paddingVertical="12dp">
 
             <LinearLayout
+                android:id="@+id/fmu_cxn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -183,6 +185,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/fmu_cgh"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -222,6 +225,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/fmu_dgh"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -243,6 +247,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/fmu_dg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

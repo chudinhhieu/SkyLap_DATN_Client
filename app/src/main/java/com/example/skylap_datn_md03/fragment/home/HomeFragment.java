@@ -9,6 +9,8 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
@@ -28,6 +30,7 @@ import com.example.skylap_datn_md03.retrofitController.HangSxInterface;
 import com.example.skylap_datn_md03.retrofitController.KhuyenMaiRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
+import com.example.skylap_datn_md03.ui.activities.GioHangActivity;
 import com.example.skylap_datn_md03.ui.activities.MessageActivity;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 
@@ -51,9 +54,11 @@ public class HomeFragment extends Fragment {
     private Timer mTimer;
     private List<KhuyenMai> list;
     private SanPhamRetrofit sanPhamRetrofit;
+    private LinearLayout btn_chat;
     private SharedPreferencesManager sharedPreferencesManager;
     private ChatRetrofit chatRetrofit;
     private RetrofitService retrofitService;
+    private RelativeLayout btnGioHang;
     private List<SanPham> dataList = new ArrayList<>();
     private List<HangSX> dataHangSx = new ArrayList<>();
     private int limit = 10; // Số lượng dữ liệu muốn tải trong mỗi lần
@@ -68,37 +73,46 @@ public class HomeFragment extends Fragment {
         retrofitService = new RetrofitService();
         sharedPreferencesManager = new SharedPreferencesManager(context.getContext());
         unitUI();
-
-//        fragment_home_toolbar.findViewById(R.id.fragment_home_img_chat).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
-//                String userId = sharedPreferencesManager.getUserId();
-//                Call<String> addChat = chatRetrofit.CreateConverSation(userId);
-//                addChat.enqueue(new Callback<String>() {
-//                    @Override
-//                    public void onResponse(Call<String> call, Response<String> response) {
-//                        if (response.code() == 206) {
-//                            Intent intent = new Intent(context.getContext(), MessageActivity.class);
-//                            intent.putExtra("conversation_key", response.body());
-//                            startActivity(intent);
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<String> call, Throwable t) {
-//
-//                    }
-//                });
-//
-//            }
-//        });
+        btnGioHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), GioHangActivity.class));
+            }
+        });
+        btn_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logicChat();
+            }
+        });
         getListSanPham();
         getListHangSx();
         getListKhuyenMai();
 
         return context;
+    }
+
+    private void logicChat() {
+        chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
+        String userId = sharedPreferencesManager.getUserId();
+        Call<String> addChat = chatRetrofit.CreateConverSation(userId);
+        addChat.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.code() == 206) {
+                    Intent intent = new Intent(context.getContext(), MessageActivity.class);
+                    intent.putExtra("conversation_key", response.body());
+                    startActivity(intent);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
     }
 
     private void getListSanPham() {
@@ -171,9 +185,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void unitUI() {
+        btn_chat = context.findViewById(R.id.fmh_chat);
         slidePager = context.findViewById(R.id.fragment_home_viewpager_slide);
         rcvHangSx = context.findViewById(R.id.fragment_home_rcv_listHang);
         rcvSanPham = context.findViewById(R.id.fragment_home_rcv_listProduct);
+        btnGioHang = context.findViewById(R.id.fmh_gioHang);
         configAdapter();
     }
 
