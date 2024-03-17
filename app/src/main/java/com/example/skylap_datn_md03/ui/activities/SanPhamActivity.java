@@ -28,6 +28,7 @@ import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPham;
+import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
 import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
@@ -52,6 +53,7 @@ public class SanPhamActivity extends AppCompatActivity {
     private LinearLayout btnCTSP, btnCTDG, btnChat, btnThemGH, btnMua;
     private RatingBar rbSP;
     private ViewFlipper viewFlipper;
+    private ChatRetrofit chatRetrofit;
     private SanPham sanPham;
     private Handler slideHandler;
 
@@ -115,8 +117,35 @@ public class SanPhamActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        btnChat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logicChat();
+            }
+        });
     }
+    private void logicChat() {
+        chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
+        String userId = sharedPreferencesManager.getUserId();
+        Call<String> addChat = chatRetrofit.CreateConverSation(userId);
+        addChat.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.code() == 206) {
+                    Intent intent = new Intent(SanPhamActivity.this, MessageActivity.class);
+                    intent.putExtra("conversation_key", response.body());
+                    startActivity(intent);
+                }
 
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+    }
     private void showBottomSheet(SanPham sanPham) {
         int maxSL = sanPham.getSoLuong();
 
@@ -134,7 +163,7 @@ public class SanPhamActivity extends AppCompatActivity {
         Button btnThemGioHang = view.findViewById(R.id.bssp_btn_add);
 
 
-        Picasso.get().load(sanPham.getAnh().get(0)).into(img_anhSP);
+        Picasso.get().load(sanPham.getAnhSanPham()).into(img_anhSP);
         tvGia.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
         tvKho.setText("Kho: " + maxSL);
         tvTen.setText(sanPham.getTenSanPham());

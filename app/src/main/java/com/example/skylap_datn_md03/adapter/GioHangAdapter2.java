@@ -62,7 +62,7 @@ public class GioHangAdapter2 extends RecyclerView.Adapter<GioHangAdapter2.GioHan
                 SanPham sanPham = response.body();
                 holder.txt_gia.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
                 holder.txt_name.setText(sanPham.getTenSanPham());
-                Picasso.get().load(sanPham.getAnh().get(0)).into(holder.img);
+                Picasso.get().load(sanPham.getAnhSanPham()).into(holder.img);
                 holder.txt_soLuong.setText("x "+gioHang.getSoLuong());
                 holder.hiddenLoading();
             }

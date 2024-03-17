@@ -52,7 +52,7 @@ public class DanhGiaActivity extends AppCompatActivity {
     private RatingBar rtbRate;
     private TextView tvDanhgia, tvSanPhamDg;
     private Button btnGuidg;
-    private ImageView imgAddphoto, imgSanPhamDg;
+    private ImageView imgAddphoto, imgSanPhamDg,btnExit;
     private RecyclerView rcyAnhDG;
     private LinearLayout ln_itemAnh;
 
@@ -65,7 +65,7 @@ public class DanhGiaActivity extends AppCompatActivity {
         tvDanhgia = findViewById(R.id.tvDanhgia);
         btnGuidg = findViewById(R.id.btnGuidg);
         imgAddphoto = findViewById(R.id.imgAddphoto);
-
+        btnExit = findViewById(R.id.adg_img_back);
         tvSanPhamDg = findViewById(R.id.tvSanPhamDG);
         imgSanPhamDg = findViewById(R.id.imgSanPhamDG);
 
@@ -119,14 +119,19 @@ public class DanhGiaActivity extends AppCompatActivity {
                 openImageChooser();
             }
         });
-
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 
 
     private void getSanPham() {
         sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
-        String idSanPham = "65e219f1471654be79af04f6";
+        String idSanPham = getIntent().getStringExtra("idSanPham");
         if (idSanPham != null) {
             Call<SanPham> getSanPham = sanPhamRetrofit.getSanPhamByID(idSanPham);
             getSanPham.enqueue(new Callback<SanPham>() {
@@ -134,7 +139,7 @@ public class DanhGiaActivity extends AppCompatActivity {
                 public void onResponse(Call<SanPham> call, Response<SanPham> response) {
                     sanPham = response.body();
                     tvSanPhamDg.setText(sanPham.getTenSanPham());
-                    Picasso.get().load(sanPham.getAnh().get(0)).into(imgSanPhamDg);
+                    Picasso.get().load(sanPham.getAnhSanPham()).into(imgSanPhamDg);
 
                 }
 
@@ -147,7 +152,7 @@ public class DanhGiaActivity extends AppCompatActivity {
     }
     private void postDanhGia(){
         danhGiaRetrofit = retrofitService.retrofit.create(DanhGiaRetrofit.class);
-        String idDonHang = "65eac432c07bea9da787d25b";
+        String idDonHang =getIntent().getStringExtra("idDonHang");
         RequestBody reqSoSao = RequestBody.create(MediaType.parse("multipart/form-data"), soSao + "");
         RequestBody reqNoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), edtNoidung.getText().toString().trim());
         List<MultipartBody.Part> imageParts = new ArrayList<>();
