@@ -69,8 +69,13 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
                         holder.moTa.setText("Đơn hàng của bạn đang chờ giao hàng!");
                         break;
                     case "Đã giao hàng":
-                        holder.button.setText("Đánh giá");
-                        holder.moTa.setText("Đơn hàng của bạn đã giao hàng thành công!");
+                        if (donHang.getDanhGia() != null){
+                            holder.button.setVisibility(View.GONE);
+                            holder.moTa.setText("Đơn hàng của bạn đã giao hàng thành công!");
+                        }else {
+                            holder.button.setText("Đánh giá");
+                            holder.moTa.setText("Đơn hàng của bạn đã giao hàng thành công!\nHãy đánh giá cảm nhận về sản phẩm nhé!");
+                        }
                         break;
                     case "Đã hủy":
                         holder.button.setText("Mua lại");

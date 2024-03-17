@@ -16,7 +16,7 @@ public class DonHang implements Serializable {
     private double tongTien;
     private String ghiChu;
     private boolean thanhToan;
-
+    private DanhGia danhGia;
     public boolean isThanhToan() {
         return thanhToan;
     }
@@ -28,7 +28,13 @@ public class DonHang implements Serializable {
     public DonHang() {
     }
 
+    public DanhGia getDanhGia() {
+        return danhGia;
+    }
 
+    public void setDanhGia(DanhGia danhGia) {
+        this.danhGia = danhGia;
+    }
 
     public String get_id() {
         return _id;

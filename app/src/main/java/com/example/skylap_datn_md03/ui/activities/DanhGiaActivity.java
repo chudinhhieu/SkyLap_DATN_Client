@@ -55,7 +55,7 @@ public class DanhGiaActivity extends AppCompatActivity {
     private ImageView imgAddphoto, imgSanPhamDg,btnExit;
     private RecyclerView rcyAnhDG;
     private LinearLayout ln_itemAnh;
-
+    private MyAuth myAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,7 +140,6 @@ public class DanhGiaActivity extends AppCompatActivity {
                     sanPham = response.body();
                     tvSanPhamDg.setText(sanPham.getTenSanPham());
                     Picasso.get().load(sanPham.getAnhSanPham()).into(imgSanPhamDg);
-
                 }
 
                 @Override
@@ -157,7 +156,7 @@ public class DanhGiaActivity extends AppCompatActivity {
         RequestBody reqNoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), edtNoidung.getText().toString().trim());
         List<MultipartBody.Part> imageParts = new ArrayList<>();
         if (selectedImages.size() == 0){
-            Toast.makeText(DanhGiaActivity.this, "Chưa chọn ảnh truyện!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(DanhGiaActivity.this, "Chưa chọn ảnh!", Toast.LENGTH_SHORT).show();
             return;
         }
         for (Uri selectedUri : selectedImages) {
@@ -172,12 +171,12 @@ public class DanhGiaActivity extends AppCompatActivity {
             postDanhGia.enqueue(new Callback<MyAuth>() {
                 @Override
                 public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
-                    MyAuth myAuth = response.body();
+                    myAuth = response.body();
                     CustomToast.showToast(DanhGiaActivity.this, myAuth.getMessage());
                 }
                 @Override
                 public void onFailure(Call<MyAuth> call, Throwable t) {
-
+                    CustomToast.showToast(DanhGiaActivity.this, myAuth.getMessage());
                 }
             });
         }
