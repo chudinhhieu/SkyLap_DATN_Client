@@ -14,7 +14,7 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/imageShopAvatar"
+            android:id="@+id/imageUserAvatar"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/shop_icon"
@@ -24,9 +24,9 @@
             android:id="@+id/textViewReviewerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/imageShopAvatar"
+            android:layout_toEndOf="@id/imageUserAvatar"
             android:layout_marginStart="10dp"
-            android:text="Shop ABC"
+            android:text="Ten nguoi danh gia"
             android:textStyle="bold"/>
 
 
@@ -34,8 +34,8 @@
             android:id="@+id/textViewBoughtDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/imageShopAvatar"
-            android:layout_toEndOf="@id/imageShopAvatar"
+            android:layout_below="@id/imageUserAvatar"
+            android:layout_toEndOf="@id/imageUserAvatar"
             android:layout_marginStart="10dp"
             android:text="21/02/2023"/>
 
@@ -75,7 +75,7 @@
             android:id="@+id/button_review"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:layout_below="@id/imageShopAvatar"
+            android:layout_below="@id/imageUserAvatar"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="116dp"
             android:layout_marginEnd="30dp"

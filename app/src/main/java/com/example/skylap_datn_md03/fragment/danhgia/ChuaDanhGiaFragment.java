@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.skylap_datn_md03.R;
-import com.example.skylap_datn_md03.adapter.DanhGiaAdapter;
+import com.example.skylap_datn_md03.adapter.ChuaDanhGiaAdapter;
 import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.DanhGiaRetrofit;
@@ -27,40 +27,40 @@ import retrofit2.Response;
 public class ChuaDanhGiaFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private DanhGiaAdapter danhGiaAdapter;
-    private DanhGiaRetrofit danhGiaRetrofit;
+    private ChuaDanhGiaAdapter chuaDanhGiaAdapter;
+    private RetrofitService retrofitService;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_danh_gia, container, false);
-        recyclerView = view.findViewById(R.id.recycler_view_danh_gia);
+        View view = inflater.inflate(R.layout.fragment_chua_danh_gia, container, false);
+        recyclerView = view.findViewById(R.id.recycler_view_chua_danh_gia);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        retrofitService = new RetrofitService();
         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getContext());
         String userId = sharedPreferencesManager.getUserId();
-        RetrofitService retrofitService = new RetrofitService();
-        danhGiaRetrofit = retrofitService.getRetrofit().create(DanhGiaRetrofit.class);
 
-//        Call<List<DonHang>> call = danhGiaRetrofit.getClass(userId);
-//        call.enqueue(new Callback<List<DonHang>>() {
-//            @Override
-//            public void onResponse(Call<List<DonHang>> call, Response<List<DonHang>> response) {
-//                if(response.isSuccessful()) {
-//                    List<DonHang> donHangs = response.body();
-//                    RetrofitService retrofitService = new RetrofitService();
-//                    AccountRetrofit accountRetrofit = retrofitService.getRetrofit().create(AccountRetrofit.class);
-//                    SanPhamRetrofit sanPhamRetrofit = retrofitService.getRetrofit().create(SanPhamRetrofit.class);
-//
-////                    danhGiaAdapter = new DanhGiaAdapter(donHangs, accountRetrofit, sanPhamRetrofit);
-//                    recyclerView.setAdapter(danhGiaAdapter);
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<DonHang>> call, Throwable t) {
-//                // Handle failure
-//            }
-//        });
+        AccountRetrofit accountRetrofit = retrofitService.getRetrofit().create(AccountRetrofit.class);
+        SanPhamRetrofit sanPhamRetrofit = retrofitService.getRetrofit().create(SanPhamRetrofit.class);
+        DanhGiaRetrofit danhGiaRetrofit = retrofitService.getRetrofit().create(DanhGiaRetrofit.class);
+
+        // Fetch unreviewed orders
+        Call<List<DonHang>> call = danhGiaRetrofit.getChuaDanhGia(userId);
+        call.enqueue(new Callback<List<DonHang>>() {
+            @Override
+            public void onResponse(Call<List<DonHang>> call, Response<List<DonHang>> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    List<DonHang> donHangs = response.body();
+                    chuaDanhGiaAdapter = new ChuaDanhGiaAdapter(getContext(), donHangs, accountRetrofit, sanPhamRetrofit);
+                    recyclerView.setAdapter(chuaDanhGiaAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DonHang>> call, Throwable t) {
+                // Handle failure
+            }
+        });
 
         return view;
     }

@@ -1,5 +1,7 @@
 package com.example.skylap_datn_md03.adapter;
 
+import android.content.Context;
+import android.net.http.UrlRequest;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +11,34 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.skylap_datn_md03.R;
+import com.example.skylap_datn_md03.data.models.Account;
 import com.example.skylap_datn_md03.data.models.DonHang;
+import com.example.skylap_datn_md03.data.models.SanPham;
+import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
+import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
+import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewViewHolder> {
 
     private final List<DonHang> reviews;
+    private final Context context;
+    private final AccountRetrofit accountRetrofit;
+    private final SanPhamRetrofit sanPhamRetrofit;
 
-    public DanhGiaAdapter(List<DonHang> reviews) {
+    public DanhGiaAdapter(List<DonHang> reviews, Context context, AccountRetrofit accountRetrofit, SanPhamRetrofit sanPhamRetrofit) {
         this.reviews = reviews;
+        this.context = context;
+        this.accountRetrofit = accountRetrofit;
+        this.sanPhamRetrofit = sanPhamRetrofit;
     }
 
     @NonNull
@@ -35,18 +52,49 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         DonHang donHang = reviews.get(position);
 
-        if (donHang.getDanhGia() != null) {
-            //Todo: name ++
-            holder.ratingBar.setRating(donHang.getDanhGia().getSoSao());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-            holder.textViewReviewDate.setText(dateFormat.format(donHang.getDanhGia().getThoiGian()));
-            //Display the first image if available
-            if (!donHang.getDanhGia().getAnh().isEmpty()) {
-                Picasso.get().load(donHang.getDanhGia().getAnh().get(0)).into(holder.imageViewReview);
+        // Fetch and display user name
+        accountRetrofit.getAccountById(donHang.getIdAccount()).enqueue(new Callback<Account>() {
+            @Override
+            public void onResponse(Call<Account> call, Response<Account> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String userName = response.body().getTaiKhoan();
+                    holder.textViewReviewerName.setText(userName);
+                }
             }
-            holder.textViewDanhGia.setText(donHang.getDanhGia().getNoiDung());
-        }
 
+            @Override
+            public void onFailure(Call<Account> call, Throwable t) {
+                holder.textViewReviewerName.setText("Unknown User");
+            }
+        });
+
+        // Fetch and display product details
+        sanPhamRetrofit.getSanPhamByID(donHang.getIdSanPham()).enqueue(new Callback<SanPham>() {
+            @Override
+            public void onResponse(Call<SanPham> call, Response<SanPham> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String productName = response.body().getTenSanPham();
+                    holder.textViewLaptopModel.setText(productName);
+                    if (!response.body().getAnhSanPham().isEmpty()) {
+                        Picasso.get().load(response.body().getAnhSanPham()).into(holder.imageViewUserAvatar);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SanPham> call, Throwable t) {
+                holder.textViewLaptopModel.setText("Unknown Product");
+            }
+        });
+
+        // Set review details
+        holder.ratingBar.setRating(donHang.getDanhGia().getSoSao());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        holder.textViewReviewDate.setText(dateFormat.format(donHang.getDanhGia().getThoiGian()));
+        holder.textViewDanhGia.setText(donHang.getDanhGia().getNoiDung());
+        if (!donHang.getDanhGia().getAnh().isEmpty()) {
+            Picasso.get().load(donHang.getDanhGia().getAnh().get(0)).into(holder.imageViewReview);
+        }
     }
 
     @Override
@@ -55,19 +103,21 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageViewReview;
-        TextView textViewReviewerName;
+        ImageView imageViewUserAvatar;
+        TextView textViewReviewerName, textViewReviewDate, textViewDanhGia, textViewLaptopModel;
         RatingBar ratingBar;
-        TextView textViewReviewDate;
-        TextView textViewDanhGia;
+        ImageView imageViewReview;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);
-            imageViewReview = itemView.findViewById(R.id.imageViewUserAvatar);
+            imageViewUserAvatar = itemView.findViewById(R.id.imageViewUserAvatar);
             textViewReviewerName = itemView.findViewById(R.id.textViewReviewerName);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             textViewReviewDate = itemView.findViewById(R.id.textViewReviewDate);
             textViewDanhGia = itemView.findViewById(R.id.textViewDanhGia);
+            imageViewReview = itemView.findViewById(R.id.imageViewLaptop);
+            textViewLaptopModel = itemView.findViewById(R.id.textViewLaptopModel);
         }
     }
 }
+
