@@ -62,6 +62,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1">
                 <FrameLayout
+                    android:id="@+id/frame_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
                     <ImageView
@@ -72,6 +73,7 @@
                         android:src="@drawable/chat"
                         android:scaleType="fitCenter"/>
                     <TextView
+                        android:id="@+id/txt_numberUnSeen_message"
                         android:layout_width="18dp"
                         android:layout_height="18dp"
                         android:background="@drawable/bo_tron"
@@ -80,7 +82,7 @@
                         android:textColor="@color/white"
                         android:textSize="10sp"
                         android:textStyle="bold"
-                        android:text="69"/>
+                        android:text=""/>
                 </FrameLayout>
 
             </LinearLayout>

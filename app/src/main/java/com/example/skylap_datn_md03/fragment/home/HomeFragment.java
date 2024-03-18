@@ -6,14 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -21,18 +25,26 @@ import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.adapter.HangSanPhamAdapter;
 import com.example.skylap_datn_md03.adapter.SanPhamAdapter;
 import com.example.skylap_datn_md03.adapter.SlideAdapter;
+import com.example.skylap_datn_md03.adapter.messageAdapter;
 import com.example.skylap_datn_md03.data.models.HangSX;
 import com.example.skylap_datn_md03.data.models.KhuyenMai;
+import com.example.skylap_datn_md03.data.models.Message;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
 import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.HangSxInterface;
 import com.example.skylap_datn_md03.retrofitController.KhuyenMaiRetrofit;
+import com.example.skylap_datn_md03.retrofitController.MessageRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.ui.activities.GioHangActivity;
 import com.example.skylap_datn_md03.ui.activities.MessageActivity;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,25 +65,32 @@ public class HomeFragment extends Fragment {
     private View context;
     private Timer mTimer;
     private List<KhuyenMai> list;
+    private DatabaseReference mDatabase;
     private SanPhamRetrofit sanPhamRetrofit;
     private LinearLayout btn_chat;
     private SharedPreferencesManager sharedPreferencesManager;
+    private MessageRetrofit messageRetrofit;
     private ChatRetrofit chatRetrofit;
     private RetrofitService retrofitService;
     private RelativeLayout btnGioHang;
+    private TextView txtNumberUnSeenMessage;
+
     private List<SanPham> dataList = new ArrayList<>();
     private List<HangSX> dataHangSx = new ArrayList<>();
     private int limit = 10; // Số lượng dữ liệu muốn tải trong mỗi lần
     private boolean isLoadingSanPham = false; // Biến để kiểm tra xem đang tải dữ liệu hay không
     private boolean isLoadingHangSx = false; // Biến để kiểm tra xem đang tải dữ liệu hay không
-
+    private String idChat;
+    private int numberChat_notSeen;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         context = inflater.inflate(R.layout.fragment_home, container, false);
         retrofitService = new RetrofitService();
         sharedPreferencesManager = new SharedPreferencesManager(context.getContext());
+
         unitUI();
         btnGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,20 +98,24 @@ public class HomeFragment extends Fragment {
                 startActivity(new Intent(getContext(), GioHangActivity.class));
             }
         });
-        btn_chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logicChat();
-            }
-        });
+        logicChat();
         getListSanPham();
         getListHangSx();
         getListKhuyenMai();
+        /// tạo chat luôn khi mới vào màn hình ////
+/////chạy sang message activi và set dã xem toàn bộ mess có id chat ////
+        btn_chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getChat();
+            }
+        });
 
         return context;
     }
 
     private void logicChat() {
+        idChat = "";
         chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
         String userId = sharedPreferencesManager.getUserId();
         Call<String> addChat = chatRetrofit.CreateConverSation(userId);
@@ -100,9 +123,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.code() == 206) {
-                    Intent intent = new Intent(context.getContext(), MessageActivity.class);
-                    intent.putExtra("conversation_key", response.body());
-                    startActivity(intent);
+                   idChat = response.body();
+                  checkChat(response.body());
                 }
 
             }
@@ -115,7 +137,49 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void getChat(){
+        Intent intent = new Intent(context.getContext(), MessageActivity.class);
+        intent.putExtra("conversation_key", idChat);
+        startActivity(intent);
+
+
+    }
+    private void checkChat(String idChat){
+        if (idChat.length() >  0){
+            mDatabase = FirebaseDatabase.getInstance().getReference("messages");
+            mDatabase.orderByChild("idChat").equalTo(idChat).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    numberChat_notSeen = 0;
+                    for (DataSnapshot data : snapshot.getChildren()) {
+                        Message mess = data.getValue(Message.class);
+                        if (mess.isDaxem() == false) {
+                            numberChat_notSeen += 1;
+                            d("check", "onDataChange: " +  numberChat_notSeen);
+                        }
+
+
+                        txtNumberUnSeenMessage.setText(""+numberChat_notSeen);
+
+                    }
+
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.d("err", "onCancelled: " + error);
+                }
+            });
+        }
+
+
+    }
+
+
     private void getListSanPham() {
+
+
         sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
         Call<List<SanPham>> getSp = sanPhamRetrofit.getListSanPham();
         getSp.enqueue(new Callback<List<SanPham>>() {
@@ -163,6 +227,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void getListHangSx() {
+
         HangSxInterface hangSxInterface = retrofitService.retrofit.create(HangSxInterface.class);
         Call<List<HangSX>> getList = hangSxInterface.getListHangSx();
         getList.enqueue(new Callback<List<HangSX>>() {
@@ -190,6 +255,7 @@ public class HomeFragment extends Fragment {
         rcvHangSx = context.findViewById(R.id.fragment_home_rcv_listHang);
         rcvSanPham = context.findViewById(R.id.fragment_home_rcv_listProduct);
         btnGioHang = context.findViewById(R.id.fmh_gioHang);
+        txtNumberUnSeenMessage = context.findViewById(R.id.txt_numberUnSeen_message);
         configAdapter();
     }
 
