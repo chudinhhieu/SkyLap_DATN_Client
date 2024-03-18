@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.Account;
 import com.example.skylap_datn_md03.data.models.DonHang;
@@ -59,6 +61,11 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
                 if (response.isSuccessful() && response.body() != null) {
                     String userName = response.body().getTaiKhoan();
                     holder.textViewReviewerName.setText(userName);
+                    if (response.body().getAvatar() == null) {
+                        Picasso.get().load(R.drawable.avatar_main).into(holder.imageViewUserAvatar);
+                    } else {
+                        Picasso.get().load(response.body().getAvatar()).into(holder.imageViewUserAvatar);
+                    }
                 }
             }
 
@@ -76,7 +83,7 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
                     String productName = response.body().getTenSanPham();
                     holder.textViewLaptopModel.setText(productName);
                     if (!response.body().getAnhSanPham().isEmpty()) {
-                        Picasso.get().load(response.body().getAnhSanPham()).into(holder.imageViewUserAvatar);
+                        Picasso.get().load(response.body().getAnhSanPham()).into(holder.imageViewLaptop);
                     }
                 }
             }
@@ -89,11 +96,10 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
 
         // Set review details
         holder.ratingBar.setRating(donHang.getDanhGia().getSoSao());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy", Locale.getDefault());
         holder.textViewReviewDate.setText(dateFormat.format(donHang.getDanhGia().getThoiGian()));
         holder.textViewDanhGia.setText(donHang.getDanhGia().getNoiDung());
         if (!donHang.getDanhGia().getAnh().isEmpty()) {
-            Picasso.get().load(donHang.getDanhGia().getAnh().get(0)).into(holder.imageViewReview);
         }
     }
 
@@ -106,7 +112,7 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
         ImageView imageViewUserAvatar;
         TextView textViewReviewerName, textViewReviewDate, textViewDanhGia, textViewLaptopModel;
         RatingBar ratingBar;
-        ImageView imageViewReview;
+        ImageView imageViewLaptop;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);
@@ -115,7 +121,7 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
             ratingBar = itemView.findViewById(R.id.ratingBar);
             textViewReviewDate = itemView.findViewById(R.id.textViewReviewDate);
             textViewDanhGia = itemView.findViewById(R.id.textViewDanhGia);
-            imageViewReview = itemView.findViewById(R.id.imageViewLaptop);
+            imageViewLaptop = itemView.findViewById(R.id.imageViewLaptop);
             textViewLaptopModel = itemView.findViewById(R.id.textViewLaptopModel);
         }
     }
