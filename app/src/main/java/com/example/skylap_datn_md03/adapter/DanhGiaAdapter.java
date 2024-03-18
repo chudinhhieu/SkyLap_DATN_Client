@@ -1,26 +1,44 @@
 package com.example.skylap_datn_md03.adapter;
 
+import android.content.Context;
+import android.net.http.UrlRequest;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.skylap_datn_md03.R;
-import com.example.skylap_datn_md03.data.models.DanhGia;
+import com.example.skylap_datn_md03.data.models.Account;
+import com.example.skylap_datn_md03.data.models.DonHang;
+import com.example.skylap_datn_md03.data.models.SanPham;
+import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
+import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
+import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewViewHolder> {
 
-    private final List<DanhGia> reviews;
+    private final List<DonHang> reviews;
+    private final Context context;
+    private final AccountRetrofit accountRetrofit;
+    private final SanPhamRetrofit sanPhamRetrofit;
 
-    public DanhGiaAdapter(List<DanhGia> reviews) {
+    public DanhGiaAdapter(List<DonHang> reviews, Context context, AccountRetrofit accountRetrofit, SanPhamRetrofit sanPhamRetrofit) {
         this.reviews = reviews;
+        this.context = context;
+        this.accountRetrofit = accountRetrofit;
+        this.sanPhamRetrofit = sanPhamRetrofit;
     }
 
     @NonNull
@@ -32,26 +50,52 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
 
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
-        DanhGia review = reviews.get(position);
-//        ToDo:
-//        holder.textViewReviewerName.setText(review.get_id());
-//        holder.ratingBar.setRating(review.getSoSao());
-//        holder.textViewReviewDate.setText(review.getThoiGianDG());
-//
-//        Picasso.get().load(review.getAnhDG()).placeholder(R.drawable.ic_account_ip).into(holder.imageViewUserAvatar);
-//
-//        Picasso.get().load(review.getAnhDG()).placeholder(R.drawable.ic_placeholder_image).into(holder.imageViewLaptop);
-//        holder.textViewLaptopModel.setText(review.get_idSanPham());
+        DonHang donHang = reviews.get(position);
 
-        // Handle Edit Button click here, if necessary
-        holder.editButton.setOnClickListener(new View.OnClickListener() {
+        // Fetch and display user name
+        accountRetrofit.getAccountById(donHang.getIdAccount()).enqueue(new Callback<Account>() {
             @Override
-            public void onClick(View v) {
-                // Handle edit action, e.g., open an edit review activity or dialog
+            public void onResponse(Call<Account> call, Response<Account> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String userName = response.body().getTaiKhoan();
+                    holder.textViewReviewerName.setText(userName);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Account> call, Throwable t) {
+                holder.textViewReviewerName.setText("Unknown User");
             }
         });
-    }
 
+        // Fetch and display product details
+        sanPhamRetrofit.getSanPhamByID(donHang.getIdSanPham()).enqueue(new Callback<SanPham>() {
+            @Override
+            public void onResponse(Call<SanPham> call, Response<SanPham> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String productName = response.body().getTenSanPham();
+                    holder.textViewLaptopModel.setText(productName);
+                    if (!response.body().getAnhSanPham().isEmpty()) {
+                        Picasso.get().load(response.body().getAnhSanPham()).into(holder.imageViewUserAvatar);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SanPham> call, Throwable t) {
+                holder.textViewLaptopModel.setText("Unknown Product");
+            }
+        });
+
+        // Set review details
+        holder.ratingBar.setRating(donHang.getDanhGia().getSoSao());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        holder.textViewReviewDate.setText(dateFormat.format(donHang.getDanhGia().getThoiGian()));
+        holder.textViewDanhGia.setText(donHang.getDanhGia().getNoiDung());
+        if (!donHang.getDanhGia().getAnh().isEmpty()) {
+            Picasso.get().load(donHang.getDanhGia().getAnh().get(0)).into(holder.imageViewReview);
+        }
+    }
 
     @Override
     public int getItemCount() {
@@ -60,12 +104,9 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewUserAvatar;
-        TextView textViewReviewerName;
+        TextView textViewReviewerName, textViewReviewDate, textViewDanhGia, textViewLaptopModel;
         RatingBar ratingBar;
-        TextView textViewReviewDate;
-        ImageView imageViewLaptop;
-        TextView textViewLaptopModel;
-        Button editButton;
+        ImageView imageViewReview;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);
@@ -73,9 +114,10 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
             textViewReviewerName = itemView.findViewById(R.id.textViewReviewerName);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             textViewReviewDate = itemView.findViewById(R.id.textViewReviewDate);
-            imageViewLaptop = itemView.findViewById(R.id.imageViewLaptop);
+            textViewDanhGia = itemView.findViewById(R.id.textViewDanhGia);
+            imageViewReview = itemView.findViewById(R.id.imageViewLaptop);
             textViewLaptopModel = itemView.findViewById(R.id.textViewLaptopModel);
-            editButton = itemView.findViewById(R.id.editButton);
         }
     }
 }
+

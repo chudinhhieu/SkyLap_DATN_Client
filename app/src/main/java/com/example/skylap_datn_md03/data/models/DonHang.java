@@ -3,6 +3,7 @@ package com.example.skylap_datn_md03.data.models;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class DonHang implements Serializable {
     private String _id;
@@ -17,6 +18,54 @@ public class DonHang implements Serializable {
     private String ghiChu;
     private boolean thanhToan;
     private DanhGia danhGia;
+    public static class DanhGia implements Serializable {
+        private int soSao;
+        private List<String> anh = new ArrayList<>();
+        private String noiDung;
+        private Date thoiGian;
+
+        public DanhGia() {
+        }
+
+        public DanhGia(int soSao, List<String> anh, String noiDung, Date thoiGian) {
+            this.soSao = soSao;
+            this.anh = anh;
+            this.noiDung = noiDung;
+            this.thoiGian = thoiGian;
+        }
+
+        public int getSoSao() {
+            return soSao;
+        }
+
+        public void setSoSao(int soSao) {
+            this.soSao = soSao;
+        }
+
+        public List<String> getAnh() {
+            return anh;
+        }
+
+        public void setAnh(List<String> anh) {
+            this.anh = anh;
+        }
+
+        public String getNoiDung() {
+            return noiDung;
+        }
+
+        public void setNoiDung(String noiDung) {
+            this.noiDung = noiDung;
+        }
+
+        public Date getThoiGian() {
+            return thoiGian;
+        }
+
+        public void setThoiGian(Date thoiGian) {
+            this.thoiGian = thoiGian;
+        }
+    }
     public boolean isThanhToan() {
         return thanhToan;
     }
@@ -26,14 +75,6 @@ public class DonHang implements Serializable {
     }
 
     public DonHang() {
-    }
-
-    public DanhGia getDanhGia() {
-        return danhGia;
-    }
-
-    public void setDanhGia(DanhGia danhGia) {
-        this.danhGia = danhGia;
     }
 
     public String get_id() {
@@ -146,5 +187,13 @@ public class DonHang implements Serializable {
                 ", ghiChu='" + ghiChu + '\'' +
                 ", thanhToan=" + thanhToan +
                 '}';
+    }
+
+    public DanhGia getDanhGia() {
+        return danhGia;
+    }
+
+    public void setDanhGia(DanhGia danhGia) {
+        this.danhGia = danhGia;
     }
 }

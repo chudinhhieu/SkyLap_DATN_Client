@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.skylap_datn_md03.R;
+
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.ui.activities.GioHangActivity;
@@ -47,6 +48,15 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
+
+        LinearLayout quanLyDanhGia = view.findViewById(R.id.fmu_qldg);
+        quanLyDanhGia.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), QuanLyDanhGiaActivity.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 

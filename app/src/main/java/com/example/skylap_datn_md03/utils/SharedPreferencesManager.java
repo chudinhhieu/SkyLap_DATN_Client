@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 public class SharedPreferencesManager {
     private static final String SHARED_PREF_NAME = "id_user_auth";
     private static final String KEY_USER_ID = "uid";
+    private static final String KEY_USER_NAME = "userName";
 
     private final SharedPreferences sharedPreferences;
     private final SharedPreferences.Editor editor;
@@ -29,6 +30,18 @@ public class SharedPreferencesManager {
         return sharedPreferences.getString(KEY_USER_ID, "");
     }
 
+    public void saveUserName(String userName) {
+        editor.putString(KEY_USER_NAME, userName).apply();
+    }
+
+    public String getUserName() {
+        return sharedPreferences.getString(KEY_USER_NAME, "****");
+    }
+    public void clearUserData() {
+        editor.remove(KEY_USER_ID);
+        editor.remove(KEY_USER_NAME);
+        editor.apply();
+    }
     public void clearUserId() {
         editor.remove(KEY_USER_ID);
         editor.apply();

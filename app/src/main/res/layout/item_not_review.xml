@@ -14,74 +14,74 @@
         android:padding="16dp">
 
         <ImageView
-            android:id="@+id/imageViewUserAvatar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_account_ip"
+            android:id="@+id/imageUserAvatar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/shop_icon"
             android:layout_alignParentStart="true"/>
 
         <TextView
             android:id="@+id/textViewReviewerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/imageViewUserAvatar"
+            android:layout_toEndOf="@id/imageUserAvatar"
             android:layout_marginStart="10dp"
-            android:text="Nguyen van A"
+            android:text="Ten nguoi danh gia"
             android:textStyle="bold"/>
-        <RatingBar
-            android:id="@+id/ratingBar"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewReviewerName"
-            android:layout_toEndOf="@id/imageViewUserAvatar"
-            android:layout_marginStart="10dp"
-            android:numStars="5"
-            android:rating="3.5"/>
+
 
         <TextView
-            android:id="@+id/textViewReviewDate"
+            android:id="@+id/textViewBoughtDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ratingBar"
-            android:layout_toEndOf="@id/imageViewUserAvatar"
+            android:layout_below="@id/imageUserAvatar"
+            android:layout_toEndOf="@id/imageUserAvatar"
             android:layout_marginStart="10dp"
             android:text="21/02/2023"/>
-        <ImageView
-            android:id="@+id/imageViewLaptop"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/anh_mau"
-            android:layout_below="@id/textViewReviewDate"
-            android:layout_toEndOf="@id/imageViewUserAvatar"
-            />
 
-
-        <TextView
-            android:id="@+id/textViewLaptopModel"
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewReviewDate"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_toEndOf="@id/imageViewLaptop"
-            android:text="Laptop Lenovo Ideapad 3 15IAU7 i3" />
+            android:layout_margin="10dp"
+            android:layout_below="@+id/textViewBoughtDate"
+            android:background="@color/cardview_dark_background"
+            >
+            <RelativeLayout
+                android:id="@+id/cardView_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/silver">
+                <ImageView
+                    android:id="@+id/imageViewLaptop"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/anh_mau"
+                    />
+
+                <TextView
+                    android:id="@+id/textViewLaptopModel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@id/imageViewLaptop"
+                    android:text="Laptop Lenovo Ideapad 3 15IAU7 i3" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+        />
 
         <Button
-            android:id="@+id/editButton"
+            android:id="@+id/button_review"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_height="35dp"
+            android:layout_below="@id/imageUserAvatar"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="99dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/white"
-            android:drawableStart="@drawable/ic_edit"
-            android:drawablePadding="8dp"
-            android:padding="10dp"
-            android:text="Sửa"
-            android:textColor="#ff4f1f"
-            android:textStyle="bold" />
+            android:layout_marginTop="116dp"
+            android:layout_marginEnd="30dp"
+            android:background="@color/main"
 
+            android:text="Đánh giá"
+            android:textColor="@color/white" />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

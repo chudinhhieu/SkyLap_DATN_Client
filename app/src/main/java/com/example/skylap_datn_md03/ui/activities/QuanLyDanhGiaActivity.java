@@ -1,5 +1,7 @@
 package com.example.skylap_datn_md03.ui.activities;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,11 +27,8 @@ public class QuanLyDanhGiaActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         setupViewPager();
     }
-
-
 
     private void setupViewPager() {
         DanhGiaTabsAdapter adapter = new DanhGiaTabsAdapter(this);
