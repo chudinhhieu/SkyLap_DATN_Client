@@ -1,0 +1,1040 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f6f6f6"
+    android:orientation="vertical"
+    tools:context=".ui.activities.ChiTietSanPhamActivity">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:elevation="20dp">
+
+        <ImageView
+            android:id="@+id/actsp_img_back"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="15dp"
+            android:src="@drawable/ic_back_ctsp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Chi tiết sản phẩm"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+    <ScrollView
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp"
+                    android:text="Bộ xử lý"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/silver" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Công nghệ CPU" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_cncpu"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Số nhân" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_sn"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Số luồng" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_sl"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tốc độ CPU" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_tdcpu"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tốc độ tối đa" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_tdtd"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Bộ nhớ đệm" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_bnd"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp"
+                    android:text="Bộ nhớ RAM,Ổ cứng"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/silver" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="RAM" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_ram"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Loại RAM" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_lr"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tốc độ Bus RAM" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_tdbr"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Hỗ trợ Ram tối đa" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_htrtd"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Ổ cứng" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_oc"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp"
+                    android:text="Màn hình"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/silver" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Màn hình" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_mh"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Độ phân giải" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_dpg"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tần số quét" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_tsq"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Độ phủ màu" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_dpm"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Công nghệ màn hình" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_cnmh"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp"
+                    android:text="Đồ họa và Âm thanh"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/silver" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Card màn hình" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_cmh"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Công nghệ âm thanh" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_cnat"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp"
+                    android:text="Cổng kết nối và tính năng mở rộng"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/silver"
+                    android:layout_marginHorizontal="15dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Cổng giao tiếp" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_cgt"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Kết nối không dây" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_knkd"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Webcam" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_wc"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Đèn bàn phím" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_dbp"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Tính năng khác" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_tnk"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp"
+                    android:text="Kích thước và khối lượng"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/silver"
+                    android:layout_marginHorizontal="15dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Kích thước, khối lượng" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_ktkl"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Chất liệu" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_cl"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Màu sắc" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_ms"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@color/white"
+                android:elevation="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="15dp"
+                    android:text="Thông tin khác"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/silver" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Thông tin Pin" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_ttp"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Công suất bộ sạc" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_csbs"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Hệ điều hành" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_hdh"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Bảo hành" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_bh"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Thời điểm ra mắt" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_tdrm"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="15dp"
+                    android:background="#f8f8fc"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="15dp">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Phụ kiện" />
+
+                    <TextView
+                        android:id="@+id/actsp_tv_pk"
+                        android:layout_width="0dp"
+                        android:layout_gravity="top"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
