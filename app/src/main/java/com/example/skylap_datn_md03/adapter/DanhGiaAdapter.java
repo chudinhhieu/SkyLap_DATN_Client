@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.skylap_datn_md03.R;
@@ -19,6 +21,7 @@ import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
+import com.google.android.play.integrity.internal.c;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -99,13 +102,17 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
         SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy", Locale.getDefault());
         holder.textViewReviewDate.setText(dateFormat.format(donHang.getDanhGia().getThoiGian()));
         holder.textViewDanhGia.setText(donHang.getDanhGia().getNoiDung());
-        if (!donHang.getDanhGia().getAnh().isEmpty()) {
+        if ((donHang.getDanhGia().getAnh()) != null) {
+            holder.recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+            ImageAdapter2 imageAdapter = new ImageAdapter2(donHang.getDanhGia().getAnh(), context);
+            holder.recyclerView.setAdapter(imageAdapter);
         }
     }
 
     @Override
     public int getItemCount() {
-        return reviews.size();
+        if (reviews != null) return reviews.size();
+        return 0;
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
@@ -113,6 +120,7 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
         TextView textViewReviewerName, textViewReviewDate, textViewDanhGia, textViewLaptopModel;
         RatingBar ratingBar;
         ImageView imageViewLaptop;
+        RecyclerView recyclerView;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);
@@ -123,6 +131,7 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
             textViewDanhGia = itemView.findViewById(R.id.textViewDanhGia);
             imageViewLaptop = itemView.findViewById(R.id.imageViewLaptop);
             textViewLaptopModel = itemView.findViewById(R.id.textViewLaptopModel);
+            recyclerView = itemView.findViewById(R.id.itrv_anhDG);
         }
     }
 }
