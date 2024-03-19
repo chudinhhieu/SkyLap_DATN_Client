@@ -95,6 +95,7 @@ public class HomeFragment extends Fragment {
         btnGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 startActivity(new Intent(getContext(), GioHangActivity.class));
             }
         });
