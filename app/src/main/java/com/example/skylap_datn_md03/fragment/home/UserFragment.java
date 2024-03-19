@@ -6,6 +6,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +18,7 @@ import android.widget.LinearLayout;
 
 import com.example.skylap_datn_md03.R;
 
+import com.example.skylap_datn_md03.fragment.yeuthich.SanPhamYeuThichFragment;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.ui.activities.GioHangActivity;
@@ -37,7 +40,7 @@ public class UserFragment extends Fragment {
     private ChatRetrofit chatRetrofit;
     private SharedPreferencesManager sharedPreferencesManager;
     private RetrofitService retrofitService;
-    private LinearLayout btnQLDH, btnCXN, btnCGH, btnDGH, btnDG, btnQLDG, btnTroTruyen, btnDangXuat;
+    private LinearLayout btnQLDH, btnCXN, btnCGH, btnDGH, btnDG, btnQLDG, btnQLYT, btnTroTruyen, btnDangXuat;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,7 @@ public class UserFragment extends Fragment {
         btnDGH = view.findViewById(R.id.fmu_dgh);
         btnDG = view.findViewById(R.id.fmu_dg);
         btnQLDG = view.findViewById(R.id.fmu_qldg);
+        btnQLYT = view.findViewById(R.id.fmu_yt);
         btnTroTruyen = view.findViewById(R.id.fmu_troTruyen);
         btnDangXuat = view.findViewById(R.id.fmu_dangXuat);
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
@@ -125,6 +129,16 @@ public class UserFragment extends Fragment {
                 startActivity(new Intent(getContext(), QuanLyDanhGiaActivity.class));
             }
         });
+        btnQLYT.setOnClickListener(v -> {
+            Fragment sanPhamYeuThichFragment = new SanPhamYeuThichFragment();
+
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.main_container, sanPhamYeuThichFragment) // Thay thế Fragment trong container
+                    .addToBackStack(null) // Thêm vào back stack để người dùng có thể quay lại
+                    .commit(); // Hoàn tất giao dịch
+        });
+
+
         btnQLDG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

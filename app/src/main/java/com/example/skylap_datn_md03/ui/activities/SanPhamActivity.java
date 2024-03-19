@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -28,10 +29,12 @@ import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPham;
+import com.example.skylap_datn_md03.data.models.SanPhamYeuThich;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
 import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
+import com.example.skylap_datn_md03.retrofitController.SanPhamYTRetrofit;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
@@ -47,7 +50,7 @@ import retrofit2.Response;
 public class SanPhamActivity extends AppCompatActivity {
     private TextView tvGiaGocSP, tvSlideSP, tvTenSP, tvGiaSP, tvSaoSP, tvDaBan, tvMoTaSP, tvStarSP, tvSLDG, tvXemDG;
     private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh, btn_muangay;
-    private ImageView imgSildeSP, imgBack, imgGioHang;
+    private ImageView imgSildeSP, imgBack, imgGioHang, imgFavorite ;
     private RecyclerView rcvCTDG;
     private RelativeLayout view;
     private LinearLayout btnCTSP, btnCTDG, btnChat, btnThemGH, btnMua;
@@ -121,6 +124,59 @@ public class SanPhamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 logicChat();
+            }
+        });
+        imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userId = sharedPreferencesManager.getUserId();
+                SanPhamYeuThich sanPhamYeuThich = new SanPhamYeuThich(sanPham.get_id(), userId);
+                Log.d("FavoriteClick", "Favorite icon clicked"+ userId +" "+sanPham.get_id() );
+
+                SanPhamYTRetrofit sanPhamYTRetrofit = retrofitService.getRetrofit().create(SanPhamYTRetrofit.class);
+                sanPhamYTRetrofit.checkSanPhamYeuThich(sanPhamYeuThich).enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            boolean isFavorite = response.body();
+                            if (isFavorite) {
+
+                                sanPhamYTRetrofit.deleteSanPhamYeuThich(sanPham.get_id()).enqueue(new Callback<Void>() {
+
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        imgFavorite.setImageResource(R.drawable.ic_chuathich);
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        // Xử lý lỗi
+                                    }
+                                });
+                            } else {
+                                // Sản phẩm chưa yêu thích, thực hiện thêm
+                                sanPhamYTRetrofit.addSanPhamYeuThich(sanPhamYeuThich).enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call, Response<Void> response) {
+                                        imgFavorite.setImageResource(R.drawable.ic_dathich);
+                                        Log.d("FavoriteCheck", "Product ID: " + sanPham.get_id() + ", User ID: " + userId);
+
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<Void> call, Throwable t) {
+                                        // Xử lý lỗi
+                                    }
+                                });
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        // Xử lý lỗi
+                    }
+                });
             }
         });
     }
@@ -390,6 +446,7 @@ public class SanPhamActivity extends AppCompatActivity {
         btn_muangay = findViewById(R.id.btn_muangay);
         progressBar = findViewById(R.id.progressBar);
         view = findViewById(R.id.view);
+        imgFavorite = findViewById(R.id.asp_img_favorite);
     }
 
     private void showLoading() {
