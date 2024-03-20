@@ -55,67 +55,39 @@ public class ChuaDanhGiaAdapter extends RecyclerView.Adapter<ChuaDanhGiaAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         DonHang donHang = donHangList.get(position);
-
-        // Fetch product name using SanPhamRetrofit
         sanPhamRetrofit.getSanPhamByID(donHang.getIdSanPham()).enqueue(new Callback<SanPham>() {
             @Override
             public void onResponse(Call<SanPham> call, Response<SanPham> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    SanPham sanPham = response.body();
-                    holder.textViewLaptopModel.setText(sanPham.getTenSanPham());
-                    // Load product image if available
-                    if (!sanPham.getAnhSanPham().isEmpty()) {
-                        Picasso.get().load(sanPham.getAnhSanPham()).into(holder.imageViewLaptop);
+                    String productName = response.body().getTenSanPham();
+                    holder.ten.setText(productName);
+                    if (!response.body().getAnhSanPham().isEmpty()) {
+                        Picasso.get().load(response.body().getAnhSanPham()).into(holder.anh);
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<SanPham> call, Throwable t) {
-                holder.textViewLaptopModel.setText("Product info not available");
             }
-        });
-
-        if (!donHang.getTrangThai().isEmpty()) {
-            TrangThai trangThai = donHang.getTrangThai().get(donHang.getTrangThai().size() - 1);
-            try {
-                SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault());
-                inputFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-                Date date = inputFormat.parse(trangThai.getThoiGian());
-
-                SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-                String formattedDate = outputFormat.format(date);
-
-                holder.textViewBoughtDate.setText(formattedDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                holder.textViewBoughtDate.setText("Date parsing error");
-            }
-        }
-
-        // Handle the review button click event
-        holder.buttonReview.setOnClickListener(v -> {
-            // Navigate to review submission screen/activity
-
         });
     }
 
     @Override
     public int getItemCount() {
-        return donHangList.size();
+        if (donHangList != null) return donHangList.size();
+        return 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageViewLaptop;
-        TextView textViewLaptopModel, textViewBoughtDate;
-        Button buttonReview;
-
+        ImageView anh;
+        TextView ten;
+        Button button;
         public ViewHolder(View itemView) {
             super(itemView);
-            imageViewLaptop = itemView.findViewById(R.id.imageViewLaptop);
-            textViewLaptopModel = itemView.findViewById(R.id.textViewLaptopModel);
-            textViewBoughtDate = itemView.findViewById(R.id.textViewBoughtDate);
-            buttonReview = itemView.findViewById(R.id.button_review);
+            anh = itemView.findViewById(R.id.itnrv_anh);
+            ten = itemView.findViewById(R.id.itnrv_ten);
+            button = itemView.findViewById(R.id.itnrv_button);
         }
     }
 }
