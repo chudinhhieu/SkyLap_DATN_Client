@@ -1,6 +1,7 @@
 package com.example.skylap_datn_md03.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.data.models.TrangThai;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
+import com.example.skylap_datn_md03.ui.activities.DanhGiaActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
@@ -69,6 +71,15 @@ public class ChuaDanhGiaAdapter extends RecyclerView.Adapter<ChuaDanhGiaAdapter.
 
             @Override
             public void onFailure(Call<SanPham> call, Throwable t) {
+            }
+        });
+        holder.button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DanhGiaActivity.class);
+                intent.putExtra("idDonHang", donHang.get_id());
+                intent.putExtra("idSanPham", donHang.getIdSanPham());
+                context.startActivity(intent);
             }
         });
     }
