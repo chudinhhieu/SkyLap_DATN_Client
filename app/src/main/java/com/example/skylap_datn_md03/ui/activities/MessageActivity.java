@@ -61,6 +61,7 @@ public class MessageActivity extends AppCompatActivity {
     private messageAdapter adapter;
     private List<Message> list;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,66 +83,69 @@ public class MessageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText mess = message_ativity_sentMess.findViewById(R.id.edt_sent_message);
 
-                if (mess.length() > 0){
+                if (mess.length() > 0) {
                     messageRetrofit = retrofitService.retrofit.create(MessageRetrofit.class);
-                     String userId = sharedPreferencesManager.getUserId();
-                        Message message = new Message();
-                        message.setIdAccount(userId);
-                        message.setContent(mess.getText().toString().trim());
-                        message.setIdChat(conversationKey);
+                    String userId = sharedPreferencesManager.getUserId();
+                    Message message = new Message();
+                    message.setIdAccount(userId);
+                    message.setContent(mess.getText().toString().trim());
+                    message.setIdChat(conversationKey);
 
-                        Call<Void> themTinNhan = messageRetrofit.CreateMess(message);
-                        themTinNhan.enqueue(new Callback<Void>() {
-                            @Override
-                            public void onResponse(Call<Void> call, Response<Void> response) {
-                                if (response.code() == 200){
-                                    Log.d("err_message_activity", "ok : " + response.body());
-                                    mess.setText("");
-                                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    imm.hideSoftInputFromWindow(mess.getWindowToken(), 0);
-                                }
+                    Call<Void> themTinNhan = messageRetrofit.CreateMess(message);
+                    themTinNhan.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            if (response.code() == 200) {
+                                Log.d("err_message_activity", "ok : " + response.body());
+                                mess.setText("");
+                                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(mess.getWindowToken(), 0);
                             }
+                        }
 
-                            @Override
-                            public void onFailure(Call<Void> call, Throwable t) {
-                                Log.d("err_message_activity", "onFailure: " + t.getMessage());
-                            }
-                        });
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.d("err_message_activity", "onFailure: " + t.getMessage());
+                        }
+                    });
                 }
 
             }
         });
 
     }
-        public void intitUi () {
-            message_ativity_sentMess = findViewById(R.id.message_ativity_sentMess);
-            message_toolBar = findViewById(R.id.message_toolBar);
-            message_ativity_loading = findViewById(R.id.message_ativity_loading);
-            message_ativity_rcv_listmest = findViewById(R.id.message_ativity_rcv_listmest);
-        }
 
-
-        private void Getdata () {
-            mDatabase = FirebaseDatabase.getInstance().getReference("messages");
-            mDatabase.orderByChild("idChat").equalTo(conversationKey).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    list = new ArrayList<>();
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        Message mess = data.getValue(Message.class);
-                        list.add( mess);
-                    }
-                    adapter = new messageAdapter(list, MessageActivity.this);
-                    message_ativity_rcv_listmest.setLayoutManager(new LinearLayoutManager(MessageActivity.this));
-                    message_ativity_rcv_listmest.setAdapter(adapter);
-                    message_ativity_rcv_listmest.scrollToPosition(list.size()-1);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.d("err", "onCancelled: " + error);
-                }
-            });
-        }
-
+    public void intitUi() {
+        message_ativity_sentMess = findViewById(R.id.message_ativity_sentMess);
+        message_toolBar = findViewById(R.id.message_toolBar);
+        message_ativity_loading = findViewById(R.id.message_ativity_loading);
+        message_ativity_rcv_listmest = findViewById(R.id.message_ativity_rcv_listmest);
     }
+
+
+    private void Getdata() {
+        mDatabase = FirebaseDatabase.getInstance().getReference("messages");
+        mDatabase.orderByChild("idChat").equalTo(conversationKey).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list = new ArrayList<>();
+                for (DataSnapshot data : snapshot.getChildren()) {
+                    Message mess = data.getValue(Message.class);
+
+                    list.add(mess);
+
+                }
+                adapter = new messageAdapter(list, MessageActivity.this);
+                message_ativity_rcv_listmest.setLayoutManager(new LinearLayoutManager(MessageActivity.this));
+                message_ativity_rcv_listmest.setAdapter(adapter);
+                message_ativity_rcv_listmest.scrollToPosition(list.size() - 1);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.d("err", "onCancelled: " + error);
+            }
+        });
+    }
+
+}

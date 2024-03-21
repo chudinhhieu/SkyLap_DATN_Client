@@ -3,85 +3,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="8dp"
-    android:outlineAmbientShadowColor="@color/cardview_dark_background">
+    android:layout_marginTop="5dp"
+    android:outlineAmbientShadowColor="@color/cardview_dark_background"
+    app:cardElevation="4dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/imageUserAvatar"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/shop_icon"
-            android:layout_alignParentStart="true"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textViewReviewerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/imageUserAvatar"
-            android:layout_marginStart="10dp"
-            android:text="Ten nguoi danh gia"
-            android:textStyle="bold"/>
+            <ImageView
+                android:id="@+id/itnrv_anh"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"
+                android:background="@color/white" />
 
-
-        <TextView
-            android:id="@+id/textViewBoughtDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imageUserAvatar"
-            android:layout_toEndOf="@id/imageUserAvatar"
-            android:layout_marginStart="10dp"
-            android:text="21/02/2023"/>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_below="@+id/textViewBoughtDate"
-            android:background="@color/cardview_dark_background"
-            >
-            <RelativeLayout
-                android:id="@+id/cardView_item"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/itnrv_ten"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:background="@color/silver">
-                <ImageView
-                    android:id="@+id/imageViewLaptop"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/anh_mau"
-                    />
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/itnrv_anh"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+        </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/textViewLaptopModel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@id/imageViewLaptop"
-                    android:text="Laptop Lenovo Ideapad 3 15IAU7 i3" />
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-        />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/black500" />
 
-        <Button
-            android:id="@+id/button_review"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_below="@id/imageUserAvatar"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="116dp"
-            android:layout_marginEnd="30dp"
-            android:background="@color/main"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            android:text="Đánh giá"
-            android:textColor="@color/white" />
-    </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="Bạn còn 7 ngày để đánh giá"
+                android:textSize="13sp"/>
+
+            <Button
+                android:id="@+id/itnrv_button"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/border_view7dp"
+                android:text="Đánh giá"
+                android:textSize="13sp" />
+        </RelativeLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

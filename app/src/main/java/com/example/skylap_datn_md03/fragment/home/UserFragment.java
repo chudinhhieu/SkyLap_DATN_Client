@@ -6,8 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +13,14 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.skylap_datn_md03.R;
 
-import com.example.skylap_datn_md03.fragment.yeuthich.SanPhamYeuThichFragment;
+import com.example.skylap_datn_md03.data.models.Account;
+import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
+import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.ui.activities.GioHangActivity;
 import com.example.skylap_datn_md03.ui.activities.MessageActivity;
@@ -28,6 +29,7 @@ import com.example.skylap_datn_md03.ui.activities.QuanLyDonHangActivity;
 import com.example.skylap_datn_md03.ui.activities.SetingActivity;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
+import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -38,9 +40,11 @@ public class UserFragment extends Fragment {
     private ImageView btnCaiDat, btnGioHang;
     private FrameLayout btnChat;
     private ChatRetrofit chatRetrofit;
+    private ImageView imgAvatar;
+    private TextView tvHoTen;
     private SharedPreferencesManager sharedPreferencesManager;
     private RetrofitService retrofitService;
-    private LinearLayout btnQLDH, btnCXN, btnCGH, btnDGH, btnDG, btnQLDG, btnQLYT, btnTroTruyen, btnDangXuat;
+    private LinearLayout btnQLDH, btnCXN, btnCGH, btnDGH, btnDG, btnQLDG, btnTroTruyen, btnDangXuat;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,18 +73,19 @@ public class UserFragment extends Fragment {
         btnChat = view.findViewById(R.id.fmu_chat);
         btnGioHang = view.findViewById(R.id.fmu_gioHang);
         btnCaiDat = view.findViewById(R.id.fmu_setting);
+        imgAvatar = view.findViewById(R.id.fmu_avatar);
+        tvHoTen = view.findViewById(R.id.fmu_hoTen);
         btnQLDH = view.findViewById(R.id.fmu_qldh);
         btnCXN = view.findViewById(R.id.fmu_cxn);
         btnCGH = view.findViewById(R.id.fmu_cgh);
         btnDGH = view.findViewById(R.id.fmu_dgh);
         btnDG = view.findViewById(R.id.fmu_dg);
         btnQLDG = view.findViewById(R.id.fmu_qldg);
-        btnQLYT = view.findViewById(R.id.fmu_yt);
         btnTroTruyen = view.findViewById(R.id.fmu_troTruyen);
         btnDangXuat = view.findViewById(R.id.fmu_dangXuat);
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         retrofitService = new RetrofitService();
-
+        getUser();
         btnGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,16 +134,6 @@ public class UserFragment extends Fragment {
                 startActivity(new Intent(getContext(), QuanLyDanhGiaActivity.class));
             }
         });
-        btnQLYT.setOnClickListener(v -> {
-            Fragment sanPhamYeuThichFragment = new SanPhamYeuThichFragment();
-
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.main_container, sanPhamYeuThichFragment) // Thay thế Fragment trong container
-                    .addToBackStack(null) // Thêm vào back stack để người dùng có thể quay lại
-                    .commit(); // Hoàn tất giao dịch
-        });
-
-
         btnQLDG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,6 +146,35 @@ public class UserFragment extends Fragment {
                 SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getContext());
                 sharedPreferencesManager.clearUserId();
                 startActivity(new Intent(getContext(), LoginActivity.class));
+            }
+        });
+
+    }
+
+    private void getUser() {
+        AccountRetrofit accountRetrofit = retrofitService.retrofit.create(AccountRetrofit.class);
+
+        accountRetrofit.getAccountById(sharedPreferencesManager.getUserId()).enqueue(new Callback<Account>() {
+            @Override
+            public void onResponse(Call<Account> call, Response<Account> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    String hoTen = response.body().getHoTen();
+                    String userName = response.body().getTaiKhoan();
+                    if (hoTen == null){
+                        tvHoTen.setText(userName);
+                    }else {
+                        tvHoTen.setText(hoTen);
+                    }
+                    if (response.body().getAvatar() == null) {
+                        Picasso.get().load(R.drawable.avatar_main).into(imgAvatar);
+                    } else {
+                        Picasso.get().load(response.body().getAvatar()).into(imgAvatar);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Account> call, Throwable t) {
             }
         });
     }

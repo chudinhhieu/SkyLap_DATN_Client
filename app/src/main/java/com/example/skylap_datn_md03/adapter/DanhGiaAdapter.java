@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.Account;
 import com.example.skylap_datn_md03.data.models.DonHang;
@@ -17,6 +21,7 @@ import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
+import com.google.android.play.integrity.internal.c;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -59,6 +64,11 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
                 if (response.isSuccessful() && response.body() != null) {
                     String userName = response.body().getTaiKhoan();
                     holder.textViewReviewerName.setText(userName);
+                    if (response.body().getAvatar() == null) {
+                        Picasso.get().load(R.drawable.avatar_main).into(holder.imageViewUserAvatar);
+                    } else {
+                        Picasso.get().load(response.body().getAvatar()).into(holder.imageViewUserAvatar);
+                    }
                 }
             }
 
@@ -76,7 +86,7 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
                     String productName = response.body().getTenSanPham();
                     holder.textViewLaptopModel.setText(productName);
                     if (!response.body().getAnhSanPham().isEmpty()) {
-                        Picasso.get().load(response.body().getAnhSanPham()).into(holder.imageViewUserAvatar);
+                        Picasso.get().load(response.body().getAnhSanPham()).into(holder.imageViewLaptop);
                     }
                 }
             }
@@ -89,24 +99,28 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
 
         // Set review details
         holder.ratingBar.setRating(donHang.getDanhGia().getSoSao());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy", Locale.getDefault());
         holder.textViewReviewDate.setText(dateFormat.format(donHang.getDanhGia().getThoiGian()));
         holder.textViewDanhGia.setText(donHang.getDanhGia().getNoiDung());
-        if (!donHang.getDanhGia().getAnh().isEmpty()) {
-            Picasso.get().load(donHang.getDanhGia().getAnh().get(0)).into(holder.imageViewReview);
+        if ((donHang.getDanhGia().getAnh()) != null) {
+            holder.recyclerView.setLayoutManager(new GridLayoutManager(context, 3));
+            ImageAdapter2 imageAdapter = new ImageAdapter2(donHang.getDanhGia().getAnh(), context);
+            holder.recyclerView.setAdapter(imageAdapter);
         }
     }
 
     @Override
     public int getItemCount() {
-        return reviews.size();
+        if (reviews != null) return reviews.size();
+        return 0;
     }
 
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
         ImageView imageViewUserAvatar;
         TextView textViewReviewerName, textViewReviewDate, textViewDanhGia, textViewLaptopModel;
         RatingBar ratingBar;
-        ImageView imageViewReview;
+        ImageView imageViewLaptop;
+        RecyclerView recyclerView;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);
@@ -115,8 +129,9 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
             ratingBar = itemView.findViewById(R.id.ratingBar);
             textViewReviewDate = itemView.findViewById(R.id.textViewReviewDate);
             textViewDanhGia = itemView.findViewById(R.id.textViewDanhGia);
-            imageViewReview = itemView.findViewById(R.id.imageViewLaptop);
+            imageViewLaptop = itemView.findViewById(R.id.imageViewLaptop);
             textViewLaptopModel = itemView.findViewById(R.id.textViewLaptopModel);
+            recyclerView = itemView.findViewById(R.id.itrv_anhDG);
         }
     }
 }

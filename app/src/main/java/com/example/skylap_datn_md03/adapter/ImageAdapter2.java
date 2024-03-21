@@ -14,16 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.skylap_datn_md03.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
+public class ImageAdapter2 extends RecyclerView.Adapter<ImageAdapter2.ImageViewHolder> {
 
-    private ArrayList<Uri> imageList;
+    private List<String> imageList;
     private Context context;
 
-    public ImageAdapter(ArrayList<Uri> imageList, Context context) {
+    public ImageAdapter2(List<String> imageList, Context context) {
         this.imageList = imageList;
         this.context = context;
     }
@@ -37,8 +38,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        Uri imageUri = imageList.get(position);
-        Glide.with(context).load(imageUri).into(holder.imageView);
+        Picasso.get().load(imageList.get(position)).into(holder.imageView);
+
     }
 
     @Override
