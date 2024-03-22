@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.example.skylap_datn_md03.R;
+import com.example.skylap_datn_md03.data.models.FavoriteResponse;
 import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPham;
@@ -58,9 +59,11 @@ public class SanPhamActivity extends AppCompatActivity {
     private ViewFlipper viewFlipper;
     private ChatRetrofit chatRetrofit;
     private SanPham sanPham;
+    private SanPhamYeuThich sanPhamYeuThich;
     private Handler slideHandler;
 
     private SanPhamRetrofit sanPhamRetrofit;
+    private SanPhamYTRetrofit sanPhamYTRetrofit;
     private RetrofitService retrofitService;
     private ProgressBar progressBar;
 
@@ -76,7 +79,9 @@ public class SanPhamActivity extends AppCompatActivity {
         initView();
         sharedPreferencesManager = new SharedPreferencesManager(this);
         retrofitService = new RetrofitService();
+        sanPhamYTRetrofit = retrofitService.getRetrofit().create(SanPhamYTRetrofit.class);
         getSanPham();
+        checkFavoriteStatus();
         slideHandler = new Handler(Looper.getMainLooper());
         btn_muangay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,54 +134,8 @@ public class SanPhamActivity extends AppCompatActivity {
         imgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String userId = sharedPreferencesManager.getUserId();
-                SanPhamYeuThich sanPhamYeuThich = new SanPhamYeuThich(sanPham.get_id(), userId);
-                Log.d("FavoriteClick", "Favorite icon clicked"+ userId +" "+sanPham.get_id() );
-
-                SanPhamYTRetrofit sanPhamYTRetrofit = retrofitService.getRetrofit().create(SanPhamYTRetrofit.class);
-                sanPhamYTRetrofit.checkSanPhamYeuThich(sanPhamYeuThich).enqueue(new Callback<Boolean>() {
-                    @Override
-                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                        if (response.isSuccessful() && response.body() != null) {
-                            boolean isFavorite = response.body();
-                            if (isFavorite) {
-
-                                sanPhamYTRetrofit.deleteSanPhamYeuThich(sanPham.get_id()).enqueue(new Callback<Void>() {
-
-                                    @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
-                                        imgFavorite.setImageResource(R.drawable.ic_chuathich);
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
-                                        // Xử lý lỗi
-                                    }
-                                });
-                            } else {
-                                // Sản phẩm chưa yêu thích, thực hiện thêm
-                                sanPhamYTRetrofit.addSanPhamYeuThich(sanPhamYeuThich).enqueue(new Callback<Void>() {
-                                    @Override
-                                    public void onResponse(Call<Void> call, Response<Void> response) {
-                                        imgFavorite.setImageResource(R.drawable.ic_dathich);
-                                        Log.d("FavoriteCheck", "Product ID: " + sanPham.get_id() + ", User ID: " + userId);
-
-                                    }
-
-                                    @Override
-                                    public void onFailure(Call<Void> call, Throwable t) {
-                                        // Xử lý lỗi
-                                    }
-                                });
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Boolean> call, Throwable t) {
-                        // Xử lý lỗi
-                    }
-                });
+                Log.d("click","clicked");
+                toggleFavoriteStatus();
             }
         });
     }
@@ -455,6 +414,96 @@ public class SanPhamActivity extends AppCompatActivity {
 
     private void hideLoading() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    private void checkFavoriteStatus() {
+        SanPhamYTRetrofit sanPhamYTRetrofit = retrofitService.getRetrofit().create(SanPhamYTRetrofit.class);
+        String userId = sharedPreferencesManager.getUserId();
+        String idSanPham = getIntent().getStringExtra("idSanPham");
+        Call<FavoriteResponse> call = sanPhamYTRetrofit.checkSanPhamYeuThich(new SanPhamYeuThich(idSanPham, userId));
+        Log.d("SanPhamActivity", "Checking favorite status for userId: " + userId + ", idSanPham: " + idSanPham);
+        call.enqueue(new Callback<FavoriteResponse>() {
+            @Override
+            public void onResponse(Call<FavoriteResponse> call, Response<FavoriteResponse> response) {
+                Log.d("checkFavoriteStatus", "Response: " + response.body());
+
+                if (response.isSuccessful() && response.body() != null) {
+                    boolean isFavorite = response.body().isSuccess();
+                    if (isFavorite) {
+                        imgFavorite.setImageResource(R.drawable.ic_dathich);
+                    } else {
+                        imgFavorite.setImageResource(R.drawable.ic_chuathich);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoriteResponse> call, Throwable t) {
+                Log.e("checkFavoriteStatus", "Error: " + t.getMessage());
+            }
+        });
+    }
+
+    private void toggleFavoriteStatus() {
+        String userId = sharedPreferencesManager.getUserId();
+        String idSanPham = getIntent().getStringExtra("idSanPham");
+        SanPhamYeuThich sanPhamYeuThich = new SanPhamYeuThich(idSanPham, userId);
+
+        SanPhamYTRetrofit sanPhamYTRetrofit = retrofitService.getRetrofit().create(SanPhamYTRetrofit.class);
+        sanPhamYTRetrofit.checkSanPhamYeuThich(sanPhamYeuThich).enqueue(new Callback<FavoriteResponse>() {
+            @Override
+            public void onResponse(Call<FavoriteResponse> call, Response<FavoriteResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    boolean isFavorite = response.body().isSuccess();
+                    if (isFavorite) {
+                        performDeleteFavorite(sanPhamYeuThich.get_id());
+                    } else {
+                        performAddFavorite(sanPhamYeuThich);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoriteResponse> call, Throwable t) {
+                Log.e("FavoriteError", "Error toggling favorite status: " + t.getMessage());
+            }
+        });
+    }
+
+
+
+    private void performAddFavorite(SanPhamYeuThich sanPhamYeuThich) {
+        sanPhamYTRetrofit.addSanPhamYeuThich(sanPhamYeuThich).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                imgFavorite.setImageResource(R.drawable.ic_dathich);
+                CustomToast.showToast(SanPhamActivity.this, "Added to favorites");
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("performAddFavorite", "Error: " + t.getMessage());
+            }
+        });
+    }
+
+    private void performDeleteFavorite(String favoriteId) {
+        if (sanPhamYTRetrofit != null) {
+            sanPhamYTRetrofit.deleteSanPhamYeuThich(favoriteId).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    imgFavorite.setImageResource(R.drawable.ic_chuathich);
+                    CustomToast.showToast(SanPhamActivity.this, "Removed from favorites");
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Log.e("performDeleteFavorite", "Error: " + t.getMessage());
+                }
+            });
+        } else {
+            Log.e("SanPhamActivity", "sanPhamYTRetrofit is null");
+        }
     }
 
 }
