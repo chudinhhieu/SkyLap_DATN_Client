@@ -25,6 +25,8 @@ public interface DonHangRetrofit {
 
     @GET("api/donHang/cho-giao-hang/{id}")
     Call<List<DonHang>>layDonHangChoGiaoHang(@Path("id") String id);
+    @GET("api/donHang/dang-giao-hang/{id}")
+    Call<List<DonHang>>layDonHangDangGiaoHang(@Path("id") String id);
     @GET("api/donHang/da-giao-hang/{id}")
     Call<List<DonHang>>layDonHangDaGiaoHang(@Path("id") String id);
 

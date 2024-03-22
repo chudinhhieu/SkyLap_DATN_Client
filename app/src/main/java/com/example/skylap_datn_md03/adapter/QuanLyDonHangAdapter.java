@@ -65,6 +65,10 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
                         holder.moTa.setText("Đơn hàng của bạn đang chờ xác nhận và chuẩn bị hàng!");
                         break;
                     case "Chờ giao hàng":
+                        holder.button.setText("Liên hệ Shop");
+                        holder.moTa.setText("Đơn hàng của bạn đang chờ giao hàng!");
+                        break;
+                    case "Đang giao hàng":
                         holder.button.setText("Đã nhận hàng");
                         holder.moTa.setText("Đơn hàng của bạn đang chờ giao hàng!");
                         break;

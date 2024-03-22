@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,9 @@ import com.example.skylap_datn_md03.ui.activities.QuanLyDonHangActivity;
 import com.example.skylap_datn_md03.ui.activities.SetingActivity;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import retrofit2.Call;
@@ -37,6 +41,7 @@ import retrofit2.Response;
 
 
 public class UserFragment extends Fragment {
+    public static final String TAG = UserFragment.class.getName();
     private ImageView btnCaiDat, btnGioHang;
     private FrameLayout btnChat;
     private ChatRetrofit chatRetrofit;
@@ -144,10 +149,26 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getContext());
+                huyDangKyTopicFirebase(sharedPreferencesManager.getUserId());
                 sharedPreferencesManager.clearUserId();
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
+
+    }
+
+    private void huyDangKyTopicFirebase(String userId) {
+        FirebaseMessaging.getInstance().unsubscribeFromTopic(userId)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Unsubscribed";
+                        if (!task.isSuccessful()) {
+                            msg = "Unsubscribe failed";
+                        }
+                        Log.d(TAG, msg);
+                    }
+                });
 
     }
 

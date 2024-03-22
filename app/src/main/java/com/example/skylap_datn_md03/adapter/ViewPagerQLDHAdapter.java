@@ -8,6 +8,7 @@ import com.example.skylap_datn_md03.fragment.donhang.ChoGiaoHangFragment;
 import com.example.skylap_datn_md03.fragment.donhang.ChoXacNhanFragment;
 import com.example.skylap_datn_md03.fragment.donhang.DaGiaoHangFragment;
 import com.example.skylap_datn_md03.fragment.donhang.DaHuyFragment;
+import com.example.skylap_datn_md03.fragment.donhang.DangGiaoHangFragment;
 
 public class ViewPagerQLDHAdapter extends FragmentPagerAdapter {
 
@@ -23,8 +24,10 @@ public class ViewPagerQLDHAdapter extends FragmentPagerAdapter {
             case 1:
                 return new ChoGiaoHangFragment();
             case 2:
-                return new DaGiaoHangFragment();
+                return new DangGiaoHangFragment();
             case 3:
+                return new DaGiaoHangFragment();
+            case 4:
                 return new DaHuyFragment();
             default:
                 return null;
@@ -33,13 +36,13 @@ public class ViewPagerQLDHAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return 5;
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        String title ="";
-        switch (position){
+        String title = "";
+        switch (position) {
             case 0:
                 title = "Chờ xác nhận";
                 break;
@@ -47,12 +50,15 @@ public class ViewPagerQLDHAdapter extends FragmentPagerAdapter {
                 title = "Chờ giao hàng";
                 break;
             case 2:
-                title = "Đã giao hàng";
+                title = "Đang giao hàng";
                 break;
             case 3:
+                title = "Đã giao hàng";
+                break;
+            case 4:
                 title = "Đã hủy";
                 break;
         }
-        return  title;
+        return title;
     }
 }

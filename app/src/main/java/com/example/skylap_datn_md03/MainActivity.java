@@ -11,21 +11,27 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
 
 import android.widget.Button;
+import android.widget.Toast;
 
 
 import com.example.skylap_datn_md03.fragment.home.HomeFragment;
 import com.example.skylap_datn_md03.fragment.home.ThongBaoFragment;
 import com.example.skylap_datn_md03.fragment.home.UserFragment;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
+import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private int id_itemSelected = R.id.menu_nav_home;
     private SharedPreferences sharedPreferences;
     private boolean canCommitFragmentTransaction = true;
-
+    public static final String TAG = MainActivity.class.getName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,33 @@ public class MainActivity extends AppCompatActivity {
                 .requestEmail().build();
         googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
         unitUI();
+        dangKyTopicFirebase();
+    }
+
+    private void dangKyTopicFirebase() {
+        FirebaseMessaging.getInstance().subscribeToTopic("skylap")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Subscribed";
+                        if (!task.isSuccessful()) {
+                            msg = "Subscribe failed";
+                        }
+                        Log.d(TAG, msg);
+                    }
+                });
+        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(this);
+        FirebaseMessaging.getInstance().subscribeToTopic(sharedPreferencesManager.getUserId())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "Subscribed";
+                        if (!task.isSuccessful()) {
+                            msg = "Subscribe failed";
+                        }
+                        Log.d(TAG, msg);
+                    }
+                });
     }
 
     private void logoutUser() {
