@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.example.skylap_datn_md03.R;
 
 import com.example.skylap_datn_md03.data.models.Account;
+import com.example.skylap_datn_md03.fragment.yeuthich.DanhSachYeuThichActivity;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
 import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
@@ -44,7 +45,7 @@ public class UserFragment extends Fragment {
     private TextView tvHoTen;
     private SharedPreferencesManager sharedPreferencesManager;
     private RetrofitService retrofitService;
-    private LinearLayout btnQLDH, btnCXN, btnCGH, btnDGH, btnDG, btnQLDG, btnTroTruyen, btnDangXuat;
+    private LinearLayout btnQLDH, btnCXN, btnCGH, btnDGH, btnDG, btnQLDG, btnYT, btnTroTruyen, btnDangXuat;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class UserFragment extends Fragment {
         imgAvatar = view.findViewById(R.id.fmu_avatar);
         tvHoTen = view.findViewById(R.id.fmu_hoTen);
         btnQLDH = view.findViewById(R.id.fmu_qldh);
+        btnYT = view.findViewById(R.id.fmu_yt);
         btnCXN = view.findViewById(R.id.fmu_cxn);
         btnCGH = view.findViewById(R.id.fmu_cgh);
         btnDGH = view.findViewById(R.id.fmu_dgh);
@@ -108,6 +110,13 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), QuanLyDonHangActivity.class));
+            }
+        });
+        btnYT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), DanhSachYeuThichActivity.class);
+                startActivity(intent);
             }
         });
         btnCXN.setOnClickListener(new View.OnClickListener() {

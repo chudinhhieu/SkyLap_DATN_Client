@@ -90,4 +90,10 @@ public class SanPhamYeuThichAdapter extends RecyclerView.Adapter<SanPhamYeuThich
         NumberFormat numberFormat = NumberFormat.getInstance();
         return numberFormat.format(price);
     }
+    public void updateData(List<SanPham> newList) {
+        list.clear();
+        list.addAll(newList);
+        notifyDataSetChanged();
+    }
+
 }

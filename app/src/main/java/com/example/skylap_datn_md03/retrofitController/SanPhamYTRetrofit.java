@@ -13,15 +13,15 @@ import retrofit2.http.Path;
 
 public interface SanPhamYTRetrofit {
 
-    @GET("sanPhamYT/{idAccount}")
+    @GET("api/yeuThich/{idAccount}")
     Call<List<SanPhamYeuThich>> getSanPhamYeuThichByAccount(@Path("idAccount") String idAccount);
 
-    @POST("sanPhamYT/check")
+    @POST("api/sanPhamYT/check")
     Call<Boolean> checkSanPhamYeuThich(@Body SanPhamYeuThich sanPhamYeuThich);
 
-    @POST("sanPhamYT")
+    @POST("api/sanPhamYT")
     Call<Void> addSanPhamYeuThich(@Body SanPhamYeuThich sanPhamYeuThich);
 
-    @DELETE("sanPhamYT/delete/{id}")
+    @DELETE("api/sanPhamYT/delete/{id}")
     Call<Void> deleteSanPhamYeuThich(@Path("id") String id);
 }
