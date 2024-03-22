@@ -1,6 +1,7 @@
 package com.example.skylap_datn_md03.retrofitController;
 
 import com.example.skylap_datn_md03.data.models.FavoriteResponse;
+import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPhamYeuThich;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface SanPhamYTRetrofit {
 
 
     @POST("api/yeuThich/")
-    Call<Void> addSanPhamYeuThich(@Body SanPhamYeuThich sanPhamYeuThich);
+    Call<MyAuth> addSanPhamYeuThich(@Body SanPhamYeuThich sanPhamYeuThich);
 
     @DELETE("api/yeuThich/delete/{id}")
     Call<Void> deleteSanPhamYeuThich(@Path("id") String _id);

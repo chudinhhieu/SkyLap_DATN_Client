@@ -171,8 +171,7 @@
                         android:id="@+id/asp_img_favorite"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_chuathich" />
+                        android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
                 <LinearLayout
