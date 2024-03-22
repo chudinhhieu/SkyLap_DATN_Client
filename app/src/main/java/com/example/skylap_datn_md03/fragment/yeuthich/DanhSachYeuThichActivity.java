@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +39,7 @@ public class DanhSachYeuThichActivity extends AppCompatActivity {
         String userId = sharedPreferencesManager.getUserId();
 
         rcvDanhSachYeuThich = findViewById(R.id.rcvDanhSachYeuThich);
-        rcvDanhSachYeuThich.setLayoutManager(new LinearLayoutManager(this));
+        rcvDanhSachYeuThich.setLayoutManager(new GridLayoutManager(this, 2));
         sanPhamYeuThichAdapter = new SanPhamYeuThichAdapter(this, new ArrayList<>());
         rcvDanhSachYeuThich.setAdapter(sanPhamYeuThichAdapter);
 
