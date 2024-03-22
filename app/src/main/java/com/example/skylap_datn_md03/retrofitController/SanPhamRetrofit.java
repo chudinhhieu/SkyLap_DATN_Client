@@ -21,5 +21,4 @@ public interface SanPhamRetrofit {
     Call<List<SanPham>> getListSanPhamByIdNhaSX(@Path("cpu") String cpu);
 
 
-
 }

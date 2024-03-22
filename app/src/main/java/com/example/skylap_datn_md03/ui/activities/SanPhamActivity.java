@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.widget.Button;
@@ -25,13 +26,16 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.example.skylap_datn_md03.R;
+import com.example.skylap_datn_md03.data.models.FavoriteResponse;
 import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPham;
+import com.example.skylap_datn_md03.data.models.SanPhamYeuThich;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
 import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
+import com.example.skylap_datn_md03.retrofitController.SanPhamYTRetrofit;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
@@ -47,7 +51,7 @@ import retrofit2.Response;
 public class SanPhamActivity extends AppCompatActivity {
     private TextView tvGiaGocSP, tvSlideSP, tvTenSP, tvGiaSP, tvSaoSP, tvDaBan, tvMoTaSP, tvStarSP, tvSLDG, tvXemDG;
     private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh, btn_muangay;
-    private ImageView imgSildeSP, imgBack, imgGioHang;
+    private ImageView imgSildeSP, imgBack, imgGioHang, imgFavorite ;
     private RecyclerView rcvCTDG;
     private RelativeLayout view;
     private LinearLayout btnCTSP, btnCTDG, btnChat, btnThemGH, btnMua;
@@ -55,9 +59,11 @@ public class SanPhamActivity extends AppCompatActivity {
     private ViewFlipper viewFlipper;
     private ChatRetrofit chatRetrofit;
     private SanPham sanPham;
+    private SanPhamYeuThich sanPhamYeuThich;
     private Handler slideHandler;
 
     private SanPhamRetrofit sanPhamRetrofit;
+    private SanPhamYTRetrofit sanPhamYTRetrofit;
     private RetrofitService retrofitService;
     private ProgressBar progressBar;
 
@@ -73,7 +79,9 @@ public class SanPhamActivity extends AppCompatActivity {
         initView();
         sharedPreferencesManager = new SharedPreferencesManager(this);
         retrofitService = new RetrofitService();
+        sanPhamYTRetrofit = retrofitService.getRetrofit().create(SanPhamYTRetrofit.class);
         getSanPham();
+        checkFavoriteStatus();
         slideHandler = new Handler(Looper.getMainLooper());
         btn_muangay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +129,13 @@ public class SanPhamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 logicChat();
+            }
+        });
+        imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("click","clicked");
+                toggleFavoriteStatus();
             }
         });
     }
@@ -390,6 +405,7 @@ public class SanPhamActivity extends AppCompatActivity {
         btn_muangay = findViewById(R.id.btn_muangay);
         progressBar = findViewById(R.id.progressBar);
         view = findViewById(R.id.view);
+        imgFavorite = findViewById(R.id.asp_img_favorite);
     }
 
     private void showLoading() {
@@ -398,6 +414,96 @@ public class SanPhamActivity extends AppCompatActivity {
 
     private void hideLoading() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    private void checkFavoriteStatus() {
+        SanPhamYTRetrofit sanPhamYTRetrofit = retrofitService.getRetrofit().create(SanPhamYTRetrofit.class);
+        String userId = sharedPreferencesManager.getUserId();
+        String idSanPham = getIntent().getStringExtra("idSanPham");
+        Call<FavoriteResponse> call = sanPhamYTRetrofit.checkSanPhamYeuThich(new SanPhamYeuThich(idSanPham, userId));
+        Log.d("SanPhamActivity", "Checking favorite status for userId: " + userId + ", idSanPham: " + idSanPham);
+        call.enqueue(new Callback<FavoriteResponse>() {
+            @Override
+            public void onResponse(Call<FavoriteResponse> call, Response<FavoriteResponse> response) {
+                Log.d("checkFavoriteStatus", "Response: " + response.body());
+
+                if (response.isSuccessful() && response.body() != null) {
+                    boolean isFavorite = response.body().isSuccess();
+                    if (isFavorite) {
+                        imgFavorite.setImageResource(R.drawable.ic_dathich);
+                    } else {
+                        imgFavorite.setImageResource(R.drawable.ic_chuathich);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoriteResponse> call, Throwable t) {
+                Log.e("checkFavoriteStatus", "Error: " + t.getMessage());
+            }
+        });
+    }
+
+    private void toggleFavoriteStatus() {
+        String userId = sharedPreferencesManager.getUserId();
+        String idSanPham = getIntent().getStringExtra("idSanPham");
+        SanPhamYeuThich sanPhamYeuThich = new SanPhamYeuThich(idSanPham, userId);
+
+        SanPhamYTRetrofit sanPhamYTRetrofit = retrofitService.getRetrofit().create(SanPhamYTRetrofit.class);
+        sanPhamYTRetrofit.checkSanPhamYeuThich(sanPhamYeuThich).enqueue(new Callback<FavoriteResponse>() {
+            @Override
+            public void onResponse(Call<FavoriteResponse> call, Response<FavoriteResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    boolean isFavorite = response.body().isSuccess();
+                    if (isFavorite) {
+                        performDeleteFavorite(sanPhamYeuThich.get_id());
+                    } else {
+                        performAddFavorite(sanPhamYeuThich);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FavoriteResponse> call, Throwable t) {
+                Log.e("FavoriteError", "Error toggling favorite status: " + t.getMessage());
+            }
+        });
+    }
+
+
+
+    private void performAddFavorite(SanPhamYeuThich sanPhamYeuThich) {
+        sanPhamYTRetrofit.addSanPhamYeuThich(sanPhamYeuThich).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                imgFavorite.setImageResource(R.drawable.ic_dathich);
+                CustomToast.showToast(SanPhamActivity.this, "Added to favorites");
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("performAddFavorite", "Error: " + t.getMessage());
+            }
+        });
+    }
+
+    private void performDeleteFavorite(String favoriteId) {
+        if (sanPhamYTRetrofit != null) {
+            sanPhamYTRetrofit.deleteSanPhamYeuThich(favoriteId).enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    imgFavorite.setImageResource(R.drawable.ic_chuathich);
+                    CustomToast.showToast(SanPhamActivity.this, "Removed from favorites");
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    Log.e("performDeleteFavorite", "Error: " + t.getMessage());
+                }
+            });
+        } else {
+            Log.e("SanPhamActivity", "sanPhamYTRetrofit is null");
+        }
     }
 
 }
