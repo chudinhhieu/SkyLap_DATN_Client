@@ -38,11 +38,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private void sendNotification(String strTitle, String strMessage) {
         Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,
-                intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE); // Sử dụng FLAG_IMMUTABLE
 
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.
-                Builder(this,MyApplication.CHANNEL_ID)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, MyApplication.CHANNEL_ID)
                 .setContentTitle(strTitle)
                 .setContentText(strMessage)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -50,10 +48,11 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Notification notification = notificationBuilder.build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        if(notificationManager !=null){
-            notificationManager.notify(1,notification);
+        if (notificationManager != null) {
+            notificationManager.notify(1, notification);
         }
     }
+
 
     @Override
     public void onNewToken(@NonNull String token) {
