@@ -76,4 +76,27 @@ public class DaGiaoHangFragment extends Fragment {
         });
 
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        String idAccount = sharedPreferencesManager.getUserId();
+        Call<List<DonHang>> getListDonHang = donHangRetrofit.layDonHangDaGiaoHang(idAccount);
+        getListDonHang.enqueue(new Callback<List<DonHang>>() {
+            @Override
+            public void onResponse(Call<List<DonHang>> call, Response<List<DonHang>> response) {
+                if (response.body().isEmpty()) {
+                    viewNull.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    adapter = new QuanLyDonHangAdapter(response.body(), getContext());
+                    recyclerView.setAdapter(adapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<DonHang>> call, Throwable t) {
+
+            }
+        });
+    }
 }

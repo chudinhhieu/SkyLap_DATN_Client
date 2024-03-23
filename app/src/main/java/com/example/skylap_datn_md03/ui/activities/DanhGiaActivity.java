@@ -8,7 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,10 +54,13 @@ public class DanhGiaActivity extends AppCompatActivity {
     private RatingBar rtbRate;
     private TextView tvDanhgia, tvSanPhamDg;
     private Button btnGuidg;
-    private ImageView imgAddphoto, imgSanPhamDg,btnExit;
+    private ImageView imgAddphoto, imgSanPhamDg, btnExit;
     private RecyclerView rcyAnhDG;
     private LinearLayout ln_itemAnh;
     private MyAuth myAuth;
+    private ProgressBar progressBar;
+    private RelativeLayout viewMain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +73,9 @@ public class DanhGiaActivity extends AppCompatActivity {
         btnExit = findViewById(R.id.adg_img_back);
         tvSanPhamDg = findViewById(R.id.tvSanPhamDG);
         imgSanPhamDg = findViewById(R.id.imgSanPhamDG);
-
+        progressBar = findViewById(R.id.progressBar);
         ln_itemAnh = findViewById(R.id.ln_itemAnh);
-
+        viewMain = findViewById(R.id.adg_view_main);
         edtNoidung = findViewById(R.id.edtNoidung);
         rcyAnhDG = findViewById(R.id.rcy_AnhDG);
         rcyAnhDG.setLayoutManager(new GridLayoutManager(this, 3));
@@ -81,7 +86,7 @@ public class DanhGiaActivity extends AppCompatActivity {
         rtbRate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                switch ((int) rating){
+                switch ((int) rating) {
                     case 1:
                         tvDanhgia.setText("Rất tệ");
                         soSao = 1;
@@ -149,13 +154,16 @@ public class DanhGiaActivity extends AppCompatActivity {
             });
         }
     }
-    private void postDanhGia(){
+
+    private void postDanhGia() {
+        progressBar.setVisibility(View.VISIBLE);
+        viewMain.setVisibility(View.GONE);
         danhGiaRetrofit = retrofitService.retrofit.create(DanhGiaRetrofit.class);
-        String idDonHang =getIntent().getStringExtra("idDonHang");
+        String idDonHang = getIntent().getStringExtra("idDonHang");
         RequestBody reqSoSao = RequestBody.create(MediaType.parse("multipart/form-data"), soSao + "");
         RequestBody reqNoiDung = RequestBody.create(MediaType.parse("multipart/form-data"), edtNoidung.getText().toString().trim());
         List<MultipartBody.Part> imageParts = new ArrayList<>();
-        if (selectedImages.size() == 0){
+        if (selectedImages.size() == 0) {
             Toast.makeText(DanhGiaActivity.this, "Chưa chọn ảnh!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -166,14 +174,17 @@ public class DanhGiaActivity extends AppCompatActivity {
             MultipartBody.Part imagePart = MultipartBody.Part.createFormData("image", imageFile.getName(), imageRequestBody);
             imageParts.add(imagePart);
         }
-        if (idDonHang != null){
-            Call<MyAuth> postDanhGia = danhGiaRetrofit.postDanhGia(idDonHang,reqSoSao, reqNoiDung, imageParts);
+        if (idDonHang != null) {
+            Call<MyAuth> postDanhGia = danhGiaRetrofit.postDanhGia(idDonHang, reqSoSao, reqNoiDung, imageParts);
             postDanhGia.enqueue(new Callback<MyAuth>() {
                 @Override
                 public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
                     myAuth = response.body();
                     CustomToast.showToast(DanhGiaActivity.this, myAuth.getMessage());
+                    progressBar.setVisibility(View.GONE);
+                    finish();
                 }
+
                 @Override
                 public void onFailure(Call<MyAuth> call, Throwable t) {
                     CustomToast.showToast(DanhGiaActivity.this, myAuth.getMessage());
@@ -181,6 +192,7 @@ public class DanhGiaActivity extends AppCompatActivity {
             });
         }
     }
+
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");

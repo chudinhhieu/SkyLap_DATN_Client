@@ -16,11 +16,13 @@ import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
+import com.example.skylap_datn_md03.retrofitController.DonHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.ui.activities.DanhGiaActivity;
 import com.example.skylap_datn_md03.ui.activities.MessageActivity;
 import com.example.skylap_datn_md03.ui.activities.SanPhamActivity;
+import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
 
@@ -137,6 +139,26 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
                 });
                 break;
             case "Đã nhận hàng":
+                holder.button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        DonHangRetrofit donHangRetrofit = retrofitService.retrofit.create(DonHangRetrofit.class);
+                        Call<Void> donHangCall = donHangRetrofit.themTrangThai(donHang.get_id(), "Đã giao hàng");
+                        donHangCall.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call, Response<Void> response) {
+                                list.remove(position);
+                                notifyDataSetChanged();
+                                CustomToast.showToast(context,"Đã nhận hàng thành công!");
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call, Throwable t) {
+                                CustomToast.showToast(context,"Đã nhận hàng thất bại");
+                            }
+                        });
+                    }
+                });
                 break;
             case "Đánh giá":
                 holder.button.setOnClickListener(new View.OnClickListener() {

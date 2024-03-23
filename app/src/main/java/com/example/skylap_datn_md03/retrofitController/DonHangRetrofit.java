@@ -11,6 +11,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface DonHangRetrofit {
     @GET("api/donHang")
@@ -18,8 +19,7 @@ public interface DonHangRetrofit {
     @POST("api/donHang/add")
     Call<DonHang>addDonHang(@Body DonHang donHang);
     @POST("api/donHang/add-trang-thai/{id}")
-    Call<Void>themTrangThai(@Part("id") String id);
-
+    Call<Void> themTrangThai(@Path("id") String id, @Query("trangThai") String trangThai);
     @GET("api/donHang/cho-xac-nhan/{id}")
     Call<List<DonHang>>layDonHangChoXacNhan(@Path("id") String id);
 
