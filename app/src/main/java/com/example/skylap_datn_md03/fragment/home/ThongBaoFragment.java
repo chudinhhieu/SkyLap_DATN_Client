@@ -61,7 +61,6 @@ public class ThongBaoFragment extends Fragment {
         apiTB.getListThongBaoByIDAccount(userId).enqueue(new Callback<List<ThongBao>>() {
             @Override
             public void onResponse(Call<List<ThongBao>> call, Response<List<ThongBao>> response) {
-                Toast.makeText(getContext(), ""+response.body().size(), Toast.LENGTH_SHORT).show();
                 thongBaoAdapter = new ThongBaoAdapter(response.body(),getContext());
                 recyclerView.setAdapter(thongBaoAdapter);
             }
