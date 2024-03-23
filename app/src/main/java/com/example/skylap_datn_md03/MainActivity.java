@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.example.skylap_datn_md03.fragment.home.DanhSachFragment;
 import com.example.skylap_datn_md03.fragment.home.HomeFragment;
 import com.example.skylap_datn_md03.fragment.home.ThongBaoFragment;
 import com.example.skylap_datn_md03.fragment.home.UserFragment;
@@ -109,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 if (item.getItemId() == R.id.menu_nav_home) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new HomeFragment()).commit();
                 } else if (item.getItemId() == R.id.menu_nav_history) {
-                    // Add your logic for history here
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new DanhSachFragment()).commit();
                 } else if (item.getItemId() == R.id.menu_nav_notification) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_container, new ThongBaoFragment()).commit();
                 } else if (item.getItemId() == R.id.menu_nav_account) {

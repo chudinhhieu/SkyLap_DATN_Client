@@ -19,16 +19,14 @@ import android.widget.TextView;
 import com.example.skylap_datn_md03.R;
 
 import com.example.skylap_datn_md03.data.models.Account;
-import com.example.skylap_datn_md03.fragment.yeuthich.DanhSachYeuThichActivity;
+import com.example.skylap_datn_md03.ui.activities.DanhSachYeuThichActivity;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
-import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.ui.activities.GioHangActivity;
 import com.example.skylap_datn_md03.ui.activities.MessageActivity;
 import com.example.skylap_datn_md03.ui.activities.QuanLyDanhGiaActivity;
 import com.example.skylap_datn_md03.ui.activities.QuanLyDonHangActivity;
-import com.example.skylap_datn_md03.ui.activities.SetingActivity;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.android.gms.tasks.OnCompleteListener;

@@ -73,7 +73,7 @@
         <activity
             android:name=".ui.activities.ChiTietSanPhamActivity"
             android:exported="false" />
-        <activity android:name=".fragment.yeuthich.DanhSachYeuThichActivity"
+        <activity android:name=".ui.activities.DanhSachYeuThichActivity"
             android:exported="false"
             />
 

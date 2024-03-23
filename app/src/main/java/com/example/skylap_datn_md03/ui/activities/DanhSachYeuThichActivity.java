@@ -1,11 +1,10 @@
-package com.example.skylap_datn_md03.fragment.yeuthich;
+package com.example.skylap_datn_md03.ui.activities;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.skylap_datn_md03.R;
