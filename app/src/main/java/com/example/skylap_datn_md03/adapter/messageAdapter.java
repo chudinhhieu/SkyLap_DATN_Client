@@ -92,7 +92,7 @@ Context context;
 
           if (mess.isThuHoi()){
               holder.message_ativity_item_mess.setBackground(backgroundUnsent);
-              holder.text_message.setText("unsent message");
+              holder.text_message.setText("Bạn đã thu hồi một tin nhắn");
               holder.text_message.setTextColor(Color.GRAY);
           }else {
               holder.text_message.setText(mess.getContent());
