@@ -32,6 +32,7 @@ import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.data.models.SanPhamYeuThich;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
+import com.example.skylap_datn_md03.retrofitController.DonHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
@@ -51,7 +52,7 @@ import retrofit2.Response;
 public class SanPhamActivity extends AppCompatActivity {
     private TextView tvGiaGocSP, tvSlideSP, tvTenSP, tvGiaSP, tvSaoSP, tvDaBan, tvMoTaSP, tvStarSP, tvSLDG, tvXemDG;
     private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh, btn_muangay;
-    private ImageView imgSildeSP, imgBack, imgGioHang, imgFavorite ;
+    private ImageView imgSildeSP, imgBack, imgGioHang, imgFavorite;
     private RecyclerView rcvCTDG;
     private RelativeLayout view;
     private LinearLayout btnCTSP, btnCTDG, btnChat, btnThemGH, btnMua;
@@ -88,7 +89,7 @@ public class SanPhamActivity extends AppCompatActivity {
             public void onClick(View v) {
                 listSend = new ArrayList<>();
                 String userId = sharedPreferencesManager.getUserId();
-                GioHang gioHang = new GioHang(sanPham.get_id(),userId,start);
+                GioHang gioHang = new GioHang(sanPham.get_id(), userId, start);
                 listSend.add(gioHang);
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList("listData", listSend);
@@ -134,10 +135,53 @@ public class SanPhamActivity extends AppCompatActivity {
         imgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                performAddFavorite(new SanPhamYeuThich(sanPham.get_id(),sharedPreferencesManager.getUserId()));
+                performAddFavorite(new SanPhamYeuThich(sanPham.get_id(), sharedPreferencesManager.getUserId()));
+            }
+        });
+
+    }
+
+    private void HienSaoVaDaBan() {
+        DonHangRetrofit donHangRetrofit = retrofitService.retrofit.create(DonHangRetrofit.class);
+        donHangRetrofit.laySaoTrungBinh(sanPham.get_id()).enqueue(new Callback<Double>() {
+            @Override
+            public void onResponse(Call<Double> call, Response<Double> response) {
+                tvSaoSP.setText("Đánh giá " + response.body()+"/5");
+                tvStarSP.setText(response.body()+"/5");
+                rbSP.setRating(Float.parseFloat(response.body().toString()));
+            }
+
+            @Override
+            public void onFailure(Call<Double> call, Throwable t) {
+                Log.d("zzzzzzz", "onFailure: " + t);
+
+            }
+        });
+        donHangRetrofit.layLanDanhGia(sanPham.get_id()).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                tvSLDG.setText(response.body()+" đánh giá");
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                Log.d("zzzzzzz", "onFailure: " + t);
+
+            }
+        });
+        donHangRetrofit.layDaBan(sanPham.get_id()).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                tvDaBan.setText("Đã bán "+response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
             }
         });
     }
+
     private void logicChat() {
         chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
         String userId = sharedPreferencesManager.getUserId();
@@ -160,6 +204,7 @@ public class SanPhamActivity extends AppCompatActivity {
         });
 
     }
+
     private void showBottomSheet(SanPham sanPham) {
         int maxSL = sanPham.getSoLuong();
 
@@ -186,8 +231,7 @@ public class SanPhamActivity extends AppCompatActivity {
             public void onClick(View v) {
                 GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
                 String userId = sharedPreferencesManager.getUserId();
-                Call<MyAuth> getGioHang = gioHangRetrofit.themGioHang(new GioHang(sanPham.get_id(),
-                        userId, Integer.parseInt(ipSoLuong.getText().toString().trim())));
+                Call<MyAuth> getGioHang = gioHangRetrofit.themGioHang(new GioHang(sanPham.get_id(), userId, Integer.parseInt(ipSoLuong.getText().toString().trim())));
                 getGioHang.enqueue(new Callback<MyAuth>() {
                     @Override
                     public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
@@ -195,6 +239,7 @@ public class SanPhamActivity extends AppCompatActivity {
                         CustomToast.showToast(SanPhamActivity.this, myAuth.getMessage());
                         bottomSheetDialog.dismiss();
                     }
+
                     @Override
                     public void onFailure(Call<MyAuth> call, Throwable t) {
                         CustomToast.showToast(SanPhamActivity.this, myAuth.getMessage());
@@ -371,6 +416,7 @@ public class SanPhamActivity extends AppCompatActivity {
         tvBaoHanh.setText(sanPham.getBaohanh());
         tvMoTaSP.setText(sanPham.getMoTa());
         startSlideshow();
+        HienSaoVaDaBan();
     }
 
     private void initView() {
@@ -441,16 +487,15 @@ public class SanPhamActivity extends AppCompatActivity {
     }
 
 
-
     private void performAddFavorite(SanPhamYeuThich sanPhamYeuThich) {
         sanPhamYTRetrofit.addSanPhamYeuThich(sanPhamYeuThich).enqueue(new Callback<MyAuth>() {
             @Override
             public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
                 myAuth = response.body();
                 CustomToast.showToast(SanPhamActivity.this, myAuth.getMessage());
-                if (myAuth.isSuccess()){
+                if (myAuth.isSuccess()) {
                     imgFavorite.setImageResource(R.drawable.ic_dathich);
-                }else{
+                } else {
                     imgFavorite.setImageResource(R.drawable.ic_chuathich);
                 }
             }
