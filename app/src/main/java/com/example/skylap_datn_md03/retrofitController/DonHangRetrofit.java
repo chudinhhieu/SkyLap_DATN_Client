@@ -32,4 +32,8 @@ public interface DonHangRetrofit {
 
     @GET("api/donHang/da-huy/{id}")
     Call<List<DonHang>>layDonHangDaHuy(@Path("id") String id);
+    @GET("api/donHang/da-ban/{id}")
+    Call<Integer>layDaBan(@Path("id") String id);
+    @GET("api/donHang/sao/{id}")
+    Call<Double>laySaoTrungBinh(@Path("id") String id);
 }

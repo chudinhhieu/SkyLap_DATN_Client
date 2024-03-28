@@ -41,10 +41,10 @@
                     android:src="@drawable/ic_star" />
 
                 <TextView
+                    android:id="@+id/txt_sao"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:gravity="center"
-                    android:text="4.8"
                     android:textColor="@color/white"
                     android:textSize="11sp"
                     android:textStyle="bold" />
@@ -245,8 +245,7 @@
                 android:layout_weight="1"
                 android:autoSizeTextType="uniform"
                 android:textSize="11sp"
-                android:gravity="end"
-                android:text="Đã bán 69" />
+                android:gravity="end" />
 
         </LinearLayout>
 
