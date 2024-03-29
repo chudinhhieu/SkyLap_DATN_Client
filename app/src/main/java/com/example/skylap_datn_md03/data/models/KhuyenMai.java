@@ -1,8 +1,9 @@
 package com.example.skylap_datn_md03.data.models;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class KhuyenMai {
+public class KhuyenMai implements Serializable {
     private String _id, code, moTa;
     private Date thoiGianKetThuc, thoiGianBatDau;
     private int soLuong;

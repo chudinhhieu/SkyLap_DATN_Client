@@ -64,4 +64,5 @@ public class KhuyenMaiActivity extends AppCompatActivity {
         adapter = new KhuyenMaiAdapter(khuyenMaiList, this);
         recyclerView.setAdapter(adapter);
     }
+
 }
