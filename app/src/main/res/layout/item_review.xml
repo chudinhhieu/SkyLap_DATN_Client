@@ -3,10 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="8dp"
-    android:outlineAmbientShadowColor="@color/cardview_dark_background">
+    android:layout_marginTop="5dp"
+    android:outlineAmbientShadowColor="@color/cardview_dark_background"
+    app:cardElevation="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,73 +14,92 @@
 
         <ImageView
             android:id="@+id/imageViewUserAvatar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_account_ip"
-        android:layout_alignParentStart="true"/>
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:background="@drawable/bo_tron2" />
 
         <TextView
             android:id="@+id/textViewReviewerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/imageViewUserAvatar"
             android:layout_marginStart="10dp"
-            android:text="Nguyen van A"
-            android:textStyle="bold"/>
+            android:layout_toEndOf="@id/imageViewUserAvatar"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
         <RatingBar
             android:id="@+id/ratingBar"
             style="?android:attr/ratingBarStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewReviewerName"
-            android:layout_toEndOf="@id/imageViewUserAvatar"
             android:layout_marginStart="10dp"
-            android:numStars="5"
-            android:rating="3.5"/>
+            android:layout_toEndOf="@id/imageViewUserAvatar"
+            android:numStars="5" />
 
         <TextView
             android:id="@+id/textViewReviewDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ratingBar"
-            android:layout_toEndOf="@id/imageViewUserAvatar"
             android:layout_marginStart="10dp"
-            android:text="21/02/2023"/>
-        <ImageView
-            android:id="@+id/imageViewLaptop"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/anh_mau"
-            android:layout_below="@id/textViewReviewDate"
             android:layout_toEndOf="@id/imageViewUserAvatar"
-            />
-
+            android:textSize="11sp" />
 
         <TextView
-            android:id="@+id/textViewLaptopModel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewReviewDate"
+            android:id="@+id/textViewDanhGia"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_toEndOf="@id/imageViewLaptop"
-            android:text="Laptop Lenovo Ideapad 3 15IAU7 i3" />
-
-        <Button
-            android:id="@+id/editButton"
-            android:layout_width="wrap_content"
+            android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="99dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/white"
-            android:drawableStart="@drawable/ic_edit"
-            android:drawablePadding="8dp"
-            android:padding="10dp"
-            android:text="Sửa"
-            android:textColor="#ff4f1f"
-            android:textStyle="bold" />
+            android:layout_below="@+id/textViewReviewDate"
+            android:layout_toEndOf="@id/imageViewUserAvatar"
+            android:paddingVertical="10dp"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/itrv_anhDG"
+            android:layout_below="@+id/textViewDanhGia"
+            android:layout_toEndOf="@id/imageViewUserAvatar"
+            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView_itemDuocDanhGia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/itrv_anhDG"
+            android:layout_toEndOf="@id/imageViewUserAvatar"
+            android:background="@color/cardview_dark_background">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/xam">
+
+                <ImageView
+                    android:id="@+id/imageViewLaptop"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:background="@color/white"/>
+
+                <TextView
+                    android:id="@+id/textViewLaptopModel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@id/imageViewLaptop"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
+        />
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

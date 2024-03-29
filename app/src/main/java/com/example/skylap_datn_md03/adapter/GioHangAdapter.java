@@ -88,7 +88,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                 maxSL = sanPham.getSoLuong();
                 holder.tvGiaSP.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
                 holder.tvTenSP.setText(sanPham.getTenSanPham());
-                Picasso.get().load(sanPham.getAnh().get(0)).into(holder.imgAnhSP);
+                Picasso.get().load(sanPham.getAnhSanPham()).into(holder.imgAnhSP);
             }
 
             @Override
@@ -191,7 +191,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                         list.get(i).setChecked(false);
                     }
                 }
-
                 list.get(index).setChecked(isChecked);
                 if (isChecked) {
                     if (onTotalPriceChangedListener != null) {

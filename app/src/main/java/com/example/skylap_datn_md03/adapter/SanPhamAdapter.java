@@ -2,11 +2,13 @@ package com.example.skylap_datn_md03.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,11 +16,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.SanPham;
+import com.example.skylap_datn_md03.retrofitController.DonHangRetrofit;
+import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.ui.activities.SanPhamActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamViewHolder>{
     private List<SanPham> list;
@@ -36,7 +44,6 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
     @Override
     public SanPhamViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         view = LayoutInflater.from(context).inflate(R.layout.item_product,parent,false);
-        view = LayoutInflater.from(context).inflate(R.layout.item_product,parent,false);
         return new SanPhamViewHolder(view);
     }
 
@@ -45,13 +52,40 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
             SanPham sanPham = list.get(position);
             if (sanPham == null) return;
             //set value
-            Picasso.get().load(sanPham.getAnh().get(0)).into(holder.img_anh);
-            holder.txt_display.setText("Display: "+sanPham.getDisplay());
-            holder.txt_cpu.setText("CPU: "+sanPham.getCpu());
-            holder.txt_card.setText("Card: "+sanPham.getGpu());
-            holder.txt_name.setText("Display: "+sanPham.getTenSanPham());
+            Picasso.get().load(sanPham.getAnhSanPham()).into(holder.img_anh);
+            holder.txt_display.setText(sanPham.getDisplay());
+            holder.txt_cpu.setText(sanPham.getCpu());
+            holder.txt_card.setText(sanPham.getGpu());
+        holder.txt_name.setText(sanPham.getTenSanPham());
+        holder.txtBaoHanh.setText(sanPham.getBaohanh());
+        holder.txtRam.setText(sanPham.getRam());
+        holder.txtRom.setText(sanPham.getRom());
             holder.txt_price.setText(formatPrice(sanPham.getGiaTien())+"₫");
-            holder.txt_sold.setText("Đã bán ");
+        RetrofitService retrofitService = new RetrofitService();
+        DonHangRetrofit donHangRetrofit = retrofitService.retrofit.create(DonHangRetrofit.class);
+        donHangRetrofit.layDaBan(sanPham.get_id()).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                holder.txtDaBan.setText("Đã bán "+response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
+        donHangRetrofit.laySaoTrungBinh(sanPham.get_id()).enqueue(new Callback<Double>() {
+            @Override
+            public void onResponse(Call<Double> call, Response<Double> response) {
+                holder.txtSao.setText(""+response.body());
+            }
+
+            @Override
+            public void onFailure(Call<Double> call, Throwable t) {
+                Log.d("zzzzzzz", "onFailure: "+t);
+
+            }
+        });
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +105,7 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
 
     public final class SanPhamViewHolder extends RecyclerView.ViewHolder{
         ImageView img_anh;
-        TextView txt_display, txt_cpu, txt_card, txt_name,txt_price, txt_sold;
+        TextView txt_display, txt_cpu, txt_card, txt_name,txt_price, txtBaoHanh,txtRam,txtRom,txtDaBan,txtSao;
 
         public SanPhamViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,7 +115,11 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
             txt_card = itemView.findViewById(R.id.item_product_txtCard);
             txt_name = itemView.findViewById(R.id.item_product_txtName);
             txt_price = itemView.findViewById(R.id.item_product_txtPrice);
-            txt_sold = itemView.findViewById(R.id.item_product_txtSold);
+            txtBaoHanh = itemView.findViewById(R.id.item_product_txtBaoHanh);
+            txtRam = itemView.findViewById(R.id.item_product_txtRam);
+            txtRom = itemView.findViewById(R.id.item_product_txtRom);
+            txtDaBan = itemView.findViewById(R.id.item_product_txtDaBan);
+            txtSao= itemView.findViewById(R.id.txt_sao);
 
         }
     }

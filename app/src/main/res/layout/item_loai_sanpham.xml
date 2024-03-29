@@ -3,18 +3,19 @@
     android:layout_width="85dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardCornerRadius="15dp"
-    android:layout_marginTop="5dp"
-    android:layout_marginEnd="5dp"
+    app:cardElevation="5dp"
+    app:cardBackgroundColor="@color/white"
+    android:layout_margin="2.5dp"
     android:layout_height="30dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:padding="5dp"
         android:layout_gravity="center"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <ImageView
             android:id="@+id/item_loai_sanPham_img"
-            android:scaleType="centerInside"
+            android:layout_margin="5dp"
+            android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

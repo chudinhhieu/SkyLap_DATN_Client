@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.MessageActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/message_toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@color/main">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="10">
+
+            <TableRow
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/message_img_back"
+                    android:layout_width="15dp"
+                    android:layout_height="35dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/ic_white_back"></ImageView>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="35dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="2"
+                    android:src="@drawable/img" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    android:layout_weight="4"
+                    android:gravity="start"
+                    android:text="Trò Chuyện Cùng SkyLab"
+                    android:textColor="@color/white"
+                    android:textSize="20dp"></TextView>
+
+            </TableRow>
+        </TableLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <ProgressBar
+        android:id="@+id/message_ativity_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/message_ativity_rcv_listmest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/message_ativity_sentMess"
+        android:layout_below="@+id/message_toolBar"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/message_ativity_sentMess" />
+
+    <LinearLayout
+        android:id="@+id/message_ativity_sentMess"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:weightSum="10"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+
+
+      <EditText
+          android:id="@+id/edt_sent_message"
+          android:layout_weight="7"
+         android:hint="Viết tin nhắn..."
+          android:background="@drawable/custom_sent"
+          android:layout_width="200dp"
+          android:paddingStart="10dp"
+          android:layout_marginStart="10dp"
+          android:layout_marginBottom="5dp"
+          android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/btn_sent_message"
+            android:layout_weight="2.5"
+            android:src="@drawable/paper_plane"
+            android:layout_gravity="center"
+            android:layout_marginBottom="4dp"
+            android:background="@android:color/white"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+

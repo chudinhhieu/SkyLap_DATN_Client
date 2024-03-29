@@ -1,19 +1,30 @@
 package com.example.skylap_datn_md03.data.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class DonHang implements Serializable {
     private String _id;
-    private int tienShip;
-    private int tongTien;
-    private String trangThai;
-    private String idGioHang;
-    private String idShipper;
-    private String ghiChu;
-    private Date thoiGianMua;
+    private ArrayList<TrangThai> trangThai;
+    private String idSanPham;
+    private String idAccount;
     private String idKhuyenMai;
-    private String idPTTT;
+    private Date thoiGianMua;
+    private String idPttt;
+    private int soLuong;
+    private double tongTien;
+    private String ghiChu;
+    private boolean thanhToan;
+    private DanhGia danhGia;
+    public boolean isThanhToan() {
+        return thanhToan;
+    }
+
+    public void setThanhToan(boolean thanhToan) {
+        this.thanhToan = thanhToan;
+    }
 
     public DonHang() {
     }
@@ -26,60 +37,35 @@ public class DonHang implements Serializable {
         this._id = _id;
     }
 
-    public int getTienShip() {
-        return tienShip;
-    }
-
-    public void setTienShip(int tienShip) {
-        this.tienShip = tienShip;
-    }
-
-    public int getTongTien() {
-        return tongTien;
-    }
-
-    public void setTongTien(int tongTien) {
-        this.tongTien = tongTien;
-    }
-
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(String trangThai) {
+    public DonHang(String _id, ArrayList<TrangThai> trangThai, String idSanPham, String idAccount, String idKhuyenMai,
+                   Date thoiGianMua, String idPttt, int soLuong, long tongTien, String ghiChu, boolean thanhToan) {
+        this._id = _id;
         this.trangThai = trangThai;
-    }
-
-    public String getIdGioHang() {
-        return idGioHang;
-    }
-
-    public void setIdGioHang(String idGioHang) {
-        this.idGioHang = idGioHang;
-    }
-
-    public String getIdShipper() {
-        return idShipper;
-    }
-
-    public void setIdShipper(String idShipper) {
-        this.idShipper = idShipper;
-    }
-
-    public String getGhiChu() {
-        return ghiChu;
-    }
-
-    public void setGhiChu(String ghiChu) {
-        this.ghiChu = ghiChu;
-    }
-
-    public Date getThoiGianMua() {
-        return thoiGianMua;
-    }
-
-    public void setThoiGianMua(Date thoiGianMua) {
+        this.idSanPham = idSanPham;
+        this.idAccount = idAccount;
+        this.idKhuyenMai = idKhuyenMai;
         this.thoiGianMua = thoiGianMua;
+        this.idPttt = idPttt;
+        this.soLuong = soLuong;
+        this.tongTien = tongTien;
+        this.ghiChu = ghiChu;
+        this.thanhToan = thanhToan;
+    }
+
+    public String getIdSanPham() {
+        return idSanPham;
+    }
+
+    public void setIdSanPham(String idSanPham) {
+        this.idSanPham = idSanPham;
+    }
+
+    public String getIdAccount() {
+        return idAccount;
+    }
+
+    public void setIdAccount(String idAccount) {
+        this.idAccount = idAccount;
     }
 
     public String getIdKhuyenMai() {
@@ -90,11 +76,76 @@ public class DonHang implements Serializable {
         this.idKhuyenMai = idKhuyenMai;
     }
 
-    public String getIdPTTT() {
-        return idPTTT;
+    public Date getThoiGianMua() {
+        return thoiGianMua;
     }
 
-    public void setIdPTTT(String idPTTT) {
-        this.idPTTT = idPTTT;
+    public void setThoiGianMua(Date thoiGianMua) {
+        this.thoiGianMua = thoiGianMua;
+    }
+
+    public String getIdPttt() {
+        return idPttt;
+    }
+
+    public ArrayList<TrangThai> getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(ArrayList<TrangThai> trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    public void setIdPttt(String idPttt) {
+        this.idPttt = idPttt;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public double getTongTien() {
+        return tongTien;
+    }
+
+    public void setTongTien(double tongTien) {
+        this.tongTien = tongTien;
+    }
+
+    public String getGhiChu() {
+        return ghiChu;
+    }
+
+    public void setGhiChu(String ghiChu) {
+        this.ghiChu = ghiChu;
+    }
+
+    @Override
+    public String toString() {
+        return "DonHang{" +
+                "_id='" + _id + '\'' +
+                ", TrangThai='" + trangThai + '\'' +
+                ", idSanPham='" + idSanPham + '\'' +
+                ", idAccount='" + idAccount + '\'' +
+                ", idKhuyenMai='" + idKhuyenMai + '\'' +
+                ", thoiGianMua=" + thoiGianMua +
+                ", idPttt='" + idPttt + '\'' +
+                ", soLuong=" + soLuong +
+                ", tongTien=" + tongTien +
+                ", ghiChu='" + ghiChu + '\'' +
+                ", thanhToan=" + thanhToan +
+                '}';
+    }
+
+    public DanhGia getDanhGia() {
+        return danhGia;
+    }
+
+    public void setDanhGia(DanhGia danhGia) {
+        this.danhGia = danhGia;
     }
 }

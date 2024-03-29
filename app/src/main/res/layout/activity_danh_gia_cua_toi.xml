@@ -16,9 +16,8 @@
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:navigationIcon="@drawable/ic_back_white"
-            app:title="Đánh giá của tôi"
-            android:textAlignment="center" />
+            app:navigationIcon="@drawable/ic_black_back"
+            app:title="Đánh giá của tôi" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"

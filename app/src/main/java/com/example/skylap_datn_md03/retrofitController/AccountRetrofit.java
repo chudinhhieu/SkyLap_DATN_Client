@@ -22,4 +22,6 @@ public interface AccountRetrofit {
     @POST("api/account/sign-in")
     Call<MyAuth> signIn(@Body Account account);
 
+    @GET("api/account/{id}")
+    Call<Account> getAccountById (@Path("id") String accountId );
 }

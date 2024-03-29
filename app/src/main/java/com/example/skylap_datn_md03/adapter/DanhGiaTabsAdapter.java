@@ -4,8 +4,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.skylap_datn_md03.fragment.ChuaDanhGiaFragment;
-import com.example.skylap_datn_md03.fragment.DanhGiaFragment;
+import com.example.skylap_datn_md03.fragment.danhgia.ChuaDanhGiaFragment;
+import com.example.skylap_datn_md03.fragment.danhgia.DanhGiaFragment;
 
 public class DanhGiaTabsAdapter extends FragmentStateAdapter {
 

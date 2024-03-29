@@ -9,6 +9,32 @@ public class Account implements Serializable {
     private String quyenTk;
     private String avatar;
     private Boolean trangThai;
+    private DiaChi diaChi;
+    private String hoTen, sdt;
+
+    public String getHoTen() {
+        return hoTen;
+    }
+
+    public void setHoTen(String hoTen) {
+        this.hoTen = hoTen;
+    }
+
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
+    public DiaChi getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(DiaChi diaChi) {
+        this.diaChi = diaChi;
+    }
 
     public Account() {
     }

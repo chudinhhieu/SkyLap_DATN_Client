@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.ThongBaoFragment">
+    android:background="#f6f6f6"
+    android:orientation="vertical"
+    tools:context=".fragment.home.ThongBaoFragment">
 
-    <Button
-        android:id="@+id/btn_dangXuat"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="5dp"
+        android:background="@color/white"
+        android:elevation="20dp"
+        android:paddingHorizontal="12dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Thông báo"
+            android:textColor="@color/black"
+            android:textSize="24dp" />
+
+        <ImageView
+            android:id="@+id/fmtb_img_cart"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_cart_black" />
+    </RelativeLayout>
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Đăng xuất"
+        android:layout_below="@+id/fmtb_rl_top"
+        android:text="Đọc tất cả"
+        android:textSize="14sp"
+        android:layout_marginEnd="10dp"
+        android:layout_gravity="end"
+        android:textColor="@color/main"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fmtb_recyclerView"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:background="#f6f6f6"
+        android:layout_height="match_parent"
         />
-
-</RelativeLayout>
+</LinearLayout>

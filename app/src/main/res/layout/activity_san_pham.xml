@@ -6,24 +6,27 @@
     android:layout_height="match_parent"
     android:background="#f6f6f6"
     tools:context=".ui.activities.SanPhamActivity">
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:visibility="invisible" />
+
     <RelativeLayout
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#f6f6f6"
-        android:visibility="gone"
-        >
+        android:visibility="visible">
+
         <RelativeLayout
             android:id="@+id/asp_rl_top"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
-            android:background="@color/main"
+            android:background="@color/white"
             android:elevation="20dp"
             android:paddingHorizontal="12dp">
 
@@ -33,7 +36,7 @@
                 android:layout_height="30dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_white_back" />
+                android:src="@drawable/ic_back_ctsp" />
 
             <ImageView
                 android:id="@+id/asp_img_cart"
@@ -41,7 +44,7 @@
                 android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_cart" />
+                android:src="@drawable/ic_cart_black" />
         </RelativeLayout>
 
         <ScrollView
@@ -59,14 +62,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white">
+
                     <ViewFlipper
                         android:id="@+id/viewFlipper"
                         android:layout_width="300dp"
                         android:layout_height="200dp"
                         android:layout_gravity="center"
                         android:padding="20dp"
-                        android:scaleType="fitCenter"
-                        />
+                        android:scaleType="fitCenter" />
+
                     <TextView
                         android:id="@+id/asp_tv_slide"
                         android:layout_width="60dp"
@@ -133,7 +137,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
                         android:paddingVertical="5dp"
-                        android:text="Đánh giá 3.5/5"
                         android:textColor="@color/black"
                         android:textSize="15sp" />
 
@@ -158,16 +161,16 @@
                         android:textColor="@color/black"
                         android:textSize="15sp" />
 
-                    <Space
+                    <TextView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:layout_weight="1" />
 
                     <ImageView
+                        android:id="@+id/asp_img_favorite"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:layout_gravity="center_vertical"
-                        android:src="@drawable/ic_dathich" />
+                        android:layout_gravity="center_vertical" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -213,11 +216,12 @@
                             android:layout_weight="2"
                             android:textColor="@color/black" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
-                        android:gravity="center_vertical"
                         android:background="#f8f8fc"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingHorizontal="12dp">
 
@@ -234,6 +238,7 @@
                             android:layout_weight="2"
                             android:textColor="@color/black" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
@@ -255,11 +260,12 @@
                             android:text='16GB'
                             android:textColor="@color/black" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
-                        android:gravity="center_vertical"
                         android:background="#f8f8fc"
+                        android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingHorizontal="12dp">
 
@@ -277,6 +283,7 @@
                             android:text="1TB SSD"
                             android:textColor="@color/black" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="35dp"
@@ -298,6 +305,7 @@
                             android:text='6 tháng'
                             android:textColor="@color/black" />
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
@@ -358,6 +366,7 @@
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -365,78 +374,87 @@
                     android:background="@color/white"
                     android:orientation="vertical"
                     android:paddingVertical="12dp">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingStart="12dp"
                         android:paddingBottom="5dp"
-                        android:text="Đánh Giá Sản Phẩm"
+                        android:text="Đánh giá sản phẩm"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
+
                         <RatingBar
                             android:id="@+id/asp_rb"
-                            android:layout_marginTop="-20dp"
-                            android:layout_marginStart="-60dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="-60dp"
+                            android:layout_marginTop="-20dp"
                             android:numStars="5"
-                            android:stepSize="0.1"
-                            android:rating="3.5"
+                            android:progressTint="@color/yellow"
                             android:scaleX="0.4"
                             android:scaleY="0.4"
-                            android:progressTint="@color/yellow"/>
+                            android:stepSize="0.1" />
+
                         <TextView
                             android:id="@+id/asp_tv_star"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_marginStart="-60dp"
                             android:layout_marginTop="-2dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="3.5/5"
-                            android:textColor="@color/red"/>
+                            android:textColor="@color/red" />
+
                         <TextView
                             android:id="@+id/asp_tv_sldg"
-                            android:layout_marginTop="-2dp"
-                            android:layout_marginStart="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="(66 đánh giá)"
-                            android:textColor="@color/gray"/>
+                            android:layout_marginStart="5dp"
+                            android:layout_marginTop="-2dp"
+                            android:textColor="@color/gray" />
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="@color/gray" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/asp_rcv_dg"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="0.5dp"
                         android:background="@color/silver" />
+
                     <LinearLayout
                         android:id="@+id/asp_ll_xemthem_dg"
-                        android:orientation="horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="12dp">
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
                         <TextView
                             android:id="@+id/asp_tv_xemdg"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/main"
-                            android:text="Xem tất cả (66)"/>
+                            android:text="Xem tất cả (66)"
+                            android:textColor="@color/main" />
+
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:layout_marginStart="5dp"
                             android:layout_gravity="center_vertical"
+                            android:layout_marginStart="5dp"
                             android:src="@drawable/ic_right" />
                     </LinearLayout>
                 </LinearLayout>
