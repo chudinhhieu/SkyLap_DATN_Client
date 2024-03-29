@@ -5,7 +5,9 @@ import com.example.skylap_datn_md03.data.models.SanPham;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface SanPhamRetrofit {
@@ -19,6 +21,9 @@ public interface SanPhamRetrofit {
     Call<SanPham> getSanPhamByID(@Path("id") String id);
     @GET("api/sanPham/cpu/{cpu}")
     Call<List<SanPham>> getListSanPhamByIdNhaSX(@Path("cpu") String cpu);
+    @POST("api/sanpham/search")
+    Call<List<SanPham>> getsearch(@Body SanPham sanPham);
+
 
 
 }

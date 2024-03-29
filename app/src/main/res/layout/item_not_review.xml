@@ -3,85 +3,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="8dp"
-    android:outlineAmbientShadowColor="@color/cardview_dark_background">
+    android:layout_marginTop="5dp"
+    android:outlineAmbientShadowColor="@color/cardview_dark_background"
+    app:cardElevation="4dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-        <ImageView
-            android:id="@+id/imageViewUserAvatar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/ic_account_ip"
-            android:layout_alignParentStart="true"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/textViewReviewerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/imageViewUserAvatar"
-            android:layout_marginStart="10dp"
-            android:text="Nguyen van A"
-            android:textStyle="bold"/>
-        <RatingBar
-            android:id="@+id/ratingBar"
-            style="?android:attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewReviewerName"
-            android:layout_toEndOf="@id/imageViewUserAvatar"
-            android:layout_marginStart="10dp"
-            android:numStars="5"
-            android:rating="3.5"/>
+            <ImageView
+                android:id="@+id/itnrv_anh"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_centerVertical="true"
+                android:background="@color/white" />
 
-        <TextView
-            android:id="@+id/textViewReviewDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ratingBar"
-            android:layout_toEndOf="@id/imageViewUserAvatar"
-            android:layout_marginStart="10dp"
-            android:text="21/02/2023"/>
-        <ImageView
-            android:id="@+id/imageViewLaptop"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/anh_mau"
-            android:layout_below="@id/textViewReviewDate"
-            android:layout_toEndOf="@id/imageViewUserAvatar"
-            />
+            <TextView
+                android:id="@+id/itnrv_ten"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@id/itnrv_anh"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
+        </RelativeLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginVertical="10dp"
+            android:background="@color/black500" />
 
-        <TextView
-            android:id="@+id/textViewLaptopModel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewReviewDate"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_toEndOf="@id/imageViewLaptop"
-            android:text="Laptop Lenovo Ideapad 3 15IAU7 i3" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/editButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="99dp"
-            android:layout_marginEnd="10dp"
-            android:background="@color/white"
-            android:drawableStart="@drawable/ic_edit"
-            android:drawablePadding="8dp"
-            android:padding="10dp"
-            android:text="Sửa"
-            android:textColor="#ff4f1f"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="Bạn còn 7 ngày để đánh giá"
+                android:textSize="13sp"/>
 
-    </RelativeLayout>
+            <Button
+                android:id="@+id/itnrv_button"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/border_view7dp"
+                android:text="Đánh giá"
+                android:textSize="13sp" />
+        </RelativeLayout>
+    </LinearLayout>
 </androidx.cardview.widget.CardView>
