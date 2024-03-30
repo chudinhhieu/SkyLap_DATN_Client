@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.GioHang;
+import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
@@ -45,21 +46,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
     private RetrofitService retrofitService;
     private SanPham sanPham;
     private int maxSL;
-    private boolean ischecked = false;
-    private int lastCheckedPosition = -1;
-
-
-    // Interface để thông báo sự kiện khi checkbox thay đổi
-    public interface OnTotalPriceChangedListener {
-        void onTotalPriceChanged(double totalPrice, GioHang gioHang);
-    }
-
-
-    private OnTotalPriceChangedListener onTotalPriceChangedListener;
-
-    public void setOnTotalPriceChangedListener(OnTotalPriceChangedListener listener) {
-        this.onTotalPriceChangedListener = listener;
-    }
 
     public GioHangAdapter(List<GioHang> list, Context context) {
         this.list = list;
@@ -111,14 +97,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
 
                     // Cập nhật số lượng mới vào EditText
                     holder.ipSoLuong.setText(String.valueOf(currentSL));
-                    if (onTotalPriceChangedListener != null && ischecked) {
-                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()),gioHang);
-                        ischecked = true;
-                        onTotalPriceChangedListener.onTotalPriceChanged(
-                                sanPham.getGiaTien() *
-                                        Integer.parseInt(holder.ipSoLuong.getText().toString().trim()), gioHang);
 
-                    }
                     holder.suaSoLuong(gioHang.get_id(),new GioHang(Integer.parseInt(holder.ipSoLuong.getText().toString().trim())));
 
                 } else {
@@ -143,67 +122,30 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
 
                     // Cập nhật số lượng mới vào EditText
                     holder.ipSoLuong.setText(String.valueOf(currentSL));
-                    if (onTotalPriceChangedListener != null && ischecked) {
-                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()), gioHang);
-                    }
                     holder.suaSoLuong(gioHang.get_id(),new GioHang(Integer.parseInt(holder.ipSoLuong.getText().toString().trim())));
                 } else {
                     CustomToast.showToast(context, "Số lượng tối thiểu là 1");
                 }
             }
         });
-        InputFilter filter = new InputFilter() {
-            int min = 1;
-
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-                try {
-                    // Nếu người dùng nhập giá trị mới
-                    int input = Integer.parseInt(dest.toString() + source.toString());
-                    // Kiểm tra xem giá trị mới có nằm trong khoảng từ 1 đến max không
-                    if (input >= min && input <= maxSL) {
-                        return null; // Giá trị hợp lệ, không có thay đổi
-                    } else {
-                        CustomToast.showToast(context, "Chỉ nhập số lượng trong khoảng từ 1 đến " + maxSL);
+            public void onClick(View v) {
+                GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
+                gioHangRetrofit.xoaGioHang(gioHang.get_id()).enqueue(new Callback<MyAuth>() {
+                    @Override
+                    public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
+                        MyAuth myAuth = response.body();
+                        CustomToast.showToast(context,myAuth.getMessage().toString());
+                        list.remove(index);
+                        notifyDataSetChanged();
                     }
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
 
-                // Giá trị không hợp lệ, không cho nhập
-                return "";
-            }
-        };
-// Thiết lập InputFilter cho EditText
-        holder.ipSoLuong.setFilters(new InputFilter[]{filter});
+                    @Override
+                    public void onFailure(Call<MyAuth> call, Throwable t) {
 
-//        Theo dõi trạng thái checkbox
-        holder.checkBox.setOnCheckedChangeListener(null); // Remove previous listener to prevent recursive calls
-
-        holder.checkBox.setChecked(list.get(index).isChecked());
-
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                for (int i = 0; i < list.size(); i++) {
-                    if (i != index) {
-                        list.get(i).setChecked(false);
                     }
-                }
-                list.get(index).setChecked(isChecked);
-                if (isChecked) {
-                    if (onTotalPriceChangedListener != null) {
-                        ischecked = true;
-                        onTotalPriceChangedListener.onTotalPriceChanged(sanPham.getGiaTien() * Integer.parseInt(holder.ipSoLuong.getText().toString().trim()),gioHang);
-                    }
-                } else {
-                    if (onTotalPriceChangedListener != null) {
-                        ischecked = false;
-                        onTotalPriceChangedListener.onTotalPriceChanged(0,new GioHang());
-                    }
-                }
-                notifyDataSetChanged();
+                });
             }
         });
     }
@@ -215,7 +157,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
     }
 
     public class GioHangViewHolder extends RecyclerView.ViewHolder {
-        private CheckBox checkBox;
         private ImageView imgAnhSP, btnDelete, btnCongSL, btnTruSl;
         private EditText ipSoLuong;
         private TextView tvTenSP, tvGiaSP;
@@ -224,7 +165,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
 
         public GioHangViewHolder(@NonNull View itemView) {
             super(itemView);
-            checkBox = itemView.findViewById(R.id.item_gh_chk);
             imgAnhSP = itemView.findViewById(R.id.item_gh_img);
             btnDelete = itemView.findViewById(R.id.item_gh_exit);
             btnCongSL = itemView.findViewById(R.id.item_gh_btn_congSL);
@@ -232,7 +172,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
             ipSoLuong = itemView.findViewById(R.id.item_gh_ip_soLuong);
             tvTenSP = itemView.findViewById(R.id.item_gh_ten);
             tvGiaSP = itemView.findViewById(R.id.item_gh_gia);
-
         }
         private void suaSoLuong(String id,GioHang gioHang) {
             GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);

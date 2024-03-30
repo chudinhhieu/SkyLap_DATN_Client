@@ -33,13 +33,11 @@ import retrofit2.Response;
 
 public class GioHangActivity extends AppCompatActivity {
     private RecyclerView agh_recyclerView;
-    private TextView tvTongTien;
     private GioHangAdapter adapter ;
     private ImageView imgBack;
     RetrofitService retrofitService;
     SharedPreferencesManager sharedPreferencesManager;
     List<GioHang> listGioHang;
-    private Button btn_muaHang;
     private GioHang gioHangThanhToan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,17 +54,11 @@ public class GioHangActivity extends AppCompatActivity {
                 finish();
             }
         });
-        btn_muaHang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                clickMuaHang(gioHangThanhToan);
-            }
-        });
     }
 
     private void clickMuaHang(GioHang gioHang) {
-        if (gioHang.get_id() ==  null){
-           CustomToast.showToast(this,"Bạn cần chọn sản phẩm trước khi mua hàng !");
+        if (gioHang == null){
+           CustomToast.showToast(this,"Bạn cần chọn 1 sản phẩm trước khi mua hàng !");
         }
         else{
             Intent intent = new Intent(this, DatHangActivity.class);
@@ -81,10 +73,8 @@ public class GioHangActivity extends AppCompatActivity {
     }
 
     void unitUI (){
-        btn_muaHang = findViewById(R.id.agh_tv_muahang);
         agh_recyclerView = findViewById(R.id.agh_recyclerView);
         imgBack = findViewById(R.id.agh_img_back);
-        tvTongTien = findViewById(R.id.agh_tv_totalPrice);
     }
     private void getGioHang() {
         GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
@@ -96,14 +86,6 @@ public class GioHangActivity extends AppCompatActivity {
                 listGioHang = response.body();
                 adapter = new GioHangAdapter(listGioHang , getApplicationContext());
                 agh_recyclerView.setAdapter(adapter);
-                adapter.setOnTotalPriceChangedListener(new GioHangAdapter.OnTotalPriceChangedListener() {
-                    @Override
-                    public void onTotalPriceChanged(double totalPrice,GioHang gioHang) {
-                        // Cập nhật TextView với tổng tiền mới
-                        tvTongTien.setText(String.format("%,.0f", totalPrice) + "₫");
-                        gioHangThanhToan = gioHang;
-                    }
-                });
             }
             @Override
             public void onFailure(Call<List<GioHang>> call, Throwable t) {

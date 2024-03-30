@@ -37,20 +37,16 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
     private RetrofitService retrofitService;
     private Intent intent;
     private SanPhamRetrofit sanPhamRetrofit;
-    private DonHang donHang;
-    private SanPham sanPham;
     private ProgressBar loading;
     private LinearLayout view;
-    private DonHangRetrofit donHangRetrofit;
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dat_hang_thanh_cong);
-        unitUI();
-        getDonHang();
-        createDonHang();
+        initUI();
+
     }
-    void unitUI(){
+    void initUI(){
         txtTrangChu = findViewById(R.id.datHangThanhCong_txt_trangChu);
         txtDonMua = findViewById(R.id.datHangThanhCong_txt_donMua);
         imgBack = findViewById(R.id.datHangThanhCong_img_back);
@@ -63,14 +59,9 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
         view = findViewById(R.id.datHangTC_view);
         loading = findViewById(R.id.datHangTC_loading);
         retrofitService = new RetrofitService();
-        showLoading();
+        getListProduct();
     }
-    void getDonHang (){
-        intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        donHang = (DonHang) bundle.getSerializable("donHang");
-        getListProduct(donHang.getIdSanPham());
-    }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.datHangThanhCong_img_back){
@@ -82,28 +73,17 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
         else if(v.getId() == R.id.datHangThanhCong_txt_trangChu){
             intent = new Intent(this, MainActivity.class);
             startActivity(intent);
-        }
-        else if(v.getId() == R.id.datHangThanhCong_txt_donMua){
-            gotoDetailOder(donHang.get_id());
+        } else if (v.getId() == R.id.datHangThanhCong_txt_donMua) {
+            intent = new Intent(this, QuanLyDonHangActivity.class);
+            startActivity(intent);
         }
     }
-
-    private void gotoDetailOder(String donHangID) {
-        Bundle bundle = new Bundle();
-        intent = new Intent(this,QuanLyDonHangActivity.class);
-//        bundle.putString("donHangID", donHangID);
-//        intent.putExtras(bundle);
-        startActivity(intent);
-    }
-
-    void getListProduct (String idSP){
+    void getListProduct (){
+        Intent intent = getIntent();
+        String cpu = intent.getStringExtra("cpu");
         showLoading();
         sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
-        Call<SanPham> getSP = sanPhamRetrofit.getSanPhamByID(idSP);
-        getSP.enqueue(new Callback<SanPham>() {
-            @Override
-            public void onResponse(Call<SanPham> call, Response<SanPham> response) {
-                Call<List<SanPham>> getList = sanPhamRetrofit.getListSanPhamByIdNhaSX(response.body().getCpu());
+        Call<List<SanPham>> getList = sanPhamRetrofit.getListSanPhamByCPU(cpu);
                 getList.enqueue(new Callback<List<SanPham>>() {
                     @Override
                     public void onResponse(Call<List<SanPham>> call, Response<List<SanPham>> response) {
@@ -118,13 +98,6 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
                         CustomToast.showToast(DatHangThanhCongActivity.this, "Có gì đó sai sai ");
                     }
                 });
-            }
-            @Override
-            public void onFailure(Call<SanPham> call, Throwable t) {
-                CustomToast.showToast(DatHangThanhCongActivity.this, "Có gì đó sai sai ");
-            }
-        });
-
     }
     void cartOnClickListener(){
         intent = new Intent(this, QuanLyDonHangActivity.class);
@@ -137,23 +110,5 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
     void hideLoading(){
         view.setVisibility(View.VISIBLE);
         loading.setVisibility(View.GONE);
-    }
-    void createDonHang (){
-        retrofitService = new RetrofitService();
-        donHangRetrofit = retrofitService.retrofit.create(DonHangRetrofit.class);
-        Call<DonHang> addDonHang = donHangRetrofit.addDonHang(donHang);
-        addDonHang.enqueue(new Callback<DonHang>() {
-            @Override
-            public void onResponse(Call<DonHang> call, Response<DonHang> response) {
-                hideLoading();
-                d("ca" + "chung", "onResponse: "+response.body().toString());
-            }
-            @Override
-            public void onFailure(Call<DonHang> call, Throwable t) {
-                CustomToast.showToast(DatHangThanhCongActivity.this,"Có gì đó sai sai");
-                d("ca" + "chung", "onFailure: "+t.getMessage());
-            }
-        });
-
     }
 }

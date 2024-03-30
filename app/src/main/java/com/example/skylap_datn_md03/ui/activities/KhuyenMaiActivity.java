@@ -1,5 +1,6 @@
 package com.example.skylap_datn_md03.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +36,7 @@ public class KhuyenMaiActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         getKhuyenMaiList();
+
     }
 
     private void getKhuyenMaiList() {
@@ -46,10 +48,8 @@ public class KhuyenMaiActivity extends AppCompatActivity {
             public void onResponse(Call<List<KhuyenMai>> call, Response<List<KhuyenMai>> response) {
                 if (response.isSuccessful()) {
                     List<KhuyenMai> khuyenMaiList = response.body();
-                    // Hiển thị danh sách khuyến mãi trong RecyclerView
                     displayKhuyenMaiList(khuyenMaiList);
                 } else {
-                    // Xử lý lỗi khi không thể lấy được dữ liệu
                 }
             }
 
@@ -62,6 +62,15 @@ public class KhuyenMaiActivity extends AppCompatActivity {
 
     private void displayKhuyenMaiList(List<KhuyenMai> khuyenMaiList) {
         adapter = new KhuyenMaiAdapter(khuyenMaiList, this);
+        adapter.setOnKhuyenMaiClickListener(new KhuyenMaiAdapter.OnKhuyenMaiClickListener() {
+            @Override
+            public void onKhuyenMaiClick(KhuyenMai khuyenMai) {
+                Intent intent = new Intent();
+                intent.putExtra("KhuyenMaiObject", khuyenMai);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
         recyclerView.setAdapter(adapter);
     }
 }

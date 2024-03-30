@@ -18,24 +18,25 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <androidx.appcompat.widget.Toolbar
+        <LinearLayout
             android:background="@color/main"
             android:layout_width="match_parent"
+            android:orientation="vertical"
             android:layout_height="wrap_content">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
                 <RelativeLayout
-                    android:paddingHorizontal="10dp"
                     android:layout_width="match_parent"
                     android:orientation="horizontal"
+                    android:paddingHorizontal="15dp"
                     android:layout_height="wrap_content">
                     <ImageButton
                         android:id="@+id/datHangThanhCong_img_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/dr_back_white"/>
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/ic_white_back"/>
                     <ImageButton
                         android:id="@+id/datHangThanhCong_img_cart"
                         android:layout_alignParentEnd="true"
@@ -48,9 +49,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageView
+                        android:layout_gravity="center"
                         android:src="@drawable/dr_success"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"/>
                     <TextView
                         android:gravity="center"
                         android:textStyle="bold"
@@ -94,7 +96,8 @@
                     </TableRow>
                 </TableLayout>
             </LinearLayout>
-        </androidx.appcompat.widget.Toolbar>
+    </LinearLayout>
+
         <LinearLayout
             android:layout_marginVertical="5dp"
             android:layout_width="match_parent"
@@ -125,6 +128,7 @@
                 android:id="@+id/datHangThanhCong_rcv_list"
                 app:spanCount="2"
                 android:orientation="vertical"
+                android:paddingHorizontal="10dp"
                 app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>

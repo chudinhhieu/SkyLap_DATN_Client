@@ -51,7 +51,7 @@ import retrofit2.Response;
 
 public class SanPhamActivity extends AppCompatActivity {
     private TextView tvGiaGocSP, tvSlideSP, tvTenSP, tvGiaSP, tvSaoSP, tvDaBan, tvMoTaSP, tvStarSP, tvSLDG, tvXemDG;
-    private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh, btn_muangay;
+    private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh;
     private ImageView imgSildeSP, imgBack, imgGioHang, imgFavorite;
     private RecyclerView rcvCTDG;
     private RelativeLayout view;
@@ -60,7 +60,6 @@ public class SanPhamActivity extends AppCompatActivity {
     private ViewFlipper viewFlipper;
     private ChatRetrofit chatRetrofit;
     private SanPham sanPham;
-    private SanPhamYeuThich sanPhamYeuThich;
     private Handler slideHandler;
 
     private SanPhamRetrofit sanPhamRetrofit;
@@ -70,9 +69,6 @@ public class SanPhamActivity extends AppCompatActivity {
 
     private SharedPreferencesManager sharedPreferencesManager;
     private MyAuth myAuth;
-    public static final int start = 1;
-    private ArrayList<GioHang> listSend;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,17 +80,11 @@ public class SanPhamActivity extends AppCompatActivity {
         getSanPham();
         checkFavoriteStatus();
         slideHandler = new Handler(Looper.getMainLooper());
-        btn_muangay.setOnClickListener(new View.OnClickListener() {
+        btnMua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listSend = new ArrayList<>();
-                String userId = sharedPreferencesManager.getUserId();
-                GioHang gioHang = new GioHang(sanPham.get_id(), userId, start);
-                listSend.add(gioHang);
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList("listData", listSend);
                 Intent intent = new Intent(SanPhamActivity.this, DatHangActivity.class);
-                intent.putExtras(bundle);
+                intent.putExtra("SanPham", sanPham);
                 startActivity(intent);
             }
         });
@@ -447,7 +437,6 @@ public class SanPhamActivity extends AppCompatActivity {
         tvRom = findViewById(R.id.asp_tv_rom);
         tvBaoHanh = findViewById(R.id.asp_tv_bao_hanh);
         viewFlipper = findViewById(R.id.viewFlipper);
-        btn_muangay = findViewById(R.id.btn_muangay);
         progressBar = findViewById(R.id.progressBar);
         view = findViewById(R.id.view);
         imgFavorite = findViewById(R.id.asp_img_favorite);

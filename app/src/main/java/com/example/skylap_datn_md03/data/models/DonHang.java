@@ -9,6 +9,7 @@ public class DonHang implements Serializable {
     private String _id;
     private ArrayList<TrangThai> trangThai;
     private String idSanPham;
+    private double tienShip;
     private String idAccount;
     private String idKhuyenMai;
     private Date thoiGianMua;
@@ -37,6 +38,17 @@ public class DonHang implements Serializable {
         this._id = _id;
     }
 
+    public DonHang(String idSanPham, double tienShip, String idAccount, String idKhuyenMai, int soLuong, double tongTien, String ghiChu, boolean thanhToan) {
+        this.idSanPham = idSanPham;
+        this.tienShip = tienShip;
+        this.idAccount = idAccount;
+        this.idKhuyenMai = idKhuyenMai;
+        this.soLuong = soLuong;
+        this.tongTien = tongTien;
+        this.ghiChu = ghiChu;
+        this.thanhToan = thanhToan;
+    }
+
     public DonHang(String _id, ArrayList<TrangThai> trangThai, String idSanPham, String idAccount, String idKhuyenMai,
                    Date thoiGianMua, String idPttt, int soLuong, long tongTien, String ghiChu, boolean thanhToan) {
         this._id = _id;
@@ -50,6 +62,14 @@ public class DonHang implements Serializable {
         this.tongTien = tongTien;
         this.ghiChu = ghiChu;
         this.thanhToan = thanhToan;
+    }
+
+    public double getTienShip() {
+        return tienShip;
+    }
+
+    public void setTienShip(double tienShip) {
+        this.tienShip = tienShip;
     }
 
     public String getIdSanPham() {
