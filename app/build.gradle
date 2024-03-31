@@ -62,6 +62,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     //
     implementation 'com.github.dhaval2404:imagepicker:2.1'
-
-
+    implementation 'com.google.firebase:firebase-messaging:23.4.1'
+    implementation 'com.google.android.material:material:1.11.0'
 }

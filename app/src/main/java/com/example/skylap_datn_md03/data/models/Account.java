@@ -10,7 +10,18 @@ public class Account implements Serializable {
     private String avatar;
     private Boolean trangThai;
     private DiaChi diaChi;
-    private String hoTen, sdt;
+    private String hoTen, sdt, email;
+
+    public Account(String email) {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     public String getHoTen() {
         return hoTen;
@@ -90,5 +101,14 @@ public class Account implements Serializable {
 
     public void setTrangThai(Boolean trangThai) {
         this.trangThai = trangThai;
+    }
+    @Override
+    public String toString() {
+        return "Account{" +
+                "hoTen='" + hoTen + '\'' +
+                ", sdt='" + sdt + '\'' +
+                ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
+                '}';
     }
 }
