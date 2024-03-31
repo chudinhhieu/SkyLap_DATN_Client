@@ -72,6 +72,7 @@
                 android:src="@drawable/chat" />
 
             <TextView
+                android:id="@+id/txt_numberUnSeen_message_UserFrag"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:layout_gravity="end"

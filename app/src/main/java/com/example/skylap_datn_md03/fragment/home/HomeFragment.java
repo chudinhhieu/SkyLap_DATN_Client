@@ -39,6 +39,7 @@ import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.ui.activities.GioHangActivity;
 import com.example.skylap_datn_md03.ui.activities.MessageActivity;
+import com.example.skylap_datn_md03.utils.MessagePreferences;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -69,6 +70,7 @@ public class HomeFragment extends Fragment {
     private SanPhamRetrofit sanPhamRetrofit;
     private LinearLayout btn_chat;
     private SharedPreferencesManager sharedPreferencesManager;
+    private  MessagePreferences messagePreferences;
     private MessageRetrofit messageRetrofit;
     private ChatRetrofit chatRetrofit;
     private RetrofitService retrofitService;
@@ -90,6 +92,8 @@ public class HomeFragment extends Fragment {
         context = inflater.inflate(R.layout.fragment_home, container, false);
         retrofitService = new RetrofitService();
         sharedPreferencesManager = new SharedPreferencesManager(context.getContext());
+        messagePreferences = new MessagePreferences();
+
 
         unitUI();
         btnGioHang.setOnClickListener(new View.OnClickListener() {
@@ -125,7 +129,9 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.code() == 206) {
                    idChat = response.body();
-                  checkChat(response.body());
+//                  checkChat(response.body());
+                    messagePreferences.checkChat( response.body() ,txtNumberUnSeenMessage  , getContext());
+
                 }
 
             }
@@ -141,9 +147,8 @@ public class HomeFragment extends Fragment {
     private void getChat(){
         Intent intent = new Intent(context.getContext(), MessageActivity.class);
         intent.putExtra("conversation_key", idChat);
+        messagePreferences.putSeeNAllwhenOnclick(idChat);
         startActivity(intent);
-
-
     }
     private void checkChat(String idChat){
         if (idChat.length() >  0){

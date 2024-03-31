@@ -28,6 +28,7 @@ import com.example.skylap_datn_md03.ui.activities.MessageActivity;
 import com.example.skylap_datn_md03.ui.activities.QuanLyDanhGiaActivity;
 import com.example.skylap_datn_md03.ui.activities.QuanLyDonHangActivity;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
+import com.example.skylap_datn_md03.utils.MessagePreferences;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -47,9 +48,11 @@ public class UserFragment extends Fragment {
     private ImageView imgAvatar;
     private TextView tvHoTen;
     private SharedPreferencesManager sharedPreferencesManager;
+    private MessagePreferences messagePreferences;
     private RetrofitService retrofitService;
+    private TextView txt_numberUnSeen_message_UserFrag;
     private LinearLayout btnQLDH, btnCXN, btnCGH, btnDGH, btnDG, btnQLDG, btnYT, btnTroTruyen, btnDangXuat;
-
+    private String idChat;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,9 +91,12 @@ public class UserFragment extends Fragment {
         btnQLDG = view.findViewById(R.id.fmu_qldg);
         btnTroTruyen = view.findViewById(R.id.fmu_troTruyen);
         btnDangXuat = view.findViewById(R.id.fmu_dangXuat);
+        txt_numberUnSeen_message_UserFrag = view.findViewById(R.id.txt_numberUnSeen_message_UserFrag);
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         retrofitService = new RetrofitService();
+        messagePreferences = new MessagePreferences();
         getUser();
+        logicChat();
         btnGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,13 +106,13 @@ public class UserFragment extends Fragment {
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logicChat();
+                getChat();
             }
         });
         btnTroTruyen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logicChat();
+                getChat();
             }
         });
         btnQLDH.setOnClickListener(new View.OnClickListener() {
@@ -179,6 +185,37 @@ public class UserFragment extends Fragment {
 
     }
 
+    private void logicChat() {
+        idChat = "";
+        chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
+        String userId = sharedPreferencesManager.getUserId();
+        Call<String> addChat = chatRetrofit.CreateConverSation(userId);
+        addChat.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.code() == 206) {
+                    idChat = response.body();
+
+                    messagePreferences.checkChat( response.body() ,txt_numberUnSeen_message_UserFrag , getContext() );
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+
+            }
+        });
+
+    }
+    private void getChat(){
+        Intent intent = new Intent(getContext(), MessageActivity.class);
+        intent.putExtra("conversation_key", idChat);
+        messagePreferences.putSeeNAllwhenOnclick(idChat);
+        startActivity(intent);
+    }
+
     private void getUser() {
         AccountRetrofit accountRetrofit = retrofitService.retrofit.create(AccountRetrofit.class);
 
@@ -207,26 +244,5 @@ public class UserFragment extends Fragment {
         });
     }
 
-    private void logicChat() {
-        chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
-        String userId = sharedPreferencesManager.getUserId();
-        Call<String> addChat = chatRetrofit.CreateConverSation(userId);
-        addChat.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.code() == 206) {
-                    Intent intent = new Intent(getContext(), MessageActivity.class);
-                    intent.putExtra("conversation_key", response.body());
-                    startActivity(intent);
-                }
 
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-
-            }
-        });
-
-    }
 }
