@@ -29,7 +29,7 @@
                 android:id="@+id/editTextHoTen"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/full_name_hint"
+                android:hint="Full name"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -43,7 +43,7 @@
                 android:id="@+id/editTextSdt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/phone_number_hint"
+                android:hint="Phone number"
                 android:inputType="phone" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,7 +59,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/password_hint"
+                android:hint="Password"
                 android:inputType="textPassword"
              />
 
@@ -84,7 +84,7 @@
                 android:id="@+id/editTextDiaChi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/address_hint" />
+                android:hint="Address" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -95,7 +95,7 @@
                 android:id="@+id/editTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email_hint"
+                android:hint="Email adress"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
         <!-- Save Button -->
@@ -107,7 +107,7 @@
             android:layout_marginTop="24dp"
             android:background="@color/colorMain"
             android:paddingVertical="12dp"
-            android:text="@string/save_changes" />
+            android:text="Save changes" />
 
     </LinearLayout>
 </ScrollView>

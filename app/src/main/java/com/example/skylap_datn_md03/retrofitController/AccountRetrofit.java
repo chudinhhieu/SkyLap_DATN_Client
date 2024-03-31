@@ -51,4 +51,5 @@ public interface AccountRetrofit {
     @PUT("api/account/edit-avatar/{id}")
     Call<ResponseBody> updateAccountAvatar(@Path("id") String accountId, @Part MultipartBody.Part avatar);
 
+
 }

@@ -1,5 +1,7 @@
 package com.example.skylap_datn_md03.ui.activities;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -10,13 +12,20 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.Account;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
+import com.example.skylap_datn_md03.utils.RealPathUtil;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
+
+import java.io.File;
+import java.io.IOException;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -34,6 +43,7 @@ public class AccountManagementActivity extends AppCompatActivity {
     private Button btnSave;
     private ImageButton btnTogglePassword;
     private SharedPreferencesManager sharedPreferencesManager;
+    private Uri selectedImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +73,7 @@ public class AccountManagementActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> updateUserInfo());
         btnTogglePassword.setOnClickListener(v -> togglePasswordVisibility());
         imgAvatar.setOnClickListener(view -> {
-//            openImageSelector();
+            openImageChooser();
         });
     }
 
@@ -216,9 +226,55 @@ public class AccountManagementActivity extends AppCompatActivity {
         }
         editTextMatKhau.setSelection(editTextMatKhau.getText().length());
     }
+    private void openImageChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        mGetContent.launch("image/*");
+    }
 
+    private ActivityResultLauncher<String> mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(), new ActivityResultCallback<Uri>() {
+        @Override
+        public void onActivityResult(Uri uri) {
+            if (uri != null) {
+                selectedImageUri = uri;
+                imgAvatar.setImageURI(uri);
+                uploadImageToServer(uri);
+            }
+        }
+    });
 
+    private void uploadImageToServer(Uri imageUri) {
+        String filePath = RealPathUtil.getRealPath(getApplicationContext(), imageUri);
+        File file = new File(filePath);
 
+        RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
+
+        String userId = sharedPreferencesManager.getUserId();
+
+        accountService.updateAccountAvatar(userId, body).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    showToast("Avatar updated successfully");
+                } else {
+                    try {
+                        // Read the error body to get the actual error message
+                        String errorString = response.errorBody().string();
+                        Log.d("AvatarUpload", "Response error: " + errorString);
+                        showToast("Failed to update avatar: " + errorString);
+                    } catch (IOException e) {
+                        Log.e("AvatarUpload", "Error reading error body", e);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                showToast("Error connecting to the server: " + t.getMessage());
+            }
+        });
+    }
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
