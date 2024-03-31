@@ -47,6 +47,8 @@ public interface AccountRetrofit {
     // Cập nhật địa chỉ
     @PUT("api/account/add-dia-chi/{id}")
     Call<ResponseBody> addAddress(@Path("id") String accountId, @Body RequestBody requestBody);
+   
+  // Cập nhật avatar
     @Multipart
     @PUT("api/account/edit-avatar/{id}")
     Call<ResponseBody> updateAccountAvatar(@Path("id") String accountId, @Part MultipartBody.Part avatar);

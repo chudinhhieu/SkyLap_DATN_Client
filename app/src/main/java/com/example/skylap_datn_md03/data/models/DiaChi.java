@@ -1,22 +1,22 @@
 package com.example.skylap_datn_md03.data.models;
 
 public class DiaChi {
-    //tenDiaChi : "Công ty"
-    //diaChi : "Trịnh Văn Bô"
-    //TrangThai : true
-    //_id : "65e5cc8a5cbf37d3549d60db"
-    private String tenDiaChi, diaChi, _id;
-    private Boolean trangThai;
+    private String idTinh, diaChi, _id;
 
     public DiaChi() {
     }
 
-    public String getTenDiaChi() {
-        return tenDiaChi;
+    public DiaChi(String idTinh, String diaChi) {
+        this.idTinh = idTinh;
+        this.diaChi = diaChi;
     }
 
-    public void setTenDiaChi(String tenDiaChi) {
-        this.tenDiaChi = tenDiaChi;
+    public String getIdTinh() {
+        return idTinh;
+    }
+
+    public void setIdTinh(String idTinh) {
+        this.idTinh = idTinh;
     }
 
     public String getDiaChi() {
@@ -35,18 +35,4 @@ public class DiaChi {
         this._id = _id;
     }
 
-    public Boolean getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(Boolean trangThai) {
-        this.trangThai = trangThai;
-    }
-
-    public DiaChi(String tenDiaChi, String diaChi, String _id, Boolean trangThai) {
-        this.tenDiaChi = tenDiaChi;
-        this.diaChi = diaChi;
-        this._id = _id;
-        this.trangThai = trangThai;
-    }
 }

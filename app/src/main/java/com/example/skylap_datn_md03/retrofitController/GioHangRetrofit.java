@@ -7,6 +7,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -22,4 +23,7 @@ public interface GioHangRetrofit {
     Call<MyAuth> themGioHang(@Body GioHang gioHang);
     @PUT("api/gioHang/edit-soLuong/{id}")
     Call<GioHang> suaSoLuong(@Path("id") String id,@Body GioHang gioHang);
+
+    @DELETE("api/gioHang/delete/{id}")
+    Call<MyAuth> xoaGioHang(@Path("id") String id);
 }

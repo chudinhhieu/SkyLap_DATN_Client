@@ -12,14 +12,6 @@
         android:layout_centerVertical="true"
         android:layout_marginHorizontal="16dp"
         android:orientation="horizontal">
-
-        <CheckBox
-            android:id="@+id/item_gh_chk"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="5dp" />
-
         <ImageView
             android:id="@+id/item_gh_img"
             android:padding="1dp"
@@ -27,8 +19,7 @@
             android:layout_height="100dp"
             android:scaleType="centerInside"
             android:layout_centerVertical="true"
-            android:background="@drawable/border_width_button"
-            android:layout_toRightOf="@+id/item_gh_chk"/>
+            android:background="@drawable/border_width_button" />
 
         <ImageView
             android:id="@+id/item_gh_exit"
@@ -85,6 +76,7 @@
                     android:layout_width="50dp"
                     android:layout_height="30dp"
                     android:enabled="false"
+                    android:inputType="number"
                     android:layout_gravity="center_vertical"
                     android:layout_marginHorizontal="5dp"
                     android:background="@drawable/border_width_button"

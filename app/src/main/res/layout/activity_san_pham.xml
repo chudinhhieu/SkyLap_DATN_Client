@@ -517,9 +517,10 @@
                     android:id="@+id/btn_muangay"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MUA NGAY"
+                    android:text="Mua ngay"
+                    android:textStyle="bold"
                     android:textColor="@color/white"
-                    android:textSize="22sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

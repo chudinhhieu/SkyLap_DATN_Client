@@ -50,6 +50,10 @@ public class Account implements Serializable {
     public Account() {
     }
 
+    public Account(String sdt) {
+        this.sdt = sdt;
+    }
+
     public Account(String taiKhoan, String matKhau) {
         this.taiKhoan = taiKhoan;
         this.matKhau = matKhau;

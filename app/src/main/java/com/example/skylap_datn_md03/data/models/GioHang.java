@@ -8,7 +8,6 @@ public class GioHang implements Parcelable {
     private String idSanPham;
     private String idAccount;
     private int soLuong;
-    private boolean isChecked;
 
 
     public GioHang() {
@@ -21,7 +20,6 @@ public class GioHang implements Parcelable {
                 ", idSanPham='" + idSanPham + '\'' +
                 ", idAccount='" + idAccount + '\'' +
                 ", soLuong=" + soLuong +
-                ", isChecked=" + isChecked +
                 '}';
     }
 
@@ -41,7 +39,6 @@ public class GioHang implements Parcelable {
         idSanPham = in.readString();
         idAccount = in.readString();
         soLuong = in.readInt();
-        isChecked = in.readByte() != 0;
     }
 
     public static final Creator<GioHang> CREATOR = new Creator<GioHang>() {
@@ -88,13 +85,6 @@ public class GioHang implements Parcelable {
         this.soLuong = soLuong;
     }
 
-    public boolean isChecked() {
-        return isChecked;
-    }
-
-    public void setChecked(boolean checked) {
-        isChecked = checked;
-    }
 
     @Override
     public int describeContents() {
@@ -107,6 +97,5 @@ public class GioHang implements Parcelable {
         dest.writeString(idSanPham);
         dest.writeString(idAccount);
         dest.writeInt(soLuong);
-        dest.writeByte((byte) (isChecked ? 1 : 0));
     }
 }

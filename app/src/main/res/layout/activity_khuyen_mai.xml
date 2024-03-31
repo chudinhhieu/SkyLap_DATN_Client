@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f6f6f6"
-    tools:context=".ui.activities.GioHangActivity">
+    tools:context=".ui.activities.KhuyenMaiActivity">
     <RelativeLayout
-        android:id="@+id/agh_rl_top"
+        android:id="@+id/agg_dg_top"
         android:layout_alignParentTop="true"
         android:background="@color/white"
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:elevation="20dp"
         android:paddingHorizontal="12dp">
         <ImageView
-            android:id="@+id/agh_img_back"
+            android:id="@+id/akm_img_back"
             android:layout_width="35dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
@@ -26,16 +26,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="Giỏ hàng"
+            android:text="Mã Giảm Giá"
             android:textColor="@color/black"
             android:textSize="24dp" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/agh_recyclerView"
+        android:id="@+id/akm_recyclerView"
         android:layout_width="match_parent"
-        android:background="#f6f6f6"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/agh_rl_top"
-        />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/agg_dg_top"/>
+
 </RelativeLayout>
