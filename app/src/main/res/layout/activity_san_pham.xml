@@ -137,7 +137,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
                         android:paddingVertical="5dp"
-                        android:text="Đánh giá 3.5/5"
                         android:textColor="@color/black"
                         android:textSize="15sp" />
 
@@ -399,7 +398,6 @@
                             android:layout_marginTop="-20dp"
                             android:numStars="5"
                             android:progressTint="@color/yellow"
-                            android:rating="3.5"
                             android:scaleX="0.4"
                             android:scaleY="0.4"
                             android:stepSize="0.1" />
@@ -419,7 +417,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
                             android:layout_marginTop="-2dp"
-                            android:text="(66 đánh giá)"
                             android:textColor="@color/gray" />
                     </LinearLayout>
 

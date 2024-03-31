@@ -18,11 +18,12 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
-    <string name="full_name_hint">Full name</string>
-    <string name="phone_number_hint">Phone number</string>
-    <string name="password_hint">Password</string>
-    <string name="address_hint">Address</string>
-    <string name="save_changes">Save changes</string>
-    <string name="email_hint">Email address</string>
+    <string name="lbl_sotien">Số Tiền</string>
+    <string name="lbl_donhang">DEMO</string>
+    <string name="btn_create_order">Tạo Đơn Hàng</string>
+    <string name="txt_amount_init">1000</string>
+    <string name="txt_amount_hint">1000</string>
+    <string name="btn_pay">Thanh Toán</string>
+    <string name="lbl_zptranstoken">zptranstoken</string>
+    <string name="to_webview">To WebView</string>
 </resources>
