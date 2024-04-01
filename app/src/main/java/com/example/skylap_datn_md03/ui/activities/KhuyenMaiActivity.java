@@ -73,4 +73,5 @@ public class KhuyenMaiActivity extends AppCompatActivity {
         });
         recyclerView.setAdapter(adapter);
     }
+
 }

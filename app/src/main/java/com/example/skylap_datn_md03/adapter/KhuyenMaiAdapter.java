@@ -1,6 +1,7 @@
 package com.example.skylap_datn_md03.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.KhuyenMai;
+import com.example.skylap_datn_md03.ui.activities.ChiTietKhuyenMaiActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -63,6 +65,15 @@ public class KhuyenMaiAdapter extends RecyclerView.Adapter<KhuyenMaiAdapter.Khuy
                 }
             }
         });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChiTietKhuyenMaiActivity.class);
+                intent.putExtra("khuyenMai", khuyenMai);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -75,6 +86,7 @@ public class KhuyenMaiAdapter extends RecyclerView.Adapter<KhuyenMaiAdapter.Khuy
         private ImageView item_giamgia_image;
         private TextView item_giamgia_mota, item_giamgia_code, item_giamgia_thoigian;
         private Button btnDungNgay;
+
         public KhuyenMaiViewHolder(@NonNull View itemView) {
             super(itemView);
             item_giamgia_image = itemView.findViewById(R.id.item_giamgia_image);

@@ -22,14 +22,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".ui.activities.ThemDiaChiActivity"
-            android:exported="true" >
-
-        </activity>
+            android:name=".ui.activities.ChiTietKhuyenMaiActivity"
+            android:exported="false" />
         <activity
-            android:name=".ui.activities.DatHangActivity"
-            android:exported="true"
-            android:launchMode="singleTask">
+            android:name=".ui.activities.KhuyenMaiActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
