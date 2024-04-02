@@ -2,6 +2,8 @@ package com.example.skylap_datn_md03.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,17 +27,24 @@ public class KhuyenMaiActivity extends AppCompatActivity {
     private KhuyenMaiAdapter adapter;
     List<KhuyenMai> listKhuyenMai;
     RetrofitService retrofitService;
+    private ImageView btnBack;
 
     SharedPreferencesManager sharedPreferencesManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_khuyen_mai);
-
+        btnBack = findViewById(R.id.akm_img_back);
         recyclerView = findViewById(R.id.akm_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         getKhuyenMaiList();
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 

@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.example.skylap_datn_md03.R;
 
 import com.example.skylap_datn_md03.data.models.Account;
+import com.example.skylap_datn_md03.ui.activities.AccountManagementActivity;
 import com.example.skylap_datn_md03.ui.activities.DanhSachYeuThichActivity;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
@@ -52,7 +53,7 @@ public class UserFragment extends Fragment {
     private MessagePreferences messagePreferences;
     private RetrofitService retrofitService;
     private TextView txt_numberUnSeen_message_UserFrag;
-    private LinearLayout btnQLDH, btnCXN, btnCGH, btnDGH, btnDG, btnQLDG, btnYT, btnTroTruyen, btnDangXuat;
+    private LinearLayout btnQLDH, btnCXN, btnCGH, btnDGH, btnDG, btnQLDG, btnYT, btnTroTruyen, btnDangXuat,btnQLTK;
     private String idChat;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -210,9 +211,7 @@ public class UserFragment extends Fragment {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.code() == 206) {
                     idChat = response.body();
-
                     messagePreferences.checkChat( response.body() ,txt_numberUnSeen_message_UserFrag , getContext() );
-
                 }
 
             }

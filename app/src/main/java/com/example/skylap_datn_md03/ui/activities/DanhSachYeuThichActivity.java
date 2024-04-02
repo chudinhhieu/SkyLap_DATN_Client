@@ -2,6 +2,8 @@ package com.example.skylap_datn_md03.ui.activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -25,6 +27,7 @@ import retrofit2.Response;
 
 public class DanhSachYeuThichActivity extends AppCompatActivity {
     private RecyclerView rcvDanhSachYeuThich;
+    private ImageView btnBack;
     private SanPhamYeuThichAdapter sanPhamYeuThichAdapter;
     private SharedPreferencesManager sharedPreferencesManager;
 
@@ -36,13 +39,20 @@ public class DanhSachYeuThichActivity extends AppCompatActivity {
 
         sharedPreferencesManager = new SharedPreferencesManager(this);
         String userId = sharedPreferencesManager.getUserId();
-
+        btnBack = findViewById(R.id.adsspyt_img_back);
         rcvDanhSachYeuThich = findViewById(R.id.rcvDanhSachYeuThich);
         rcvDanhSachYeuThich.setLayoutManager(new GridLayoutManager(this, 2));
         sanPhamYeuThichAdapter = new SanPhamYeuThichAdapter(this, new ArrayList<>());
         rcvDanhSachYeuThich.setAdapter(sanPhamYeuThichAdapter);
 
         fetchSanPhamYeuThich(userId);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
     }
 
     private void fetchSanPhamYeuThich(String idAccount) {

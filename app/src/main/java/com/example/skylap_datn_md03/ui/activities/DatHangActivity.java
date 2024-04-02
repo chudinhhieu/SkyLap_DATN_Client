@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -66,6 +67,8 @@ public class DatHangActivity extends AppCompatActivity {
     private RetrofitService retrofitService;
     private DonHangRetrofit donHangRetrofit;
     private View line;
+    private RelativeLayout viewMain;
+    private ProgressBar progressBar;
     private SharedPreferencesManager sharedPreferencesManager;
     private double tongTienSP = 0;
     private double tienVanChuyen = 0;
@@ -90,10 +93,7 @@ public class DatHangActivity extends AppCompatActivity {
         initView();
         fillDataToView();
         getUser();
-        tinhTongThanhToan();
         int maxSL = sanPham.getSoLuong();
-
-
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,6 +226,9 @@ public class DatHangActivity extends AppCompatActivity {
     }
 
     private void callDatHang() {
+        if (sanPham == null){
+            return;
+        }
         String idKhuyenMai = khuyenMai == null ? "":khuyenMai.get_id();
         DonHang donHang = new DonHang(sanPham.get_id(),tienVanChuyen, sharedPreferencesManager.getUserId(),
                 idKhuyenMai, Integer.parseInt(ipSoLuong.getText().toString().trim()), tongThanhToan, ipGhiChu.getText().toString().trim(), isZaloPay);
@@ -255,8 +258,7 @@ public class DatHangActivity extends AppCompatActivity {
         ZaloPaySDK.init(2554 , Environment.SANDBOX);
     }
     private void thanhToanZaloPay(){
-        // Chuyển chuỗi thành số double
-
+        showLoading();
 // Chuyển số double thành chuỗi nguyên
         String tien = String.valueOf((long) tongThanhToan);
         CreateOrder orderApi = new CreateOrder();
@@ -266,23 +268,19 @@ public class DatHangActivity extends AppCompatActivity {
 
             if (code.equals("1")) {
                 String token = data.getString("zp_trans_token");
-                Toast.makeText(DatHangActivity.this, ""+token, Toast.LENGTH_SHORT).show();
                 ZaloPaySDK.getInstance().payOrder(DatHangActivity.this, token, "demozpdk://app", new PayOrderListener() {
                     @Override
                     public void onPaymentSucceeded(String s, String s1, String s2) {
-                        Toast.makeText(DatHangActivity.this, "onPaymentSucceeded", Toast.LENGTH_SHORT).show();
+                        callDatHang();
                     }
 
                     @Override
                     public void onPaymentCanceled(String s, String s1) {
-                        Toast.makeText(DatHangActivity.this, "onPaymentCanceled", Toast.LENGTH_SHORT).show();
 
                     }
 
                     @Override
                     public void onPaymentError(ZaloPayError zaloPayError, String s, String s1) {
-                        Toast.makeText(DatHangActivity.this, "onPaymentError", Toast.LENGTH_SHORT).show();
-
                     }
                 });
             }
@@ -291,11 +289,10 @@ public class DatHangActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-    private void tinhTongThanhToan() {
-    }
-
     private void getUser() {
+        if (sanPham == null){
+            return;
+        }
         AccountRetrofit accountRetrofit = retrofitService.retrofit.create(AccountRetrofit.class);
         accountRetrofit.getAccountById(sharedPreferencesManager.getUserId()).enqueue(new Callback<Account>() {
             @Override
@@ -324,14 +321,16 @@ public class DatHangActivity extends AppCompatActivity {
     }
 
     private void updateViewTongTienSP() {
-        tongTienSP = Integer.parseInt(ipSoLuong.getText().toString()) * sanPham.getGiaTien();
-        tongThanhToan = tongTienSP + tienVanChuyen - tienKhuyenMai;
-        tvTongTienSP.setText(String.format("%,.0f", tongTienSP) + "₫");
-        tvTongTienHang.setText(String.format("%,.0f", tongTienSP) + "₫");
-        tvTongCTTT.setText(String.format("%,.0f", tongThanhToan) + "₫");
-        tvTongTien.setText(String.format("%,.0f", tongThanhToan) + "₫");
-        tvTienVanChuyen.setText(String.format("%,.0f", tienVanChuyen) + "₫");
-        tvTienKhuyenMai.setText(String.format("-"+"%,.0f", tienKhuyenMai) + "₫");
+        if (sanPham != null){
+            tongTienSP = Integer.parseInt(ipSoLuong.getText().toString()) * sanPham.getGiaTien();
+            tongThanhToan = tongTienSP + tienVanChuyen - tienKhuyenMai;
+            tvTongTienSP.setText(String.format("%,.0f", tongTienSP) + "₫");
+            tvTongTienHang.setText(String.format("%,.0f", tongTienSP) + "₫");
+            tvTongCTTT.setText(String.format("%,.0f", tongThanhToan) + "₫");
+            tvTongTien.setText(String.format("%,.0f", tongThanhToan) + "₫");
+            tvTienVanChuyen.setText(String.format("%,.0f", tienVanChuyen) + "₫");
+            tvTienKhuyenMai.setText(String.format("-"+"%,.0f", tienKhuyenMai) + "₫");
+        }
     }
 
     private void fillDataToView() {
@@ -342,6 +341,8 @@ public class DatHangActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        progressBar = findViewById(R.id.adh_loading);
+        viewMain = findViewById(R.id.adh_view);
         btnBack = findViewById(R.id.adh_img_back);
         ipGhiChu = findViewById(R.id.adh_ipGhiChu);
         btnThemDiaChi = findViewById(R.id.adh_addDicChi);
@@ -392,10 +393,10 @@ public class DatHangActivity extends AppCompatActivity {
         super.onResume();
     getUser();
     }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        getUser();
+    void showLoading(){
+        progressBar.setVisibility(View.VISIBLE);
+        viewMain.setVisibility(View.GONE);
+    }
+    void hideLoading(){
     }
 }

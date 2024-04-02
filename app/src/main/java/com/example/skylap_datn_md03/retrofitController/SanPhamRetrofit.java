@@ -23,5 +23,7 @@ public interface SanPhamRetrofit {
     Call<List<SanPham>> getListSanPhamByCPU(@Path("cpu") String cpu);
     @POST("api/sanpham/search")
     Call<List<SanPham>> getsearch(@Body SanPham sanPham);
+    @GET("api/sanPham/hang/{id}")
+    Call<List<SanPham>> getListSanPhamByHang(@Path("id") String id);
 
 }

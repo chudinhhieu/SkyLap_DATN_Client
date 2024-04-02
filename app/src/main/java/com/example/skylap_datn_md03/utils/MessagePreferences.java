@@ -4,6 +4,7 @@ import static android.util.Log.d;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,7 +32,6 @@ public class MessagePreferences {
 
     public  void checkChat(String idChat , TextView txtNumberUnSeenMessage , Context  context){
         SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
-        d("checkChat", "checkChat: " +  sharedPreferencesManager.getUserId());
 
         if (idChat.length() >  0){
             mDatabase = FirebaseDatabase.getInstance().getReference("messages");
@@ -43,16 +43,12 @@ public class MessagePreferences {
                         Message mess = data.getValue(Message.class);
                         if (mess.isDaxem() == false && !mess.getIdAccount().equals(sharedPreferencesManager.getUserId())) {
                                 numberChat_notSeen += 1;
-                                d("check", "onDataChange: " +  numberChat_notSeen);
-
-
+                            txtNumberUnSeenMessage.setText(""+numberChat_notSeen);
+                            txtNumberUnSeenMessage.setVisibility(View.VISIBLE);
                         }else {
                             numberChat_notSeen = 0  ;
+                            txtNumberUnSeenMessage.setVisibility(View.GONE);
                         }
-
-
-                        txtNumberUnSeenMessage.setText(""+numberChat_notSeen);
-
                     }
 
 

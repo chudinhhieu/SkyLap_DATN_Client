@@ -74,15 +74,16 @@
                         android:scaleType="fitCenter"/>
                     <TextView
                         android:id="@+id/txt_numberUnSeen_message"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="13dp"
+                        android:visibility="gone"
+                        android:layout_height="13dp"
                         android:background="@drawable/bo_tron"
                         android:layout_gravity="end"
                         android:gravity="center"
                         android:textColor="@color/white"
-                        android:textSize="10sp"
+                        android:textSize="7sp"
                         android:textStyle="bold"
-                        android:text=""/>
+                        />
                 </FrameLayout>
 
             </LinearLayout>
@@ -111,7 +112,32 @@
             android:paddingStart="5dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2" />
-
+        <RelativeLayout
+            android:id="@+id/view_null_home"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_centerInParent="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/img_null_home"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:scaleType="centerInside"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/null_home"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="wrap_content"
+                    android:text="Không tìm thấy sản phẩm nào"
+                    android:textSize="16sp"
+                    android:layout_below="@id/img_null_home"
+                    android:layout_centerHorizontal="true"/>
+            </RelativeLayout>
+        </RelativeLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/fragment_home_rcv_listProduct"
             android:layout_width="match_parent"

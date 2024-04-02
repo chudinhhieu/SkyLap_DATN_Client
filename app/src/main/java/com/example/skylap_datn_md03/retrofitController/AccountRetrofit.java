@@ -1,6 +1,7 @@
 package com.example.skylap_datn_md03.retrofitController;
 
 import com.example.skylap_datn_md03.data.models.Account;
+import com.example.skylap_datn_md03.data.models.DiaChi;
 import com.example.skylap_datn_md03.data.models.MyAuth;
 
 import okhttp3.MultipartBody;
@@ -53,5 +54,9 @@ public interface AccountRetrofit {
     @PUT("api/account/edit-avatar/{id}")
     Call<ResponseBody> updateAccountAvatar(@Path("id") String accountId, @Part MultipartBody.Part avatar);
 
+    @PUT("api/account/add-dia-chi/{id}")
+    Call<MyAuth> themDiaChi(@Path("id") String id,@Body DiaChi diaChi );
 
+    @PUT("api/account/edit-sdt/{id}")
+    Call<MyAuth> themSDT(@Body Account account,@Path("id") String id );
 }

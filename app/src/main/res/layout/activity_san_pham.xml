@@ -36,7 +36,7 @@
                 android:layout_height="30dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/ic_back_ctsp" />
+                android:src="@drawable/ic_back" />
 
             <ImageView
                 android:id="@+id/asp_img_cart"

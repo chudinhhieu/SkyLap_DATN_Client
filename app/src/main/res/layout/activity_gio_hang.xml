@@ -9,26 +9,26 @@
     <RelativeLayout
         android:id="@+id/agh_rl_top"
         android:layout_alignParentTop="true"
-        android:background="@color/main"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:elevation="20dp"
         android:paddingHorizontal="12dp">
         <ImageView
             android:id="@+id/agh_img_back"
-            android:layout_width="35dp"
+            android:layout_width="30dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_white_back"/>
+            android:layout_height="30dp"
+            android:src="@drawable/ic_back"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="Giỏ hàng"
-            android:textSize="24dp"
-            android:textColor="@color/white"
-            />
+            android:textColor="@color/black"
+            android:textSize="24dp" />
     </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView

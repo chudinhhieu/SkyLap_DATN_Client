@@ -21,9 +21,13 @@ import java.util.List;
 public class HangSanPhamAdapter extends RecyclerView.Adapter<HangSanPhamAdapter.LoaiSanPhamViewHolder>{
     private List<HangSX> list;
     private Context context;
-
-    public HangSanPhamAdapter(Context context) {
+    private OnItemClickListener listener;
+    public interface OnItemClickListener {
+        void onItemClick(String hangId);
+    }
+    public HangSanPhamAdapter(Context context, OnItemClickListener listener) {
         this.context = context;
+        this.listener = listener;
     }
     public void setList(List<HangSX> list){
         this.list = list;
@@ -41,6 +45,14 @@ public class HangSanPhamAdapter extends RecyclerView.Adapter<HangSanPhamAdapter.
         HangSX hangSX = list.get(position);
         if (hangSX == null) return;
         Picasso.get().load(hangSX.getLogo()).into(holder.img_anh);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onItemClick(hangSX.get_id());
+                }
+            }
+        });
     }
 
     @Override

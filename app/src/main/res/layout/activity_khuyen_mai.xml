@@ -16,11 +16,11 @@
         android:paddingHorizontal="12dp">
         <ImageView
             android:id="@+id/akm_img_back"
-            android:layout_width="35dp"
+            android:layout_width="30dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_back_ctsp"/>
+            android:layout_height="30dp"
+            android:src="@drawable/ic_back"/>
 
         <TextView
             android:layout_width="wrap_content"

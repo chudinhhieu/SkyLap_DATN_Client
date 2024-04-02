@@ -2,6 +2,7 @@ package com.example.skylap_datn_md03.ui.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import java.util.Locale;
 
 public class ChiTietKhuyenMaiActivity extends AppCompatActivity {
     private KhuyenMai khuyenMai;
+    private ImageView btnBack;
     private ImageView imgChiTietKhuyenMai;
     private TextView tvMoTaChiTiet, tvCodeChiTiet, tvThoiGianBatDau, tvThoiGianKetThuc,
                     tvSoLuong, tvSoTienGiam, tvTrangThai;
@@ -33,9 +35,16 @@ public class ChiTietKhuyenMaiActivity extends AppCompatActivity {
         }
         initView();
         fillDataToView(khuyenMai);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
     private void initView(){
+        btnBack = findViewById(R.id.act_km_img_back);
         imgChiTietKhuyenMai = findViewById(R.id.imgChiTietKhuyenMai);
         tvMoTaChiTiet = findViewById(R.id.tvMoTaChiTiet);
         tvCodeChiTiet = findViewById(R.id.tvCodeChiTiet);

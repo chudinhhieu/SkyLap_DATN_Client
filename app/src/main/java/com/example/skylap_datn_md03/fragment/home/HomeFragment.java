@@ -26,6 +26,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.adapter.HangSanPhamAdapter;
+import com.example.skylap_datn_md03.adapter.QuanLyDonHangAdapter;
 import com.example.skylap_datn_md03.adapter.SanPhamAdapter;
 import com.example.skylap_datn_md03.adapter.SlideAdapter;
 import com.example.skylap_datn_md03.adapter.messageAdapter;
@@ -69,7 +70,6 @@ public class HomeFragment extends Fragment {
     private View context;
     private Timer mTimer;
     private List<KhuyenMai> list;
-    private DatabaseReference mDatabase;
     private SanPhamRetrofit sanPhamRetrofit;
     private LinearLayout btn_chat;
     private SharedPreferencesManager sharedPreferencesManager;
@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment {
     private MessageRetrofit messageRetrofit;
     private ChatRetrofit chatRetrofit;
     private RetrofitService retrofitService;
-    private RelativeLayout btnGioHang;
+    private RelativeLayout btnGioHang,viewNull;
     private TextView txtNumberUnSeenMessage;
 
     private EditText txtSearrch;
@@ -100,7 +100,8 @@ public class HomeFragment extends Fragment {
         messagePreferences = new MessagePreferences();
 
 
-        unitUI();
+        initUI();
+
         txtSearrch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -109,15 +110,30 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (txtSearrch.getText().toString().trim().equals("")){
+                    return;
+                }
 
                 sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
                 sanPhamRetrofit.getsearch( new SanPham(txtSearrch.getText().toString())).enqueue(new Callback<List<SanPham>>() {
                     @Override
                     public void onResponse(Call<List<SanPham>> call, Response<List<SanPham>> response) {
                         List<SanPham> newData = response.body();
-                        // Cập nhật dữ liệu lên RecyclerView
-                        sanPhamAdapter.setList(newData);
-                        rcvSanPham.setAdapter(sanPhamAdapter);
+                        if (newData == null){
+                            viewNull.setVisibility(View.VISIBLE);
+                            rcvSanPham.setVisibility(View.GONE);
+                            return;
+                        }
+                        if (newData.isEmpty() ) {
+                            viewNull.setVisibility(View.VISIBLE);
+                            rcvSanPham.setVisibility(View.GONE);
+                        } else {
+                            viewNull.setVisibility(View.GONE);
+                            rcvSanPham.setVisibility(View.VISIBLE);
+                            sanPhamAdapter.setList(newData);
+                            rcvSanPham.setAdapter(sanPhamAdapter);
+                        }
+
                     }
 
                     @Override
@@ -188,55 +204,27 @@ public class HomeFragment extends Fragment {
         messagePreferences.putSeeNAllwhenOnclick(idChat);
         startActivity(intent);
     }
-    private void checkChat(String idChat){
-        if (idChat.length() >  0){
-            mDatabase = FirebaseDatabase.getInstance().getReference("messages");
-            mDatabase.orderByChild("idChat").equalTo(idChat).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    numberChat_notSeen = 0;
-                    for (DataSnapshot data : snapshot.getChildren()) {
-                        Message mess = data.getValue(Message.class);
-                        if (mess.isDaxem() == false) {
-                            numberChat_notSeen += 1;
-                            d("check", "onDataChange: " +  numberChat_notSeen);
-                        }
-
-
-                        txtNumberUnSeenMessage.setText(""+numberChat_notSeen);
-
-                    }
-
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    Log.d("err", "onCancelled: " + error);
-                }
-            });
-        }
-
-
-    }
-
 
     private void getListSanPham() {
-
-
         sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
         Call<List<SanPham>> getSp = sanPhamRetrofit.getListSanPham();
         getSp.enqueue(new Callback<List<SanPham>>() {
             @Override
             public void onResponse(Call<List<SanPham>> call, Response<List<SanPham>> response) {
-                if (response.isSuccessful()) {
-                    List<SanPham> newData = response.body();
-                    // Cập nhật dữ liệu lên RecyclerView
+                List<SanPham> newData = response.body();
+                if (newData == null){
+                    viewNull.setVisibility(View.VISIBLE);
+                    rcvSanPham.setVisibility(View.GONE);
+                    return;
+                }
+                if (newData.isEmpty() ) {
+                    viewNull.setVisibility(View.VISIBLE);
+                    rcvSanPham.setVisibility(View.GONE);
+                } else {
+                    viewNull.setVisibility(View.GONE);
+                    rcvSanPham.setVisibility(View.VISIBLE);
                     sanPhamAdapter.setList(newData);
                     rcvSanPham.setAdapter(sanPhamAdapter);
-
-                } else {
-                    d("ca" + "chung", "onResponse: " + response.message());
                 }
             }
 
@@ -293,7 +281,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    private void unitUI() {
+    private void initUI() {
         btn_chat = context.findViewById(R.id.fmh_chat);
         slidePager = context.findViewById(R.id.fragment_home_viewpager_slide);
         rcvHangSx = context.findViewById(R.id.fragment_home_rcv_listHang);
@@ -301,11 +289,46 @@ public class HomeFragment extends Fragment {
         btnGioHang = context.findViewById(R.id.fmh_gioHang);
         txtNumberUnSeenMessage = context.findViewById(R.id.txt_numberUnSeen_message);
         txtSearrch = context.findViewById(R.id.editText);
+        viewNull = context.findViewById(R.id.view_null_home);
         configAdapter();
     }
+    private void getSanPhamByHang(String hangId) {
+        SanPhamRetrofit sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
+        Call<List<SanPham>> call = sanPhamRetrofit.getListSanPhamByHang(hangId);
+        call.enqueue(new Callback<List<SanPham>>() {
+            @Override
+            public void onResponse(Call<List<SanPham>> call, Response<List<SanPham>> response) {
+                List<SanPham> newData = response.body();
+                if (newData == null){
+                    viewNull.setVisibility(View.VISIBLE);
+                    rcvSanPham.setVisibility(View.GONE);
+                    return;
+                }
+                if (newData.isEmpty() ) {
+                    viewNull.setVisibility(View.VISIBLE);
+                    rcvSanPham.setVisibility(View.GONE);
+                } else {
+                    viewNull.setVisibility(View.GONE);
+                    rcvSanPham.setVisibility(View.VISIBLE);
+                    sanPhamAdapter.setList(newData);
+                    rcvSanPham.setAdapter(sanPhamAdapter);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<SanPham>> call, Throwable t) {
+                // Xử lý khi có lỗi
+            }
+        });
+    }
     private void configAdapter() {
-        hangSxAdapter = new HangSanPhamAdapter(getContext());
+        hangSxAdapter = new HangSanPhamAdapter(getContext(), new HangSanPhamAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(String hangId) {
+                // Gọi API lấy danh sách sản phẩm theo ID Hãng
+                getSanPhamByHang(hangId);
+            }
+        });
         sanPhamAdapter = new SanPhamAdapter(getContext());
         slideAdapter = new SlideAdapter(getContext());
     }

@@ -21,23 +21,6 @@
         android:theme="@style/Theme.SkyLap_DATN_MD03"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.activities.ChiTietKhuyenMaiActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.KhuyenMaiActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="app"
-                    android:scheme="demozpdk" />
-            </intent-filter>
-        </activity>
 
         <service
             android:name=".MyNotification.MyFirebaseMessagingService"
@@ -58,9 +41,6 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.activities.KhuyenMaiActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.SetingActivity"
@@ -98,8 +78,33 @@
         <activity
             android:name=".ui.activities.DanhSachYeuThichActivity"
             android:exported="false" />
-        <activity android:name=".ui.activities.AccountManagementActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".ui.activities.AccountManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ChiTietKhuyenMaiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.KhuyenMaiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ThemDiaChiActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.DatHangActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="app"
+                    android:scheme="demozpdk" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -73,14 +73,14 @@
 
             <TextView
                 android:id="@+id/txt_numberUnSeen_message_UserFrag"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="end"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:visibility="gone"
                 android:background="@drawable/bo_tron"
+                android:layout_gravity="end"
                 android:gravity="center"
-                android:text="69"
                 android:textColor="@color/white"
-                android:textSize="10sp"
+                android:textSize="7sp"
                 android:textStyle="bold" />
         </FrameLayout>
     </RelativeLayout>
@@ -163,15 +163,13 @@
                         android:src="@drawable/cxn_fmu" />
 
                     <TextView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="end"
-                        android:layout_marginStart="13dp"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
                         android:background="@drawable/bo_tron"
+                        android:layout_gravity="end"
                         android:gravity="center"
-                        android:text="69"
                         android:textColor="@color/white"
-                        android:textSize="10sp"
+                        android:textSize="7sp"
                         android:textStyle="bold" />
                 </FrameLayout>
 
@@ -203,16 +201,14 @@
                         android:src="@drawable/cgh_fmu" />
 
                     <TextView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="end"
-                        android:layout_marginStart="13dp"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
                         android:background="@drawable/bo_tron"
+                        android:layout_gravity="end"
                         android:gravity="center"
-                        android:text="69"
                         android:textColor="@color/white"
-                        android:textSize="10sp"
-                        android:textStyle="bold" />
+                        android:textSize="7sp"
+                        android:textStyle="bold"/>
                 </FrameLayout>
 
                 <TextView
@@ -232,16 +228,32 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/dgh_fmu" />
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/dgh_fmu" />
+
+                    <TextView
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
+                        android:background="@drawable/bo_tron"
+                        android:layout_gravity="end"
+                        android:gravity="center"
+                        android:textColor="@color/white"
+                        android:textSize="7sp"
+                        android:textStyle="bold"/>
+                </FrameLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="Đang giao hàng"
+                    android:text="Chờ giao hàng"
                     android:textColor="@color/black500"
                     android:textSize="11sp" />
             </LinearLayout>
@@ -265,15 +277,13 @@
                         android:src="@drawable/dg_fmu" />
 
                     <TextView
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_gravity="end"
-                        android:layout_marginStart="13dp"
+                        android:layout_width="13dp"
+                        android:layout_height="13dp"
                         android:background="@drawable/bo_tron"
+                        android:layout_gravity="end"
                         android:gravity="center"
-                        android:text="69"
                         android:textColor="@color/white"
-                        android:textSize="10sp"
+                        android:textSize="7sp"
                         android:textStyle="bold" />
                 </FrameLayout>
 

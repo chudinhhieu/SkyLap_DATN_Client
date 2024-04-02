@@ -12,9 +12,6 @@ public class Account implements Serializable {
     private DiaChi diaChi;
     private String hoTen, sdt, email;
 
-    public Account(String email) {
-    }
-
     public String getEmail() {
         return email;
     }
