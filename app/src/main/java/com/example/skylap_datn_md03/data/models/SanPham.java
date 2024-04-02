@@ -53,7 +53,12 @@ public class SanPham implements Serializable {
     private String os;
     private String phuKien;
 
+    public SanPham(String tenSanPham) {
+        this.tenSanPham = tenSanPham;
+    }
+
     public SanPham() {
+
     }
 
     public String get_id() {

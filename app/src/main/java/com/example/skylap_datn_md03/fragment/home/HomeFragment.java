@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -77,6 +80,8 @@ public class HomeFragment extends Fragment {
     private RelativeLayout btnGioHang;
     private TextView txtNumberUnSeenMessage;
 
+    private EditText txtSearrch;
+
     private List<SanPham> dataList = new ArrayList<>();
     private List<HangSX> dataHangSx = new ArrayList<>();
     private int limit = 10; // Số lượng dữ liệu muốn tải trong mỗi lần
@@ -96,6 +101,39 @@ public class HomeFragment extends Fragment {
 
 
         unitUI();
+        txtSearrch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
+                sanPhamRetrofit.getsearch( new SanPham(txtSearrch.getText().toString())).enqueue(new Callback<List<SanPham>>() {
+                    @Override
+                    public void onResponse(Call<List<SanPham>> call, Response<List<SanPham>> response) {
+                        List<SanPham> newData = response.body();
+                        // Cập nhật dữ liệu lên RecyclerView
+                        sanPhamAdapter.setList(newData);
+                        rcvSanPham.setAdapter(sanPhamAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<SanPham>> call, Throwable t) {
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         btnGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -262,6 +300,7 @@ public class HomeFragment extends Fragment {
         rcvSanPham = context.findViewById(R.id.fragment_home_rcv_listProduct);
         btnGioHang = context.findViewById(R.id.fmh_gioHang);
         txtNumberUnSeenMessage = context.findViewById(R.id.txt_numberUnSeen_message);
+        txtSearrch = context.findViewById(R.id.editText);
         configAdapter();
     }
 

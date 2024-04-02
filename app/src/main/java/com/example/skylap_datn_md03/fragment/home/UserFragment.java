@@ -27,6 +27,7 @@ import com.example.skylap_datn_md03.ui.activities.GioHangActivity;
 import com.example.skylap_datn_md03.ui.activities.MessageActivity;
 import com.example.skylap_datn_md03.ui.activities.QuanLyDanhGiaActivity;
 import com.example.skylap_datn_md03.ui.activities.QuanLyDonHangActivity;
+import com.example.skylap_datn_md03.ui.activities.SetingActivity;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.example.skylap_datn_md03.utils.MessagePreferences;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
@@ -102,6 +103,12 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getContext(), GioHangActivity.class));
+            }
+        });
+        btnCaiDat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getContext(), SetingActivity.class));
             }
         });
         btnChat.setOnClickListener(new View.OnClickListener() {
