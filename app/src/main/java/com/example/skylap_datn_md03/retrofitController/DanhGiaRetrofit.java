@@ -28,4 +28,6 @@ public interface DanhGiaRetrofit {
     @GET("api/danhGia/chua-danh-gia/{idAccount}")
     Call<List<DonHang>> getChuaDanhGia(@Path("idAccount") String idAccount);
 
+    @GET("api/danhGia/sl-chua-danh-gia/{idAccount}")
+    Call<Integer> getSoLuongChuaDanhGia(@Path("idAccount") String idAccount);
 }

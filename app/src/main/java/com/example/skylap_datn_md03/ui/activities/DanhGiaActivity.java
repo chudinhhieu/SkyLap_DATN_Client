@@ -3,6 +3,7 @@ package com.example.skylap_datn_md03.ui.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -184,10 +185,9 @@ public class DanhGiaActivity extends AppCompatActivity {
                     progressBar.setVisibility(View.GONE);
                     finish();
                 }
-
                 @Override
                 public void onFailure(Call<MyAuth> call, Throwable t) {
-                    CustomToast.showToast(DanhGiaActivity.this, myAuth.getMessage());
+                    Log.d("zzzzzzz", "onFailure: "+t);
                 }
             });
         }
@@ -200,7 +200,6 @@ public class DanhGiaActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGES_REQUEST);
         imageAdapter = new ImageAdapter(selectedImages, this);
         rcyAnhDG.setAdapter(imageAdapter);
-
         ln_itemAnh.setVisibility(View.GONE);
     }
 

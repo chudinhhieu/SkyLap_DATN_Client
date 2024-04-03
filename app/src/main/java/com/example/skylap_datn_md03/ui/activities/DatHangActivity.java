@@ -397,6 +397,4 @@ public class DatHangActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
         viewMain.setVisibility(View.GONE);
     }
-    void hideLoading(){
-    }
 }

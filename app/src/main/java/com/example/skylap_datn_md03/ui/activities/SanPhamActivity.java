@@ -78,7 +78,6 @@ public class SanPhamActivity extends AppCompatActivity {
         retrofitService = new RetrofitService();
         sanPhamYTRetrofit = retrofitService.getRetrofit().create(SanPhamYTRetrofit.class);
         getSanPham();
-        checkFavoriteStatus();
         slideHandler = new Handler(Looper.getMainLooper());
         btnMua.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -407,6 +406,7 @@ public class SanPhamActivity extends AppCompatActivity {
         tvMoTaSP.setText(sanPham.getMoTa());
         startSlideshow();
         HienSaoVaDaBan();
+        checkFavoriteStatus();
     }
 
     private void initView() {
@@ -453,8 +453,7 @@ public class SanPhamActivity extends AppCompatActivity {
     private void checkFavoriteStatus() {
         SanPhamYTRetrofit sanPhamYTRetrofit = retrofitService.getRetrofit().create(SanPhamYTRetrofit.class);
         String userId = sharedPreferencesManager.getUserId();
-        String idSanPham = getIntent().getStringExtra("idSanPham");
-        Call<FavoriteResponse> call = sanPhamYTRetrofit.checkSanPhamYeuThich(new SanPhamYeuThich(idSanPham, userId));
+        Call<FavoriteResponse> call = sanPhamYTRetrofit.checkSanPhamYeuThich(new SanPhamYeuThich(sanPham.get_id(), userId));
         call.enqueue(new Callback<FavoriteResponse>() {
             @Override
             public void onResponse(Call<FavoriteResponse> call, Response<FavoriteResponse> response) {

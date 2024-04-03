@@ -38,4 +38,13 @@ public interface DonHangRetrofit {
     Call<Double>laySaoTrungBinh(@Path("id") String id);
     @GET("api/donHang/lan-danh-gia/{id}")
     Call<Integer>layLanDanhGia(@Path("id") String id);
+
+
+    @GET("api/donHang/sl-cho-xac-nhan/{id}")
+    Call<Integer>laySLDonHangChoXacNhan(@Path("id") String id);
+
+    @GET("api/donHang/sl-cho-giao-hang/{id}")
+    Call<Integer>laySLDonHangChoGiaoHang(@Path("id") String id);
+    @GET("api/donHang/sl-dang-giao-hang/{id}")
+    Call<Integer>laySLDonHangDangGiaoHang(@Path("id") String id);
 }

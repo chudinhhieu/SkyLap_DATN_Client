@@ -4,11 +4,13 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.adapter.ChuaDanhGiaAdapter;
 import com.example.skylap_datn_md03.data.models.DonHang;
@@ -29,6 +31,11 @@ public class ChuaDanhGiaFragment extends Fragment {
     private RecyclerView recyclerView;
     private ChuaDanhGiaAdapter chuaDanhGiaAdapter;
     private RetrofitService retrofitService;
+    private AccountRetrofit accountRetrofit;
+    private SanPhamRetrofit sanPhamRetrofit;
+    private DanhGiaRetrofit danhGiaRetrofit;
+    private SharedPreferencesManager sharedPreferencesManager;
+    private String userId;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,19 +44,25 @@ public class ChuaDanhGiaFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         retrofitService = new RetrofitService();
-        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        String userId = sharedPreferencesManager.getUserId();
+        sharedPreferencesManager = new SharedPreferencesManager(getContext());
+        userId = sharedPreferencesManager.getUserId();
 
-        AccountRetrofit accountRetrofit = retrofitService.getRetrofit().create(AccountRetrofit.class);
-        SanPhamRetrofit sanPhamRetrofit = retrofitService.getRetrofit().create(SanPhamRetrofit.class);
-        DanhGiaRetrofit danhGiaRetrofit = retrofitService.getRetrofit().create(DanhGiaRetrofit.class);
+        accountRetrofit = retrofitService.getRetrofit().create(AccountRetrofit.class);
+        sanPhamRetrofit = retrofitService.getRetrofit().create(SanPhamRetrofit.class);
+        danhGiaRetrofit = retrofitService.getRetrofit().create(DanhGiaRetrofit.class);
 
-        // Fetch unreviewed orders
+        callChuaDanhGia();
+
+
+        return view;
+    }
+
+    private void callChuaDanhGia() {
         Call<List<DonHang>> call = danhGiaRetrofit.getChuaDanhGia(userId);
         call.enqueue(new Callback<List<DonHang>>() {
             @Override
             public void onResponse(Call<List<DonHang>> call, Response<List<DonHang>> response) {
-                if(response.isSuccessful() && response.body() != null) {
+                if (response.isSuccessful() && response.body() != null) {
                     List<DonHang> donHangs = response.body();
                     chuaDanhGiaAdapter = new ChuaDanhGiaAdapter(getContext(), donHangs, accountRetrofit, sanPhamRetrofit);
                     recyclerView.setAdapter(chuaDanhGiaAdapter);
@@ -61,7 +74,11 @@ public class ChuaDanhGiaFragment extends Fragment {
                 // Handle failure
             }
         });
+    }
 
-        return view;
+    @Override
+    public void onResume() {
+        super.onResume();
+        callChuaDanhGia();
     }
 }

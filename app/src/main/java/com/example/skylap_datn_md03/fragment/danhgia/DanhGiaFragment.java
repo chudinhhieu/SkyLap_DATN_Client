@@ -27,7 +27,11 @@ public class DanhGiaFragment extends Fragment {
     private RecyclerView recyclerView;
     private DanhGiaAdapter danhGiaAdapter;
     private RetrofitService retrofitService;
+    SharedPreferencesManager sharedPreferencesManager;
+    String userId ;
 
+    AccountRetrofit accountRetrofit ;
+    SanPhamRetrofit sanPhamRetrofit ;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_danh_gia, container, false);
@@ -35,12 +39,18 @@ public class DanhGiaFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         retrofitService = new RetrofitService();
-        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getContext());
-        String userId = sharedPreferencesManager.getUserId();
+         sharedPreferencesManager = new SharedPreferencesManager(getContext());
+         userId = sharedPreferencesManager.getUserId();
 
-        AccountRetrofit accountRetrofit = retrofitService.getRetrofit().create(AccountRetrofit.class);
-        SanPhamRetrofit sanPhamRetrofit = retrofitService.getRetrofit().create(SanPhamRetrofit.class);
+         accountRetrofit = retrofitService.getRetrofit().create(AccountRetrofit.class);
+         sanPhamRetrofit = retrofitService.getRetrofit().create(SanPhamRetrofit.class);
 
+        callDanhGia();
+
+        return view;
+    }
+
+    private void callDanhGia() {
         DanhGiaRetrofit danhGiaRetrofit = retrofitService.getRetrofit().create(DanhGiaRetrofit.class);
         Call<List<DonHang>> call = danhGiaRetrofit.getDaDanhGia(userId);
 
@@ -59,8 +69,12 @@ public class DanhGiaFragment extends Fragment {
                 // Handle failure
             }
         });
+    }
 
-        return view;
+    @Override
+    public void onResume() {
+        super.onResume();
+        callDanhGia();
     }
 }
 

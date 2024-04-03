@@ -25,6 +25,7 @@ import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
+import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -65,11 +66,13 @@ public class LoginActivity extends AppCompatActivity {
     private AccountRetrofit accountRetrofit;
     private RetrofitService retrofitService;
     private MyAuth myAuth;
+    private SharedPreferencesManager sharedPreferencesManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferencesManager= new SharedPreferencesManager(this);
 
-        if (isUserLoggedIn()) {
+        if (sharedPreferencesManager.hasUserId()) {
             gotoHomeScreen();
             return;
         }
@@ -179,13 +182,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-
-    //    Kiểm tra người dùng đã từng đăng nhập chưa
-    private boolean isUserLoggedIn() {
-        SharedPreferences sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
-        return sharedPreferences.contains("uid");
-    }
-
     //    Định nghĩa mã requestCode cho việc đăng nhập bằng google
     private void handleGoogleSignIn() {
         Intent intent = googleSignInClient.getSignInIntent();
@@ -239,10 +235,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //  Lưu lại uid của người dùng vào SharedPreferences
     private void saveUserIdToSharedPreferences(String userId) {
-        SharedPreferences sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("uid", userId);
-        editor.apply();
+        sharedPreferencesManager.saveUserId(userId);
     }
 
     //    Xử lý validate form

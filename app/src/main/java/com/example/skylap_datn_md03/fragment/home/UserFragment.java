@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.example.skylap_datn_md03.R;
 
 import com.example.skylap_datn_md03.data.models.Account;
+import com.example.skylap_datn_md03.retrofitController.DanhGiaRetrofit;
+import com.example.skylap_datn_md03.retrofitController.DonHangRetrofit;
 import com.example.skylap_datn_md03.ui.activities.AccountManagementActivity;
 import com.example.skylap_datn_md03.ui.activities.DanhSachYeuThichActivity;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
@@ -48,7 +50,7 @@ public class UserFragment extends Fragment {
     private FrameLayout btnChat;
     private ChatRetrofit chatRetrofit;
     private ImageView imgAvatar;
-    private TextView tvHoTen;
+    private TextView tvHoTen,tvSLCXN,tvSLCGH,tvSLDangGH,tvSLCDG;
     private SharedPreferencesManager sharedPreferencesManager;
     private MessagePreferences messagePreferences;
     private RetrofitService retrofitService;
@@ -79,6 +81,10 @@ public class UserFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        tvSLCDG = view.findViewById(R.id.fmu_slCDG);
+        tvSLCXN = view.findViewById(R.id.fmu_slCXN);
+        tvSLCGH = view.findViewById(R.id.fmu_slCGH);
+        tvSLDangGH = view.findViewById(R.id.fmu_slDangGN);
         btnChat = view.findViewById(R.id.fmu_chat);
         btnGioHang = view.findViewById(R.id.fmu_gioHang);
         btnCaiDat = view.findViewById(R.id.fmu_setting);
@@ -100,6 +106,7 @@ public class UserFragment extends Fragment {
         messagePreferences = new MessagePreferences();
         getUser();
         logicChat();
+        laySoLuongDonHang();
         btnGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,6 +191,80 @@ public class UserFragment extends Fragment {
             }
         });
 
+    }
+
+    private void laySoLuongDonHang() {
+        String userID = sharedPreferencesManager.getUserId();
+        DonHangRetrofit donHangRetrofit = retrofitService.retrofit.create(DonHangRetrofit.class);
+        DanhGiaRetrofit danhGiaRetrofit = retrofitService.retrofit.create(DanhGiaRetrofit.class);
+        donHangRetrofit.laySLDonHangChoGiaoHang(userID).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                int soLuong = response.body();
+                if (soLuong == 0 ){
+                    tvSLCGH.setVisibility(View.GONE);
+                }else{
+                    tvSLCGH.setText(soLuong+"");
+                    tvSLCGH.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
+        donHangRetrofit.laySLDonHangChoXacNhan(userID).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                int soLuong = response.body();
+                if (soLuong == 0 ){
+                    tvSLCXN.setVisibility(View.GONE);
+                }else{
+                    tvSLCXN.setText(soLuong+"");
+                    tvSLCXN.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
+        donHangRetrofit.laySLDonHangDangGiaoHang(userID).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                int soLuong = response.body();
+                if (soLuong == 0 ){
+                    tvSLDangGH.setVisibility(View.GONE);
+                }else{
+                    tvSLDangGH.setText(soLuong+"");
+                    tvSLDangGH.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
+        danhGiaRetrofit.getSoLuongChuaDanhGia(userID).enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                int soLuong = response.body();
+                if (soLuong == 0 ){
+                    tvSLCDG.setVisibility(View.GONE);
+                }else{
+                    tvSLCDG.setText(soLuong+"");
+                    tvSLCDG.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
     }
 
     private void huyDangKyTopicFirebase(String userId) {

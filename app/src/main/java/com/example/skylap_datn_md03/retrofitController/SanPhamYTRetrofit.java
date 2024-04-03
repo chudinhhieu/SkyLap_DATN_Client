@@ -25,6 +25,4 @@ public interface SanPhamYTRetrofit {
     @POST("api/yeuThich/")
     Call<MyAuth> addSanPhamYeuThich(@Body SanPhamYeuThich sanPhamYeuThich);
 
-    @DELETE("api/yeuThich/delete/{id}")
-    Call<Void> deleteSanPhamYeuThich(@Path("id") String _id);
 }
