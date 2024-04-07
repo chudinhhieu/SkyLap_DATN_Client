@@ -292,7 +292,7 @@ public class UserFragment extends Fragment {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.code() == 206) {
                     idChat = response.body();
-                    messagePreferences.checkChat( response.body() ,txt_numberUnSeen_message_UserFrag , getContext() );
+                    messagePreferences.checkChat( response.body() ,txt_numberUnSeen_message_UserFrag ,userId);
                 }
 
             }

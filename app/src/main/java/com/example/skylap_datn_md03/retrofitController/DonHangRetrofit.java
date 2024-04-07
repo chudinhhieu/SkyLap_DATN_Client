@@ -1,6 +1,7 @@
 package com.example.skylap_datn_md03.retrofitController;
 
 import com.example.skylap_datn_md03.data.models.DonHang;
+import com.example.skylap_datn_md03.data.models.MyAuth;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public interface DonHangRetrofit {
     @GET("api/donHang")
     Call<List<DonHang>>GetAllDonHang();
     @POST("api/donHang/add")
-    Call<DonHang>addDonHang(@Body DonHang donHang);
+    Call<MyAuth>addDonHang(@Body DonHang donHang);
     @POST("api/donHang/add-trang-thai/{id}")
     Call<Void> themTrangThai(@Path("id") String id, @Query("trangThai") String trangThai);
     @GET("api/donHang/cho-xac-nhan/{id}")

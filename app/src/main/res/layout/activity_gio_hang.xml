@@ -16,12 +16,11 @@
         android:paddingHorizontal="12dp">
         <ImageView
             android:id="@+id/agh_img_back"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_back"/>
-
+            android:layout_height="35dp"
+            android:src="@drawable/ic_back_ctsp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,12 +29,66 @@
             android:textColor="@color/black"
             android:textSize="24dp" />
     </RelativeLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/agh_recyclerView"
         android:layout_width="match_parent"
         android:background="#f6f6f6"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_below="@+id/agh_rl_top"
+        android:layout_above="@+id/agh_ll_bottom"
         />
+    <LinearLayout
+        android:id="@+id/agh_ll_bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:elevation="20dp"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingStart="15dp"
+            android:paddingVertical="6dp"
+            android:layout_weight="1.5">
+
+            <TextView
+                android:id="@+id/agh_tv_totalcart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tổng thanh toán"
+                android:textSize="16dp"
+                android:textColor="@color/main"
+                android:layout_gravity="center_vertical"
+                />
+
+            <TextView
+                android:id="@+id/agh_tv_totalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="0 đ"
+                android:textSize="16sp"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="@color/main"
+            android:gravity="center"
+            android:layout_weight="1">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:text="Mua hàng"
+                android:id="@+id/agh_tv_muahang"/>
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>

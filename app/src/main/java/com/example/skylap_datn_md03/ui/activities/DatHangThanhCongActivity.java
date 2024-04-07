@@ -73,9 +73,11 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
         else if(v.getId() == R.id.datHangThanhCong_txt_trangChu){
             intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            finish();
         } else if (v.getId() == R.id.datHangThanhCong_txt_donMua) {
             intent = new Intent(this, QuanLyDonHangActivity.class);
             startActivity(intent);
+            finish();
         }
     }
     void getListProduct (){
@@ -102,6 +104,7 @@ public class DatHangThanhCongActivity extends AppCompatActivity implements View.
     void cartOnClickListener(){
         intent = new Intent(this, QuanLyDonHangActivity.class);
         startActivity(intent);
+        finish();
     }
     void showLoading(){
         view.setVisibility(View.GONE);

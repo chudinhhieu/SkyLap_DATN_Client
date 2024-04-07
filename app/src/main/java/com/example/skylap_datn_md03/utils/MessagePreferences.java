@@ -30,8 +30,7 @@ public class MessagePreferences {
     private RetrofitService retrofitService;
 
 
-    public  void checkChat(String idChat , TextView txtNumberUnSeenMessage , Context  context){
-        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(context);
+    public  void checkChat(String idChat , TextView txtNumberUnSeenMessage , String  userID){
 
         if (idChat.length() >  0){
             mDatabase = FirebaseDatabase.getInstance().getReference("messages");
@@ -41,7 +40,7 @@ public class MessagePreferences {
                     numberChat_notSeen = 0;
                     for (DataSnapshot data : snapshot.getChildren()) {
                         Message mess = data.getValue(Message.class);
-                        if (mess.isDaxem() == false && !mess.getIdAccount().equals(sharedPreferencesManager.getUserId())) {
+                        if (mess.isDaxem() == false && !mess.getIdAccount().equals(userID)) {
                                 numberChat_notSeen += 1;
                             txtNumberUnSeenMessage.setText(""+numberChat_notSeen);
                             txtNumberUnSeenMessage.setVisibility(View.VISIBLE);

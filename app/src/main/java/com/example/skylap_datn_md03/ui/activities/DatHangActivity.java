@@ -33,9 +33,11 @@ import com.example.skylap_datn_md03.data.models.Account;
 import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.KhuyenMai;
+import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.DonHangRetrofit;
+import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
@@ -57,13 +59,13 @@ import vn.zalopay.sdk.listeners.PayOrderListener;
 public class DatHangActivity extends AppCompatActivity {
     private SanPham sanPham;
     private KhuyenMai khuyenMai;
-    private ImageView anhSP, btnTru, btnCong,btnBack;
+    private ImageView anhSP, btnTru, btnCong, btnBack;
     private TextView tenSP, giaSP, tvTongTienSP, tvTongTienHang,
-            hoTen, sdt, diaChi,tvTienVanChuyen, tvTienKhuyenMai,tvTongTien,tvTongCTTT,tvKM;
+            hoTen, sdt, diaChi, tvTienVanChuyen, tvTienKhuyenMai, tvTongTien, tvTongCTTT, tvKM;
     private Spinner spinner;
     private Button btnDatHang;
-    private EditText ipSoLuong,ipGhiChu;
-    private LinearLayout btnKhuyenMai,btnThemDiaChi;
+    private EditText ipSoLuong, ipGhiChu;
+    private LinearLayout btnKhuyenMai, btnThemDiaChi;
     private RetrofitService retrofitService;
     private DonHangRetrofit donHangRetrofit;
     private View line;
@@ -75,25 +77,48 @@ public class DatHangActivity extends AppCompatActivity {
     private double tienKhuyenMai = 0;
     private double tongThanhToan = 0;
     private Account account;
+    private GioHang gioHang;
     String[] phuongThucThanhToan = {"Khi nhận hàng", "ZaloPay"};
     Boolean isZaloPay = false;
+    int maxSL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dat_hang);
+        initView();
         Intent intent = getIntent();
+        retrofitService = new RetrofitService();
+        sharedPreferencesManager = new SharedPreferencesManager(this);
         if (intent != null) {
             if (intent.hasExtra("SanPham")) {
                 sanPham = (SanPham) intent.getSerializableExtra("SanPham");
+                fillDataToView();
+                getUser();
+                maxSL = sanPham.getSoLuong();
+            }
+            if (intent.hasExtra("GioHang")) {
+                gioHang = (GioHang) intent.getSerializableExtra("GioHang");
+                ipSoLuong.setText(gioHang.getSoLuong() + "");
+                SanPhamRetrofit sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
+                sanPhamRetrofit.getSanPhamByID(gioHang.getIdSanPham()).enqueue(new Callback<SanPham>() {
+                    @Override
+                    public void onResponse(Call<SanPham> call, Response<SanPham> response) {
+                        sanPham = response.body();
+                        fillDataToView();
+                        getUser();
+                        maxSL = sanPham.getSoLuong();
+                    }
+
+                    @Override
+                    public void onFailure(Call<SanPham> call, Throwable t) {
+
+                    }
+                });
             }
         }
         initZaloPay();
-        retrofitService = new RetrofitService();
-        sharedPreferencesManager = new SharedPreferencesManager(this);
-        initView();
-        fillDataToView();
-        getUser();
-        int maxSL = sanPham.getSoLuong();
+
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +129,7 @@ public class DatHangActivity extends AppCompatActivity {
         btnThemDiaChi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(DatHangActivity.this,ThemDiaChiActivity.class));
+                startActivity(new Intent(DatHangActivity.this, ThemDiaChiActivity.class));
             }
         });
 
@@ -112,13 +137,13 @@ public class DatHangActivity extends AppCompatActivity {
         btnDatHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(account.getSdt() == null || account.getDiaChi() == null){
-                    CustomToast.showToast(DatHangActivity.this,"Vui lòng chọn địa chỉ giao hàng!");
+                if (account.getSdt() == null || account.getDiaChi() == null) {
+                    CustomToast.showToast(DatHangActivity.this, "Vui lòng chọn địa chỉ giao hàng!");
                     return;
                 }
-                if(isZaloPay){
+                if (isZaloPay) {
                     thanhToanZaloPay();
-                }else{
+                } else {
                     callDatHang();
                 }
             }
@@ -226,25 +251,44 @@ public class DatHangActivity extends AppCompatActivity {
     }
 
     private void callDatHang() {
-        if (sanPham == null){
+        if (sanPham == null) {
             return;
         }
-        String idKhuyenMai = khuyenMai == null ? "":khuyenMai.get_id();
-        DonHang donHang = new DonHang(sanPham.get_id(),tienVanChuyen, sharedPreferencesManager.getUserId(),
+        String idKhuyenMai = khuyenMai == null ? "" : khuyenMai.get_id();
+        DonHang donHang = new DonHang(sanPham.get_id(), tienVanChuyen, sharedPreferencesManager.getUserId(),
                 idKhuyenMai, Integer.parseInt(ipSoLuong.getText().toString().trim()), tongThanhToan, ipGhiChu.getText().toString().trim(), isZaloPay);
         donHangRetrofit = retrofitService.retrofit.create(DonHangRetrofit.class);
-        donHangRetrofit.addDonHang(donHang).enqueue(new Callback<DonHang>() {
+        donHangRetrofit.addDonHang(donHang).enqueue(new Callback<MyAuth>() {
             @Override
-            public void onResponse(Call<DonHang> call, Response<DonHang> response) {
-                Intent intent = new Intent(DatHangActivity.this, DatHangThanhCongActivity.class);
-                intent.putExtra("cpu", sanPham.getCpu());
-                startActivity(intent);
+            public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
+                MyAuth myAuth = response.body();
+                if (response.code() == 201) {
+                    if (gioHang != null) {
+                        GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
+                        gioHangRetrofit.xoaGioHang(gioHang.get_id()).enqueue(new Callback<MyAuth>() {
+                            @Override
+                            public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<MyAuth> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                    Intent intent = new Intent(DatHangActivity.this, DatHangThanhCongActivity.class);
+                    intent.putExtra("cpu", sanPham.getCpu());
+                    startActivity(intent);
+                    finish();
+                } else {
+                    CustomToast.showToast(DatHangActivity.this,"Đặt hàng thất bại, sản phẩm đã được mua hết!");
+                }
             }
 
             @Override
-            public void onFailure(Call<DonHang> call, Throwable t) {
+            public void onFailure(Call<MyAuth> call, Throwable t) {
                 Toast.makeText(DatHangActivity.this, "That bai", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
@@ -255,9 +299,10 @@ public class DatHangActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         // ZaloPay SDK Init
-        ZaloPaySDK.init(2554 , Environment.SANDBOX);
+        ZaloPaySDK.init(2554, Environment.SANDBOX);
     }
-    private void thanhToanZaloPay(){
+
+    private void thanhToanZaloPay() {
         showLoading();
 // Chuyển số double thành chuỗi nguyên
         String tien = String.valueOf((long) tongThanhToan);
@@ -289,22 +334,24 @@ public class DatHangActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
     private void getUser() {
-        if (sanPham == null){
+        if (sanPham == null) {
             return;
         }
         AccountRetrofit accountRetrofit = retrofitService.retrofit.create(AccountRetrofit.class);
         accountRetrofit.getAccountById(sharedPreferencesManager.getUserId()).enqueue(new Callback<Account>() {
             @Override
             public void onResponse(Call<Account> call, Response<Account> response) {
-                 account = response.body();
-                if (account.getDiaChi() == null || account.getSdt() == null){
+                account = response.body();
+                if (account.getDiaChi() == null || account.getSdt() == null) {
                     hoTen.setText("Vui lòng chọn địa chỉ nhận hàng!");
                     hoTen.setTextColor(Color.RED);
                     line.setVisibility(View.GONE);
-                }else{
-                    String hoVaTen = account.getHoTen() == null ? account.getTaiKhoan(): account.getHoTen();
+                } else {
+                    String hoVaTen = account.getHoTen() == null ? account.getTaiKhoan() : account.getHoTen();
                     hoTen.setText(hoVaTen);
+                    hoTen.setTextColor(Color.BLACK);
                     diaChi.setText(account.getDiaChi().getDiaChi());
                     line.setVisibility(View.VISIBLE);
                     sdt.setText(account.getSdt());
@@ -321,7 +368,7 @@ public class DatHangActivity extends AppCompatActivity {
     }
 
     private void updateViewTongTienSP() {
-        if (sanPham != null){
+        if (sanPham != null) {
             tongTienSP = Integer.parseInt(ipSoLuong.getText().toString()) * sanPham.getGiaTien();
             tongThanhToan = tongTienSP + tienVanChuyen - tienKhuyenMai;
             tvTongTienSP.setText(String.format("%,.0f", tongTienSP) + "₫");
@@ -329,7 +376,7 @@ public class DatHangActivity extends AppCompatActivity {
             tvTongCTTT.setText(String.format("%,.0f", tongThanhToan) + "₫");
             tvTongTien.setText(String.format("%,.0f", tongThanhToan) + "₫");
             tvTienVanChuyen.setText(String.format("%,.0f", tienVanChuyen) + "₫");
-            tvTienKhuyenMai.setText(String.format("-"+"%,.0f", tienKhuyenMai) + "₫");
+            tvTienKhuyenMai.setText(String.format("-" + "%,.0f", tienKhuyenMai) + "₫");
         }
     }
 
@@ -372,11 +419,13 @@ public class DatHangActivity extends AppCompatActivity {
         // Thiết lập Adapter cho Spinner
         spinner.setAdapter(adapter);
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         ZaloPaySDK.getInstance().onResult(intent);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -391,9 +440,10 @@ public class DatHangActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-    getUser();
+        getUser();
     }
-    void showLoading(){
+
+    void showLoading() {
         progressBar.setVisibility(View.VISIBLE);
         viewMain.setVisibility(View.GONE);
     }

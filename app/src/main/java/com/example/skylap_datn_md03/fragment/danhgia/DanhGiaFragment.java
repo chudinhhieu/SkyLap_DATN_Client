@@ -38,14 +38,12 @@ public class DanhGiaFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view_danh_gia);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        retrofitService = new RetrofitService();
+         retrofitService = new RetrofitService();
          sharedPreferencesManager = new SharedPreferencesManager(getContext());
          userId = sharedPreferencesManager.getUserId();
-
          accountRetrofit = retrofitService.getRetrofit().create(AccountRetrofit.class);
          sanPhamRetrofit = retrofitService.getRetrofit().create(SanPhamRetrofit.class);
-
-        callDanhGia();
+         callDanhGia();
 
         return view;
     }

@@ -183,9 +183,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.code() == 206) {
                    idChat = response.body();
-//                  checkChat(response.body());
-                    messagePreferences.checkChat( response.body() ,txtNumberUnSeenMessage  , getContext());
-
+                    messagePreferences.checkChat( response.body() ,txtNumberUnSeenMessage  , userId);
                 }
 
             }

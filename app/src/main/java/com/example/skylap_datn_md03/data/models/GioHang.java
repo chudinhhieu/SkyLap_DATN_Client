@@ -3,12 +3,14 @@ package com.example.skylap_datn_md03.data.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class GioHang implements Parcelable {
+import java.io.Serializable;
+
+public class GioHang implements Serializable {
     private String _id;
     private String idSanPham;
     private String idAccount;
     private int soLuong;
-
+    private boolean isChecked;
 
     public GioHang() {
     }
@@ -41,17 +43,6 @@ public class GioHang implements Parcelable {
         soLuong = in.readInt();
     }
 
-    public static final Creator<GioHang> CREATOR = new Creator<GioHang>() {
-        @Override
-        public GioHang createFromParcel(Parcel in) {
-            return new GioHang(in);
-        }
-
-        @Override
-        public GioHang[] newArray(int size) {
-            return new GioHang[size];
-        }
-    };
 
     public String get_id() {
         return _id;
@@ -85,17 +76,12 @@ public class GioHang implements Parcelable {
         this.soLuong = soLuong;
     }
 
-
-    @Override
-    public int describeContents() {
-        return 0;
+    public boolean isChecked() {
+        return isChecked;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(_id);
-        dest.writeString(idSanPham);
-        dest.writeString(idAccount);
-        dest.writeInt(soLuong);
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
+
 }
