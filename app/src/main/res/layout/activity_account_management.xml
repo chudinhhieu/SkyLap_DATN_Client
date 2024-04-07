@@ -1,113 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true">
-
-    <LinearLayout
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:id="@+id/aam_rl_top"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
+        android:layout_height="50dp"
+        android:elevation="20dp"
+        android:paddingHorizontal="12dp">
         <ImageView
-            android:id="@+id/imgAvatar"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-            android:src="@drawable/avatar_main" />
+            android:id="@+id/aam_img_back"
+            android:layout_width="30dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_back"/>
 
-        <!-- Full Name -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <EditText
-                android:id="@+id/editTextHoTen"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Full name"
-                android:inputType="textPersonName" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Phone Number -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <EditText
-                android:id="@+id/editTextSdt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Phone number"
-                android:inputType="phone" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Password -->
+            android:layout_centerInParent="true"
+            android:text="Thông tin tài khoản"
+            android:textColor="@color/black"
+            android:textSize="24dp" />
+    </RelativeLayout>
+    <ScrollView
+        android:layout_above="@id/btnSave"
+        android:layout_below="@+id/aam_rl_top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            android:orientation="vertical"
+            android:padding="16dp">
 
-            <EditText
-                android:id="@+id/editTextMatKhau"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Password"
-                android:inputType="textPassword"
-             />
-
-            <ImageButton
-                android:id="@+id/btnTogglePassword"
+           <FrameLayout
+               android:layout_gravity="center"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="10dp"
+               android:layout_marginBottom="15dp">
+               <de.hdodenhof.circleimageview.CircleImageView
+                   android:id="@+id/imgAvatar"
+                   android:layout_width="120dp"
+                   android:layout_height="120dp"/>
+               <de.hdodenhof.circleimageview.CircleImageView
+                   android:id="@+id/addAvatar"
+                   android:layout_width="40dp"
+                   android:layout_height="40dp"
+                   android:padding="5dp"
+                   android:background="@drawable/bo_tron2"
+                   android:layout_gravity="bottom|end"
+                   android:src="@drawable/add_avatar"/>
+           </FrameLayout>
+            <TextView
+                android:id="@+id/tv_idUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                android:layout_marginTop="5dp"
-                android:background="?attr/selectableItemBackground"
-                android:src="@drawable/ic_visibility_off"/>
+                android:textSize="16sp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="15dp"
+                />
+            <!-- Tài khoản -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tài khoản"
+                android:layout_marginBottom="7dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextTaiKhoan"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- Full Name -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Họ và tên"
+                app:endIconMode="clear_text"
+                app:placeholderText="Ví dụ:Nguyễn Văn A"
+                android:layout_marginBottom="7dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextHoTen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Phone Number -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                android:hint="Số điện thoại"
+                app:placeholderText="Ví dụ:0987654321"
+                android:layout_marginBottom="7dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextSdt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:endIconMode="clear_text"
+                android:hint="Email"
+                app:placeholderText="Ví dụ:nguyenvana@gmail.com"
+                android:layout_marginBottom="7dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"/>
+            </com.google.android.material.textfield.TextInputLayout>
+            <!-- Địa chỉ -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Địa chỉ"
+                android:layout_marginBottom="7dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextDiaChi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:inputType="text"/>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-
-
-        <!-- Address -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <EditText
-                android:id="@+id/editTextDiaChi"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Address" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
-
-            <EditText
-                android:id="@+id/editTextEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Email adress"
-                android:inputType="textEmailAddress" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <!-- Save Button -->
-        <Button
-            android:id="@+id/btnSave"
-            android:onClick="onSaveClicked"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:background="@color/colorMain"
-            android:paddingVertical="12dp"
-            android:text="Save changes" />
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/btnSave"
+        android:onClick="onSaveClicked"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginVertical="10dp"
+        android:enabled="false"
+        android:layout_marginHorizontal="16dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/border_view7dp"
+        android:elevation="20dp"
+        android:text="Lưu thông tin" />
+</RelativeLayout>

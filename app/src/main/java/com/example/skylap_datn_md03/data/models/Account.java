@@ -56,6 +56,12 @@ public class Account implements Serializable {
         this.matKhau = matKhau;
     }
 
+    public Account(String hoTen, String sdt, String email) {
+        this.hoTen = hoTen;
+        this.sdt = sdt;
+        this.email = email;
+    }
+
     public String get_id() {
         return _id;
     }

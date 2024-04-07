@@ -29,25 +29,8 @@ public interface AccountRetrofit {
     @GET("api/account/{id}")
     Call<Account> getAccountById(@Path("id") String accountId);
 
-    // Cập nhật họ tên của một account dựa trên ID
-    @PUT("api/account/edit-ho-ten/{id}")
-    Call<ResponseBody> updateAccountName(@Path("id") String accountId, @Body RequestBody requestBody);
-
-    // Cập nhật mật khẩu
-    @PUT("api/account/edit-mat-khau/{id}")
-    Call<ResponseBody> updateAccountPassword(@Path("id") String accountId, @Body RequestBody requestBody);
-
-    // Cập nhật số điện thoại
-    @PUT("api/account/edit-sdt/{id}")
-    Call<ResponseBody> updateAccountPhone(@Path("id") String accountId, @Body RequestBody requestBody);
-
-    // Cập nhật email
-    @PUT("api/account/edit-email/{id}")
-    Call<ResponseBody> updateAccountEmail(@Path("id") String accountId, @Body RequestBody requestBody);
-
-    // Cập nhật địa chỉ
-    @PUT("api/account/add-dia-chi/{id}")
-    Call<ResponseBody> addAddress(@Path("id") String accountId, @Body RequestBody requestBody);
+   @PUT("api/account/edit-account/{id}")
+   Call<MyAuth> editAccount(@Path("id") String id,@Body Account account);
    
   // Cập nhật avatar
     @Multipart

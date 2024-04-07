@@ -3,13 +3,16 @@ package com.example.skylap_datn_md03.ui.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -18,10 +21,13 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.Account;
+import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
+import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
 import com.example.skylap_datn_md03.utils.RealPathUtil;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
+import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -38,13 +44,14 @@ import retrofit2.Response;
 public class AccountManagementActivity extends AppCompatActivity {
 
     private AccountRetrofit accountService;
-    private EditText editTextHoTen, editTextSdt, editTextEmail, editTextMatKhau, editTextDiaChi;
-    private ImageView imgAvatar;
+    private TextInputEditText editTextHoTen, editTextSdt, editTextEmail,editTextDiaChi,editTextTaiKhoan;
+    private ImageView imgAvatar,btnExit,btnAddAvatar;
     private Button btnSave;
-    private ImageButton btnTogglePassword;
-    private SharedPreferencesManager sharedPreferencesManager;
-    private Uri selectedImageUri;
+    private TextView tvIdUser;
+    private Account account;
+    private Boolean isUpdate = false;
 
+    private SharedPreferencesManager sharedPreferencesManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +60,13 @@ public class AccountManagementActivity extends AppCompatActivity {
         initUI();
         setupRetrofit();
         loadUserInfo();
+
+        btnExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
     private void setupRetrofit() {
         RetrofitService retrofitService = new RetrofitService();
@@ -61,31 +75,35 @@ public class AccountManagementActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+        editTextTaiKhoan = findViewById(R.id.editTextTaiKhoan);
         editTextHoTen = findViewById(R.id.editTextHoTen);
         editTextSdt = findViewById(R.id.editTextSdt);
         editTextEmail = findViewById(R.id.editTextEmail);
-        editTextMatKhau = findViewById(R.id.editTextMatKhau);
         editTextDiaChi = findViewById(R.id.editTextDiaChi);
         imgAvatar = findViewById(R.id.imgAvatar);
+        btnAddAvatar = findViewById(R.id.addAvatar);
+        btnExit = findViewById(R.id.aam_img_back);
         btnSave = findViewById(R.id.btnSave);
-        btnTogglePassword = findViewById(R.id.btnTogglePassword);
+        tvIdUser = findViewById(R.id.tv_idUser);
 
-        btnSave.setOnClickListener(v -> updateUserInfo());
-        btnTogglePassword.setOnClickListener(v -> togglePasswordVisibility());
-        imgAvatar.setOnClickListener(view -> {
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateUserInfo();
+            }
+        });
+        btnAddAvatar.setOnClickListener(view -> {
             openImageChooser();
         });
     }
 
     private void loadUserInfo() {
         String userId = sharedPreferencesManager.getUserId();
-        Log.d("AccountManagement", "Loading user info for user ID: " + userId);
         accountService.getAccountById(userId).enqueue(new Callback<Account>() {
             @Override
             public void onResponse(Call<Account> call, Response<Account> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Account account = response.body();
-                    Log.d("AccountManagement", "Account loaded: " + account.toString());
+                    account = response.body();
                     displayUserInfo(account);
                 }
             }
@@ -98,133 +116,38 @@ public class AccountManagementActivity extends AppCompatActivity {
     }
     private void updateUserInfo() {
         String userId = sharedPreferencesManager.getUserId();
-
         // Lấy thông tin từ EditText
         String hoTen = editTextHoTen.getText().toString();
         String sdt = editTextSdt.getText().toString();
         String email = editTextEmail.getText().toString();
-        String diaChi = editTextDiaChi.getText().toString();
-        String matKhau = editTextMatKhau.getText().toString();
+        accountService.editAccount(sharedPreferencesManager.getUserId(),new Account(hoTen,sdt,email)).enqueue(new Callback<MyAuth>() {
+            @Override
+            public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
+                CustomToast.showToast(AccountManagementActivity.this,response.body().getMessage());
+                finish();
+            }
 
-        // Kiểm tra và cập nhật họ tên
-        if (!hoTen.isEmpty()) {
-            RequestBody body = RequestBody.create(MediaType.parse("application/json"), "{\"hoTen\":\"" + hoTen + "\"}");
-            accountService.updateAccountName(userId, body).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        showToast("Cập nhật họ tên thành công");
-                    } else {
-                        showToast("Lỗi cập nhật họ tên");
-                    }
-                }
+            @Override
+            public void onFailure(Call<MyAuth> call, Throwable t) {
 
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    showToast("Lỗi kết nối mạng");
-                }
-            });
-        }
-
-        // Kiểm tra và cập nhật số điện thoại
-        if (!sdt.isEmpty()) {
-            RequestBody body = RequestBody.create(MediaType.parse("application/json"), "{\"sdt\":\"" + sdt + "\"}");
-            accountService.updateAccountPhone(userId, body).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        showToast("Cập nhật số điện thoại thành công");
-                    } else {
-                        showToast("Lỗi cập nhật số điện thoại");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    showToast("Lỗi kết nối mạng");
-                }
-            });
-        }
-
-        // Kiểm tra và cập nhật email
-        if (!email.isEmpty()) {
-            RequestBody body = RequestBody.create(MediaType.parse("application/json"), "{\"email\":\"" + email + "\"}");
-            accountService.updateAccountEmail(userId, body).enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        showToast("Cập nhật email thành công");
-                    } else {
-                        showToast("Lỗi cập nhật email");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    showToast("Lỗi kết nối mạng");
-                }
-            });
-        }
-
-        // Kiểm tra và cập nhật mật khẩu
-        if (!matKhau.isEmpty()) {
-            RequestBody body = RequestBody.create(MediaType.parse("application/json"), "{\"matKhau\":\"" + matKhau + "\"}");
-            accountService.updateAccountPassword(userId, body).enqueue(new Callback<ResponseBody>() {                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        showToast("Cập nhật mật khẩu thành công");
-                    } else {
-                        showToast("Lỗi cập nhật mật khẩu");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    showToast("Lỗi kết nối mạng");
-                }
-            });
-        }
-
-        // Kiểm tra và cập nhật địa chỉ
-        if (!diaChi.isEmpty()) {
-            RequestBody body = RequestBody.create(MediaType.parse("application/json"), "{\"diaChi\":\"" + diaChi + "\"}");
-            accountService.addAddress(userId, body).enqueue(new Callback<ResponseBody>() {                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.isSuccessful()) {
-                        showToast("Cập nhật địa chỉ thành công");
-                    } else {
-                        showToast("Lỗi cập nhật địa chỉ");
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    showToast("Lỗi kết nối mạng");
-                }
-            });
-        }
-
+            }
+        });
 
     }
     private void displayUserInfo(Account account) {
+        tvIdUser.setText("ID: "+account.get_id());
+        editTextTaiKhoan.setText(account.getTaiKhoan());
         editTextHoTen.setText(account.getHoTen());
         editTextSdt.setText(account.getSdt());
+        editTextDiaChi.setText(account.getDiaChi().getDiaChi());
         editTextEmail.setText(account.getEmail());
-        editTextMatKhau.setText(account.getMatKhau());
-        editTextDiaChi.setText(account.getDiaChi() != null ? account.getDiaChi().getDiaChi() : "");
         if (account.getAvatar() != null && !account.getAvatar().isEmpty()) {
             Picasso.get().load(account.getAvatar()).into(imgAvatar);
         }
-    }
-    public void togglePasswordVisibility() {
-        if (editTextMatKhau.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
-            editTextMatKhau.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            btnTogglePassword.setImageResource(R.drawable.ic_visibility_off);
-        } else {
-            editTextMatKhau.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-            btnTogglePassword.setImageResource(R.drawable.ic_visibility);
-        }
-        editTextMatKhau.setSelection(editTextMatKhau.getText().length());
+        // Thêm TextWatcher cho các EditText
+        editTextHoTen.addTextChangedListener(textWatcher);
+        editTextSdt.addTextChangedListener(textWatcher);
+        editTextEmail.addTextChangedListener(textWatcher);
     }
     private void openImageChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -236,7 +159,6 @@ public class AccountManagementActivity extends AppCompatActivity {
         @Override
         public void onActivityResult(Uri uri) {
             if (uri != null) {
-                selectedImageUri = uri;
                 imgAvatar.setImageURI(uri);
                 uploadImageToServer(uri);
             }
@@ -256,12 +178,11 @@ public class AccountManagementActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    showToast("Avatar updated successfully");
+                    showToast("Cập nhật ảnh đại diện thành công!");
                 } else {
                     try {
                         // Read the error body to get the actual error message
                         String errorString = response.errorBody().string();
-                        Log.d("AvatarUpload", "Response error: " + errorString);
                         showToast("Failed to update avatar: " + errorString);
                     } catch (IOException e) {
                         Log.e("AvatarUpload", "Error reading error body", e);
@@ -275,9 +196,41 @@ public class AccountManagementActivity extends AppCompatActivity {
             }
         });
     }
+    // TextWatcher để kiểm tra sự thay đổi trong EditText
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // Không cần thực hiện gì trước khi văn bản thay đổi
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            // Kích hoạt nút btnSave khi có sự thay đổi trong EditText
+            btnSave.setEnabled(isUserInfoChanged());
+        }
+    };
+
+    // Kiểm tra xem có sự thay đổi nào trong thông tin người dùng so với thông tin hiện tại không
+    private boolean isUserInfoChanged() {
+        String hoTen = editTextHoTen.getText().toString();
+        String sdt = editTextSdt.getText().toString();
+        String email = editTextEmail.getText().toString();
+
+        // So sánh với thông tin hiện tại của tài khoản
+        return !hoTen.equals(account.getHoTen()) || !sdt.equals(account.getSdt()) || !email.equals(account.getEmail());
+    }
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadUserInfo();
+    }
 }

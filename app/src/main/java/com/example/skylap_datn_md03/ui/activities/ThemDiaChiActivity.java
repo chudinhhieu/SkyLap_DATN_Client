@@ -252,8 +252,6 @@ public class ThemDiaChiActivity extends AppCompatActivity {
     }
 
     private void getUser() {
-
-
         accountRetrofit.getAccountById(sharedPreferencesManager.getUserId()).enqueue(new Callback<Account>() {
             @Override
             public void onResponse(Call<Account> call, Response<Account> response) {
