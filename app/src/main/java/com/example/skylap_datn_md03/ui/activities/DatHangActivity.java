@@ -152,6 +152,7 @@ public class DatHangActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DatHangActivity.this, KhuyenMaiActivity.class);
+                intent.putExtra("isDatHang", true);
                 startActivityForResult(intent, 69);
             }
         });

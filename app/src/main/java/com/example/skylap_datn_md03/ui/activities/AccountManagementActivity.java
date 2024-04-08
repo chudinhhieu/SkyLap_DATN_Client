@@ -60,7 +60,12 @@ public class AccountManagementActivity extends AppCompatActivity {
         initUI();
         setupRetrofit();
         loadUserInfo();
-
+        editTextDiaChi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AccountManagementActivity.this, ThemDiaChiActivity.class));
+            }
+        });
         btnExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

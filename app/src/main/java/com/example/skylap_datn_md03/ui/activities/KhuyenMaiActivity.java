@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.adapter.KhuyenMaiAdapter;
 import com.example.skylap_datn_md03.data.models.KhuyenMai;
+import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.KhuyenMaiRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
@@ -25,9 +26,8 @@ import retrofit2.Response;
 public class KhuyenMaiActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private KhuyenMaiAdapter adapter;
-    List<KhuyenMai> listKhuyenMai;
-    RetrofitService retrofitService;
     private ImageView btnBack;
+    private Boolean isDatHang;
 
     SharedPreferencesManager sharedPreferencesManager;
     @Override
@@ -37,14 +37,14 @@ public class KhuyenMaiActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.akm_img_back);
         recyclerView = findViewById(R.id.akm_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        getKhuyenMaiList();
+         isDatHang = getIntent().getBooleanExtra("isDatHang", true);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        getKhuyenMaiList();
 
     }
 
@@ -70,7 +70,7 @@ public class KhuyenMaiActivity extends AppCompatActivity {
     }
 
     private void displayKhuyenMaiList(List<KhuyenMai> khuyenMaiList) {
-        adapter = new KhuyenMaiAdapter(khuyenMaiList, this);
+        adapter = new KhuyenMaiAdapter(khuyenMaiList, this,isDatHang);
         adapter.setOnKhuyenMaiClickListener(new KhuyenMaiAdapter.OnKhuyenMaiClickListener() {
             @Override
             public void onKhuyenMaiClick(KhuyenMai khuyenMai) {

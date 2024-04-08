@@ -26,7 +26,9 @@ import com.example.skylap_datn_md03.ui.activities.DanhSachYeuThichActivity;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
+import com.example.skylap_datn_md03.ui.activities.DatHangActivity;
 import com.example.skylap_datn_md03.ui.activities.GioHangActivity;
+import com.example.skylap_datn_md03.ui.activities.KhuyenMaiActivity;
 import com.example.skylap_datn_md03.ui.activities.MessageActivity;
 import com.example.skylap_datn_md03.ui.activities.QuanLyDanhGiaActivity;
 import com.example.skylap_datn_md03.ui.activities.QuanLyDonHangActivity;
@@ -55,7 +57,7 @@ public class UserFragment extends Fragment {
     private MessagePreferences messagePreferences;
     private RetrofitService retrofitService;
     private TextView txt_numberUnSeen_message_UserFrag;
-    private LinearLayout btnQLDH, btnCXN, btnCGH, btnDGH, btnDG, btnQLDG, btnYT, btnTroTruyen, btnDangXuat,btnQLTK;
+    private LinearLayout btnQLDH, btnCXN,btnDMK,btnKM, btnCGH, btnDGH, btnDG, btnQLDG, btnYT, btnTroTruyen, btnDangXuat,btnQLTK;
     private String idChat;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -81,26 +83,7 @@ public class UserFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        tvSLCDG = view.findViewById(R.id.fmu_slCDG);
-        tvSLCXN = view.findViewById(R.id.fmu_slCXN);
-        tvSLCGH = view.findViewById(R.id.fmu_slCGH);
-        tvSLDangGH = view.findViewById(R.id.fmu_slDangGN);
-        btnChat = view.findViewById(R.id.fmu_chat);
-        btnGioHang = view.findViewById(R.id.fmu_gioHang);
-        btnCaiDat = view.findViewById(R.id.fmu_setting);
-        imgAvatar = view.findViewById(R.id.fmu_avatar);
-        tvHoTen = view.findViewById(R.id.fmu_hoTen);
-        btnQLDH = view.findViewById(R.id.fmu_qldh);
-        btnYT = view.findViewById(R.id.fmu_yt);
-        btnQLTK = view.findViewById(R.id.fmu_taiKhoan);
-        btnCXN = view.findViewById(R.id.fmu_cxn);
-        btnCGH = view.findViewById(R.id.fmu_cgh);
-        btnDGH = view.findViewById(R.id.fmu_dgh);
-        btnDG = view.findViewById(R.id.fmu_dg);
-        btnQLDG = view.findViewById(R.id.fmu_qldg);
-        btnTroTruyen = view.findViewById(R.id.fmu_troTruyen);
-        btnDangXuat = view.findViewById(R.id.fmu_dangXuat);
-        txt_numberUnSeen_message_UserFrag = view.findViewById(R.id.txt_numberUnSeen_message_UserFrag);
+        initView(view);
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         retrofitService = new RetrofitService();
         messagePreferences = new MessagePreferences();
@@ -190,7 +173,39 @@ public class UserFragment extends Fragment {
                 startActivity(new Intent(getContext(), LoginActivity.class));
             }
         });
+        btnKM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), KhuyenMaiActivity.class);
+                intent.putExtra("isDatHang", false);
+                startActivity(intent);
+            }
+        });
+    }
 
+    private void initView(View view) {
+        tvSLCDG = view.findViewById(R.id.fmu_slCDG);
+        tvSLCXN = view.findViewById(R.id.fmu_slCXN);
+        tvSLCGH = view.findViewById(R.id.fmu_slCGH);
+        tvSLDangGH = view.findViewById(R.id.fmu_slDangGN);
+        btnChat = view.findViewById(R.id.fmu_chat);
+        btnGioHang = view.findViewById(R.id.fmu_gioHang);
+        btnCaiDat = view.findViewById(R.id.fmu_setting);
+        imgAvatar = view.findViewById(R.id.fmu_avatar);
+        tvHoTen = view.findViewById(R.id.fmu_hoTen);
+        btnQLDH = view.findViewById(R.id.fmu_qldh);
+        btnYT = view.findViewById(R.id.fmu_yt);
+        btnQLTK = view.findViewById(R.id.fmu_taiKhoan);
+        btnCXN = view.findViewById(R.id.fmu_cxn);
+        btnCGH = view.findViewById(R.id.fmu_cgh);
+        btnDGH = view.findViewById(R.id.fmu_dgh);
+        btnDG = view.findViewById(R.id.fmu_dg);
+        btnQLDG = view.findViewById(R.id.fmu_qldg);
+        btnTroTruyen = view.findViewById(R.id.fmu_troTruyen);
+        btnDMK = view.findViewById(R.id.fmu_dmk);
+        btnKM = view.findViewById(R.id.fmu_km);
+        btnDangXuat = view.findViewById(R.id.fmu_dangXuat);
+        txt_numberUnSeen_message_UserFrag = view.findViewById(R.id.txt_numberUnSeen_message_UserFrag);
     }
 
     private void laySoLuongDonHang() {

@@ -25,10 +25,12 @@ public class KhuyenMaiAdapter extends RecyclerView.Adapter<KhuyenMaiAdapter.Khuy
     private List<KhuyenMai> list;
     private Context context;
     private OnKhuyenMaiClickListener mListener;
+    private Boolean isDatHang;
 
-    public KhuyenMaiAdapter(List<KhuyenMai> list, Context context){
+    public KhuyenMaiAdapter(List<KhuyenMai> list, Context context,Boolean isDatHang){
         this.list = list;
         this.context = context;
+        this.isDatHang  = isDatHang;
     }
 
     public interface OnKhuyenMaiClickListener {
@@ -48,6 +50,9 @@ public class KhuyenMaiAdapter extends RecyclerView.Adapter<KhuyenMaiAdapter.Khuy
 
     @Override
     public void onBindViewHolder(@NonNull KhuyenMaiViewHolder holder, int position) {
+        if (!isDatHang){
+            holder.btnDungNgay.setVisibility(View.GONE);
+        }
         KhuyenMai khuyenMai = list.get(position);
         holder.item_giamgia_mota.setText(khuyenMai.getMoTa());
         holder.item_giamgia_code.setText(khuyenMai.getCode());
