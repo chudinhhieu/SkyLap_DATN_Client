@@ -2,28 +2,85 @@
     <string name="app_name">SkyLap</string>
     <string name="default_web_client_id">206926809191-de60mh57o6o0defg6969r8ruuan98aoo.apps.googleusercontent.com</string>
     <string name="key_check_auth">id_user_auth</string>
-    //
-    <string name="facebook_app_id">691783929791241</string>
-    <string name="fb_login_protocol_scheme">fb691783929791241</string>
-    <string name="facebook_client_token">4e64f0a1f13db196d28297b7747aca2173af597c551cc48f58ff497d7edc4024</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="XacNhanDonHang_fragment">Xac Nhan Don Hang fragment</string>
-    <string-array name="listSpinnerVanChuyen">
-        <item>Vận chuyển Thường</item>
-        <item>Vận chuyển nhanh</item>
+
+<!--    CPU-->
+    <string-array name="cpuArray">
+        <item>Tất cả</item>
+        <item>Intel i3</item>
+        <item>Intel i5</item>
+        <item>Intel i7</item>
+        <item>Intel i9</item>
+        <item>AMD Ryzen 3</item>
+        <item>AMD Ryzen 5</item>
+        <item>AMD Ryzen 7</item>
+        <item>AMD Ryzen 9</item>
+        <item>Apple M1</item>
+        <item>Apple M2</item>
+        <item>Apple M3</item>
+        <item>Apple M3 Pro</item>
+        <item>Apple M3 Max</item>
     </string-array>
-    <string-array name="listSpinnerThanhToan">
-        <item>Thanh toán khi nhận hàng</item>
-        <item>Thanh toán qua momo</item>
+<!--    GPU-->
+    <string-array name="gpuArray">
+        <item>Tất cả</item>
+        <item>Card rời</item>
+        <item>Tích hợp</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="lbl_sotien">Số Tiền</string>
-    <string name="lbl_donhang">DEMO</string>
-    <string name="btn_create_order">Tạo Đơn Hàng</string>
-    <string name="txt_amount_init">1000</string>
-    <string name="txt_amount_hint">1000</string>
-    <string name="btn_pay">Thanh Toán</string>
-    <string name="lbl_zptranstoken">zptranstoken</string>
-    <string name="to_webview">To WebView</string>
+    <!-- RAM Array -->
+    <string-array name="ramArray">
+        <item>Tất cả</item>
+        <item>4 GB</item>
+        <item>8 GB</item>
+        <item>16 GB</item>
+        <item>18 GB</item>
+        <item>32 GB</item>
+        <item>36 GB</item>
+        <item>64 GB</item>
+    </string-array>
+
+    <!-- ROM Array -->
+    <string-array name="romArray">
+        <item>Tất cả</item>
+        <item>128 GB</item>
+        <item>256 GB</item>
+        <item>512 GB</item>
+        <item>1 TB</item>
+        <item>2 TB</item>
+    </string-array>
+
+    <!-- Màn hình Array -->
+    <string-array name="displaySizeArray">
+        <item>Tất cả</item>
+        <item>11.6 inch</item>
+        <item>13.3 inch</item>
+        <item>13.4 inch</item>
+        <item>13.6 inch</item>
+        <item>14 inch</item>
+        <item>14.2 inch</item>
+        <item>15.6 inch</item>
+        <item>16 inch</item>
+        <item>16.1 inch</item>
+        <item>17 inch</item>
+        <item>17.3 inch</item>
+        <item>18 inch</item>
+    </string-array>
+<!--    Giá-->
+    <string-array name="priceArray">
+        <item>Tất cả</item>
+        <item>Dưới 10 triệu</item>
+        <item>10 - 15 triệu</item>
+        <item>15 - 20 triệu</item>
+        <item>20 - 25 triệu</item>
+        <item>25 - 30 triệu</item>
+        <item>Trên 30 triệu</item>
+    </string-array>
+<!--    Bảo hành-->
+    <string-array name="baohanhArray">
+        <item>Tất cả</item>
+        <item>6 tháng</item>
+        <item>12 tháng</item>
+        <item>18 tháng</item>
+        <item>24 tháng</item>
+    </string-array>
+
 </resources>
