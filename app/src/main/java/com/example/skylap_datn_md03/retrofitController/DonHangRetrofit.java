@@ -8,15 +8,15 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
-import retrofit2.http.Multipart;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface DonHangRetrofit {
     @GET("api/donHang")
     Call<List<DonHang>>GetAllDonHang();
+    @GET("api/donHang/get-by-id/{id}")
+    Call<DonHang>GetDonHangById(@Path("id") String id);
     @POST("api/donHang/add")
     Call<MyAuth>addDonHang(@Body DonHang donHang);
     @POST("api/donHang/add-trang-thai/{id}")

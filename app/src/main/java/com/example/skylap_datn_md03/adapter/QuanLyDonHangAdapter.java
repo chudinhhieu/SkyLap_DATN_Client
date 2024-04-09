@@ -19,6 +19,7 @@ import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
 import com.example.skylap_datn_md03.retrofitController.DonHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
+import com.example.skylap_datn_md03.ui.activities.ChiTietDonHangActivity;
 import com.example.skylap_datn_md03.ui.activities.DanhGiaActivity;
 import com.example.skylap_datn_md03.ui.activities.MessageActivity;
 import com.example.skylap_datn_md03.ui.activities.SanPhamActivity;
@@ -43,6 +44,8 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
     private SharedPreferencesManager sharedPreferencesManager;
     private ChatRetrofit chatRetrofit;
 
+    private View view;
+
     public QuanLyDonHangAdapter(List<DonHang> list, Context context) {
         this.list = list;
         this.context = context;
@@ -51,7 +54,7 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
     @NonNull
     @Override
     public ReviewViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_qldh, parent, false);
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_qldh, parent, false);
         return new ReviewViewHolder(view);
     }
 
@@ -108,6 +111,15 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
 
             @Override
             public void onFailure(Call<SanPham> call, Throwable t) {
+            }
+        });
+
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ChiTietDonHangActivity.class);
+                intent.putExtra("DonHang", list.get(index).get_id());
+                context.startActivity(intent);
             }
         });
 
@@ -173,6 +185,7 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
                 break;
             case "Mua lại":
                 break;
+
         }
     }
 

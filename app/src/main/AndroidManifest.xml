@@ -21,6 +21,9 @@
         android:theme="@style/Theme.SkyLap_DATN_MD03"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.activities.ChiTietDonHangActivity"
+            android:exported="false" />
 
         <service
             android:name=".MyNotification.MyFirebaseMessagingService"

@@ -1,10 +1,5 @@
 package com.example.skylap_datn_md03.ui.activities;
 
-import static android.util.Log.d;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -22,13 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.ZaloPay.CreateOrder;
-import com.example.skylap_datn_md03.adapter.GioHangAdapter2;
 import com.example.skylap_datn_md03.data.models.Account;
 import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.data.models.GioHang;
@@ -45,8 +40,6 @@ import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -262,7 +255,7 @@ public class DatHangActivity extends AppCompatActivity {
         donHangRetrofit.addDonHang(donHang).enqueue(new Callback<MyAuth>() {
             @Override
             public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
-                MyAuth myAuth = response.body();
+                 MyAuth myAuth = response.body();
                 if (response.code() == 201) {
                     if (gioHang != null) {
                         GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
