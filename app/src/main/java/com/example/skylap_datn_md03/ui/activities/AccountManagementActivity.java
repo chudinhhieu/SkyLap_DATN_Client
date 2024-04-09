@@ -142,10 +142,19 @@ public class AccountManagementActivity extends AppCompatActivity {
     private void displayUserInfo(Account account) {
         tvIdUser.setText("ID: "+account.get_id());
         editTextTaiKhoan.setText(account.getTaiKhoan());
-        editTextHoTen.setText(account.getHoTen());
-        editTextSdt.setText(account.getSdt());
-        editTextDiaChi.setText(account.getDiaChi().getDiaChi());
-        editTextEmail.setText(account.getEmail());
+        if (account.getHoTen() != null){
+            editTextHoTen.setText(account.getHoTen());
+        }
+        if (account.getSdt() != null){
+            editTextSdt.setText(account.getSdt());
+        }
+        if (account.getDiaChi() != null){
+            editTextDiaChi.setText(account.getDiaChi().getDiaChi());
+
+        }
+        if (account.getHoTen() != null){
+            editTextEmail.setText(account.getEmail());
+        }
         if (account.getAvatar() != null && !account.getAvatar().isEmpty()) {
             Picasso.get().load(account.getAvatar()).into(imgAvatar);
         }

@@ -4,10 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Message {
-//    idChat: idChat,
-//    idAccount: idNguoiGui,
-//    content: content,
-//    AnhTinNhan: [],
+
 
 
     private String id;
