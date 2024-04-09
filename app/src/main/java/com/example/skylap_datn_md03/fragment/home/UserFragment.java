@@ -192,6 +192,7 @@ public class UserFragment extends Fragment {
         btnGioHang = view.findViewById(R.id.fmu_gioHang);
         btnCaiDat = view.findViewById(R.id.fmu_setting);
         imgAvatar = view.findViewById(R.id.fmu_avatar);
+        imgAvatar.setRotation(-90);
         tvHoTen = view.findViewById(R.id.fmu_hoTen);
         btnQLDH = view.findViewById(R.id.fmu_qldh);
         btnYT = view.findViewById(R.id.fmu_yt);

@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,11 +37,11 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
     private SanPhamRetrofit sanPhamRetrofit;
     private KhuyenMaiRetrofit khuyenMaiRetrofit;
     private DonHangRetrofit donHangRetrofit;
-    private ImageView anhSP, btnTru, btnCong, btnBack;
+    private ImageView anhSP, btnBack;
     private Button btnDatHang;
-    private EditText edtSLSP, edtGhiChu;
+    private EditText  edtGhiChu;
     private TextView tenSP, giaSP, tvTongTienSP, tvTongTienHang,
-            hoTen, sdt, diaChi, tvTienVanChuyen, tvTienKhuyenMai, tvTongTien, tvTongCTTT, tvKM;
+            hoTen, sdt, diaChi, tvTienVanChuyen, tvTienKhuyenMai, tvPTTT,tvSL, tvTongCTTT, tvKM;
     private Account account;
 
     @Override
@@ -54,13 +55,14 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
 
         anhSP = findViewById(R.id.actdh_anhSP);
         btnBack = findViewById(R.id.actdh_img_back);
-        edtSLSP = findViewById(R.id.actdh_SLSP);
         tenSP = findViewById(R.id.actdh_tenSP);
         giaSP = findViewById(R.id.actdh_giaSP);
+        tvSL = findViewById(R.id.tvSL);
 
         edtGhiChu = findViewById(R.id.actdh_ipGhiChu);
         tvTongTienSP = findViewById(R.id.actdh_tvTongTienSP);
         tvKM = findViewById(R.id.actdh_tvKM);
+        tvPTTT = findViewById(R.id.pttt);
 
         tvTongTienHang = findViewById(R.id.actdh_tvTongTienHang);
         tvTienVanChuyen = findViewById(R.id.actdh_tvTienVanChuyen);
@@ -82,27 +84,41 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
                 donHang = response.body();
                 getUser();
                 getSanPham();
-                getKhuyenMai();
+                if (donHang.isThanhToan()){
+                    tvPTTT.setText("ZaloPay");
+                }else{
+                    tvPTTT.setText("Khi nhận hàng");
+                }
+                if(donHang.getIdKhuyenMai() == null){
+                        tvTienKhuyenMai.setText("-0₫");
+                        tvKM.setText("Không có");
+                }else{
+                    getKhuyenMai();
+                }
                 getTrangThai();
-                edtGhiChu.setText(donHang.getGhiChu());
-
+                if (!donHang.getGhiChu().isEmpty()){
+                    edtGhiChu.setText(donHang.getGhiChu());
+                }else{
+                    edtGhiChu.setText("Không có ghi chú");
+                }                edtGhiChu.setEnabled(false);
                 tvTienVanChuyen.setText(String.format("%,.0f", donHang.getTienShip()) + "₫");
                 tvTongCTTT.setText(String.format("%,.0f", donHang.getTongTien()) + "₫");
 
                 btnDatHang.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Call<Void> donHangCall = donHangRetrofit.themTrangThai(donHang.get_id(), "Đã huỷ");
+                        Call<Void> donHangCall = donHangRetrofit.themTrangThai(donHang.get_id(), "Đã hủy");
                         donHangCall.enqueue(new Callback<Void>() {
                             @Override
                             public void onResponse(Call<Void> call, Response<Void> response) {
                                 btnDatHang.setVisibility(View.GONE);
-                                CustomToast.showToast(ChiTietDonHangActivity.this,"Đã huỷ đơn hàng thành công");
+                                CustomToast.showToast(ChiTietDonHangActivity.this,"Đã huỷ đơn hàng thành công!");
+                                finish();
                             }
 
                             @Override
                             public void onFailure(Call<Void> call, Throwable t) {
-                                CustomToast.showToast(ChiTietDonHangActivity.this,"Đã huỷ đơn hàng thất bại");
+                                CustomToast.showToast(ChiTietDonHangActivity.this,"Đã huỷ đơn hàng thất bại!");
                             }
                         });
                     }
@@ -142,7 +158,6 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<KhuyenMai> call, Response<KhuyenMai> response) {
                 khuyenMai = response.body();
-
                 tvTienKhuyenMai.setText("-" +String.format("%,.0f", khuyenMai.getSoTienGiam()) + "₫");
                 tvKM.setText(khuyenMai.getCode());
             }
@@ -180,11 +195,10 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
                 Picasso.get().load(sanPham.getAnhSanPham()).into(anhSP);
                 tenSP.setText(sanPham.getTenSanPham());
                 giaSP.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
-                edtSLSP.setText(donHang.getSoLuong()+ "");
-                edtSLSP.setEnabled(false);
-
+                tvSL.setText("x"+donHang.getSoLuong());
                 Double tongTienSP = donHang.getSoLuong() * sanPham.getGiaTien();
                 tvTongTienSP.setText(String.format("%,.0f", tongTienSP) + "₫");
+                tvTongTienHang.setText(String.format("%,.0f", tongTienSP) + "₫");
             }
 
             @Override

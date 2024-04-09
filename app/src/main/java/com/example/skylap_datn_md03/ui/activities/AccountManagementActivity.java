@@ -86,6 +86,7 @@ public class AccountManagementActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextDiaChi = findViewById(R.id.editTextDiaChi);
         imgAvatar = findViewById(R.id.imgAvatar);
+        imgAvatar.setRotation(-90);
         btnAddAvatar = findViewById(R.id.addAvatar);
         btnExit = findViewById(R.id.aam_img_back);
         btnSave = findViewById(R.id.btnSave);

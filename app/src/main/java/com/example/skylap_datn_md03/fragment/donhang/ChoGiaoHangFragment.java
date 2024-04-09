@@ -55,6 +55,11 @@ public class ChoGiaoHangFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         retrofitService = new RetrofitService();
         donHangRetrofit = retrofitService.retrofit.create(DonHangRetrofit.class);
+        getList();
+
+    }
+
+    private void getList() {
         String idAccount = sharedPreferencesManager.getUserId();
         Call<List<DonHang>> getListDonHang = donHangRetrofit.layDonHangChoGiaoHang(idAccount);
         getListDonHang.enqueue(new Callback<List<DonHang>>() {
@@ -74,12 +79,11 @@ public class ChoGiaoHangFragment extends Fragment {
 
             }
         });
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        getList();
     }
 }

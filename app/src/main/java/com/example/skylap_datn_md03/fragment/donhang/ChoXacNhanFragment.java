@@ -55,6 +55,11 @@ public class ChoXacNhanFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         retrofitService = new RetrofitService();
         donHangRetrofit = retrofitService.retrofit.create(DonHangRetrofit.class);
+        getList();
+
+    }
+
+    private void getList() {
         String idAccount = sharedPreferencesManager.getUserId();
         Call<List<DonHang>> getListDonHang = donHangRetrofit.layDonHangChoXacNhan(idAccount);
         getListDonHang.enqueue(new Callback<List<DonHang>>() {
@@ -74,6 +79,11 @@ public class ChoXacNhanFragment extends Fragment {
 
             }
         });
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getList();
     }
 }
