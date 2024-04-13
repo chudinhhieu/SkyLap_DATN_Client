@@ -85,9 +85,6 @@
             android:name=".ui.activities.AccountManagementActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.ChiTietKhuyenMaiActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.activities.KhuyenMaiActivity"
             android:exported="false" />
         <activity
