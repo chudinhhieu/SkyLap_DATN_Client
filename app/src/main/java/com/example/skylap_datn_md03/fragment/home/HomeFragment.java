@@ -43,6 +43,7 @@ import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.ui.activities.GioHangActivity;
 import com.example.skylap_datn_md03.ui.activities.MessageActivity;
+import com.example.skylap_datn_md03.ui.dialogs.CheckDialog;
 import com.example.skylap_datn_md03.utils.MessagePreferences;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.firebase.database.DataSnapshot;
@@ -74,21 +75,12 @@ public class HomeFragment extends Fragment {
     private LinearLayout btn_chat;
     private SharedPreferencesManager sharedPreferencesManager;
     private  MessagePreferences messagePreferences;
-    private MessageRetrofit messageRetrofit;
     private ChatRetrofit chatRetrofit;
     private RetrofitService retrofitService;
     private RelativeLayout btnGioHang,viewNull;
     private TextView txtNumberUnSeenMessage;
-
     private EditText txtSearrch;
-
-    private List<SanPham> dataList = new ArrayList<>();
-    private List<HangSX> dataHangSx = new ArrayList<>();
-    private int limit = 10; // Số lượng dữ liệu muốn tải trong mỗi lần
-    private boolean isLoadingSanPham = false; // Biến để kiểm tra xem đang tải dữ liệu hay không
-    private boolean isLoadingHangSx = false; // Biến để kiểm tra xem đang tải dữ liệu hay không
     private String idChat;
-    private int numberChat_notSeen;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,8 +90,6 @@ public class HomeFragment extends Fragment {
         retrofitService = new RetrofitService();
         sharedPreferencesManager = new SharedPreferencesManager(context.getContext());
         messagePreferences = new MessagePreferences();
-
-
         initUI();
 
         txtSearrch.addTextChangedListener(new TextWatcher() {
@@ -153,7 +143,10 @@ public class HomeFragment extends Fragment {
         btnGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 startActivity(new Intent(getContext(), GioHangActivity.class));
             }
         });
@@ -166,6 +159,10 @@ public class HomeFragment extends Fragment {
         btn_chat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 getChat();
             }
         });
@@ -174,6 +171,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void logicChat() {
+        if (sharedPreferencesManager.getUserId().isEmpty()){
+            return;
+        }
         idChat = "";
         chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
         String userId = sharedPreferencesManager.getUserId();
@@ -197,6 +197,9 @@ public class HomeFragment extends Fragment {
     }
 
     private void getChat(){
+        if (sharedPreferencesManager.getUserId().isEmpty()){
+            return;
+        }
         Intent intent = new Intent(context.getContext(), MessageActivity.class);
         intent.putExtra("conversation_key", idChat);
         messagePreferences.putSeeNAllwhenOnclick(idChat);

@@ -48,21 +48,14 @@ import retrofit2.Response;
 
 
 public class LoginActivity extends AppCompatActivity {
-    private FirebaseAuth firebaseAuth;
-    private GoogleSignInClient googleSignInClient;
-    private LinearLayout btnLoginGoogle;
-    private TextView tvRegister;
+    private TextView tvRegister,tvKhongDangNhap;
     private TextView tvForgotPassword;
-
     private TextInputLayout iplUsername;
     private TextInputLayout iplPassword;
     private TextInputEditText ipUsername;
     private TextInputEditText ipPassword;
     private Button btnLogin;
     private TextWatcher inputWatcher;
-
-    private static final int RQ_CODE_GG = 20;
-    private static final String TAG_ERROR_AUTH = "Error Auth";
     private AccountRetrofit accountRetrofit;
     private RetrofitService retrofitService;
     private MyAuth myAuth;
@@ -71,23 +64,10 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferencesManager= new SharedPreferencesManager(this);
-
-        if (sharedPreferencesManager.hasUserId()) {
-            gotoHomeScreen();
-            return;
-        }
         setContentView(R.layout.activity_login);
         initView();
         retrofitService = new RetrofitService();
         fillDataToInput();
-//        Kết nối firebase
-        firebaseAuth = FirebaseAuth.getInstance();
-        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
-                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail().build();
-        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-
 //        Theo dõi trạng thái của input để thực hiện validate form
         inputWatcher = new TextWatcher() {
             @Override
@@ -111,6 +91,12 @@ public class LoginActivity extends AppCompatActivity {
         if (ipPassword != null) {
             ipPassword.addTextChangedListener(inputWatcher);
         }
+        tvKhongDangNhap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoHomeScreen();
+            }
+        });
 //        Sự kiện ấn button login và xử lý chức năng đăng nhập
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +114,7 @@ public class LoginActivity extends AppCompatActivity {
                                 saveUserIdToSharedPreferences(myAuth.getValue());
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
+                                finish();
                             }else {
                                 CustomToast.showToast(LoginActivity.this, myAuth.getMessage());
                             }
@@ -140,13 +127,6 @@ public class LoginActivity extends AppCompatActivity {
                         t.printStackTrace();
                     }
                 });
-            }
-        });
-//        Sự kiện ấn vào icon google và thực hiện xử lý chức năng đăng nhập bằng google
-        btnLoginGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleGoogleSignIn();
             }
         });
 
@@ -182,55 +162,11 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
-    //    Định nghĩa mã requestCode cho việc đăng nhập bằng google
-    private void handleGoogleSignIn() {
-        Intent intent = googleSignInClient.getSignInIntent();
-        startActivityForResult(intent, RQ_CODE_GG);
-    }
 
-    // Dữ liệu được activity trả về khi xong 1 việc gì đó, phân biệt nhau bằng mã requestCode;
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RQ_CODE_GG) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthGoogle(account.getIdToken());
-            } catch (Exception e) {
-                Log.e(TAG_ERROR_AUTH, "Google: " + e);
-            }
-        }
-    }
-
-    // Thực hiện xử lý chức năng đăng nhập bằng google
-    private void firebaseAuthGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-                    if (firebaseUser != null) {
-                        String uid = firebaseUser.getUid();
-                        saveUserIdToSharedPreferences(uid);
-                    }
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                    gotoHomeScreen();
-                } else {
-                    Toast.makeText(LoginActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
-
-                }
-            }
-        });
-    }
-
-    //  Chuyển đến màn hình MainActivity
     private void gotoHomeScreen() {
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     //  Lưu lại uid của người dùng vào SharedPreferences
@@ -287,8 +223,8 @@ public class LoginActivity extends AppCompatActivity {
     // Khởi tạo các biến
     @SuppressLint("WrongViewCast")
     void initView() {
-        btnLoginGoogle = findViewById(R.id.lg_btn_login_google);
         tvRegister = findViewById(R.id.lg_tv_register);
+        tvKhongDangNhap = findViewById(R.id.lg_tv_dns);
         tvForgotPassword = findViewById(R.id.lg_tv_forgot_password);
         iplUsername = findViewById(R.id.lg_ipl_username);
         iplPassword = findViewById(R.id.lg_ipl_password);

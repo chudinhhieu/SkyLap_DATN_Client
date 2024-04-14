@@ -22,14 +22,6 @@
             android:text="Thông báo"
             android:textColor="@color/black"
             android:textSize="24dp" />
-
-        <ImageView
-            android:id="@+id/fmtb_img_cart"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_cart_black" />
     </RelativeLayout>
 
     <TextView

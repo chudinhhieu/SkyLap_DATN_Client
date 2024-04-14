@@ -44,7 +44,6 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ThongB
     private RetrofitService retrofitService;
     private SanPham sanPham;
     public ThongBaoAdapter(List<ThongBao> list, Context context) {
-        Collections.reverse(list);
         this.list = list;
         this.context = context;
     }

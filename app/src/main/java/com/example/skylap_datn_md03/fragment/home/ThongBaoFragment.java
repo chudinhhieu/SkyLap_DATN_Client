@@ -1,5 +1,6 @@
 package com.example.skylap_datn_md03.fragment.home;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.retrofitController.SanPhamYTRetrofit;
 import com.example.skylap_datn_md03.retrofitController.ThongBaoRetrofit;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
+import com.example.skylap_datn_md03.ui.dialogs.CheckDialog;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 
 import java.util.List;
@@ -59,10 +61,14 @@ public class ThongBaoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
+        userId = sharedPreferencesManager.getUserId();
+        if (userId.isEmpty()){
+            CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+            return;
+        }
         recyclerView = view.findViewById(R.id.fmtb_recyclerView);
         tvDocTatCa = view.findViewById(R.id.tvDocTatCa);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-         userId = sharedPreferencesManager.getUserId();
         retrofitService= new RetrofitService();
         apiTB = retrofitService.getRetrofit().create(ThongBaoRetrofit.class);
         tvDocTatCa.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +91,9 @@ public class ThongBaoFragment extends Fragment {
     }
 
     private void getList() {
+        if (userId.isEmpty()){
+            return;
+        }
         apiTB.getListThongBaoByIDAccount(userId).enqueue(new Callback<List<ThongBao>>() {
             @Override
             public void onResponse(Call<List<ThongBao>> call, Response<List<ThongBao>> response) {
