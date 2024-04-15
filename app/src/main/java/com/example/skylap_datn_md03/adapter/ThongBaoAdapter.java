@@ -86,6 +86,12 @@ public class ThongBaoAdapter extends RecyclerView.Adapter<ThongBaoAdapter.ThongB
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (thongBao.isDaXem()){
+                    Intent intent = new Intent(context, ChiTietDonHangActivity.class);
+                    intent.putExtra("DonHang", list.get(index).getIdDonHang());
+                    context.startActivity(intent);
+                    return;
+                }
                 ThongBaoRetrofit thongBaoRetrofit = retrofitService.retrofit.create(ThongBaoRetrofit.class);
                 thongBaoRetrofit.daXem(list.get(index).get_id()).enqueue(new Callback<MyAuth>() {
                     @Override

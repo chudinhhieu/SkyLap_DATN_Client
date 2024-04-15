@@ -1,13 +1,17 @@
 package com.example.skylap_datn_md03.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -25,9 +29,11 @@ import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
+import com.example.skylap_datn_md03.retrofitController.MessageRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.ui.activities.SanPhamActivity;
+import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
@@ -46,8 +52,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
     private RetrofitService retrofitService;
     private SanPham sanPham;
     private int maxSL;
-    private boolean ischecked = false;
-    private int lastCheckedPosition = -1;
     private OnTotalPriceChangedListener onTotalPriceChangedListener;
 
     // Interface để thông báo sự kiện khi checkbox thay đổi
@@ -88,7 +92,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                 holder.tvTenSP.setText(sanPham.getTenSanPham());
                 Picasso.get().load(sanPham.getAnhSanPham()).into(holder.imgAnhSP);
             }
-
             @Override
             public void onFailure(Call<SanPham> call, Throwable t) {
             }
@@ -107,6 +110,22 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     currentSL++;
                     // Cập nhật số lượng mới vào EditText
                     holder.suaSoLuong(gioHang.get_id(),currentSL, holder.ipSoLuong);
+                    if (list.get(index).isChecked()){
+                        if (onTotalPriceChangedListener != null) {
+                            GioHang gh = list.get(index);
+                            Call<SanPham> getSanPham = sanPhamRetrofit.getSanPhamByID(gh.getIdSanPham());
+                            getSanPham.enqueue(new Callback<SanPham>() {
+                                @Override
+                                public void onResponse(Call<SanPham> call, Response<SanPham> response) {
+                                    onTotalPriceChangedListener.onTotalPriceChanged(response.body().getGiaTien() * gh.getSoLuong(), gh);
+                                }
+
+                                @Override
+                                public void onFailure(Call<SanPham> call, Throwable t) {
+                                }
+                            });
+                        }
+                    }
                     list.get(index).setSoLuong(currentSL);
                     notifyDataSetChanged();
                 } else {
@@ -129,6 +148,22 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
 
                     // Cập nhật số lượng mới vào EditText
                     holder.suaSoLuong(gioHang.get_id(), currentSL, holder.ipSoLuong);
+                    if (list.get(index).isChecked()){
+                        if (onTotalPriceChangedListener != null) {
+                            GioHang gh = list.get(index);
+                            Call<SanPham> getSanPham = sanPhamRetrofit.getSanPhamByID(gh.getIdSanPham());
+                            getSanPham.enqueue(new Callback<SanPham>() {
+                                @Override
+                                public void onResponse(Call<SanPham> call, Response<SanPham> response) {
+                                    onTotalPriceChangedListener.onTotalPriceChanged(response.body().getGiaTien() * gh.getSoLuong(), gh);
+                                }
+
+                                @Override
+                                public void onFailure(Call<SanPham> call, Throwable t) {
+                                }
+                            });
+                        }
+                    }
                     list.get(index).setSoLuong(currentSL);
                     notifyDataSetChanged();
                 } else {
@@ -159,7 +194,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                         getSanPham.enqueue(new Callback<SanPham>() {
                             @Override
                             public void onResponse(Call<SanPham> call, Response<SanPham> response) {
-                                ischecked = true;
                                 onTotalPriceChangedListener.onTotalPriceChanged(response.body().getGiaTien() * gh.getSoLuong(), gh);
                             }
 
@@ -170,7 +204,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     }
                 } else {
                     if (onTotalPriceChangedListener != null) {
-                        ischecked = false;
                         onTotalPriceChangedListener.onTotalPriceChanged(0, new GioHang());
                     }
                 }
@@ -180,20 +213,42 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
-                gioHangRetrofit.xoaGioHang(list.get(index).get_id()).enqueue(new Callback<MyAuth>() {
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_check);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                TextView tvNoiDung = dialog.findViewById(R.id.dal_noiDung);
+                TextView tvTieuDe = dialog.findViewById(R.id.dal_tieuDe);
+                Button btnHuy = dialog.findViewById(R.id.dal_btnHuy);
+                Button btnOk = dialog.findViewById(R.id.dal_btnOk);
+                tvTieuDe.setText("Thông báo");
+                tvNoiDung.setText("Bạn chắc chắn muốn xóa giỏ hàng?");
+                btnHuy.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
-                        CustomToast.showToast(context,"Xóa giỏ hàng thành công!");
-                        list.remove(index);
-                        notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onFailure(Call<MyAuth> call, Throwable t) {
-
+                    public void onClick(View v) {
+                        dialog.dismiss();
                     }
                 });
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
+                        gioHangRetrofit.xoaGioHang(list.get(index).get_id()).enqueue(new Callback<MyAuth>() {
+                            @Override
+                            public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
+                                CustomToast.showToast(context,"Xóa giỏ hàng thành công!");
+                                list.remove(index);
+                                notifyDataSetChanged();
+                                dialog.dismiss();
+                            }
+
+                            @Override
+                            public void onFailure(Call<MyAuth> call, Throwable t) {
+
+                            }
+                        });
+                    }
+                });
+                dialog.show();
             }
         });
     }

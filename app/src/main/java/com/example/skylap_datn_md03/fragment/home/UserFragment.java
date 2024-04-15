@@ -79,12 +79,7 @@ public class UserFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         retrofitService = new RetrofitService();
         messagePreferences = new MessagePreferences();
-        if (sharedPreferencesManager.getUserId().isEmpty()){
-            CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
-            btnDangXuat.setVisibility(View.GONE);
-            btnDMK.setVisibility(View.GONE);
-            Picasso.get().load(R.drawable.avatar_main).into(imgAvatar);
-        }
+
         getUser();
         logicChat();
         laySoLuongDonHang();
@@ -210,7 +205,7 @@ public class UserFragment extends Fragment {
                 SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getContext());
                 huyDangKyTopicFirebase(sharedPreferencesManager.getUserId());
                 sharedPreferencesManager.clearUserId();
-                startActivity(new Intent(getContext(), LoginActivity.class));
+                CheckDialog.showCheckDialog(getContext(),"Thông báo","Bạn chắc chắn muốn đăng xuất?");
             }
         });
         btnKM.setOnClickListener(new View.OnClickListener() {
@@ -379,6 +374,11 @@ public class UserFragment extends Fragment {
 
     private void getUser() {
         if (sharedPreferencesManager.getUserId().isEmpty()){
+            CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+            btnDangXuat.setVisibility(View.GONE);
+            btnDMK.setVisibility(View.GONE);
+            tvHoTen.setText("");
+            Picasso.get().load(R.drawable.avatar_main).into(imgAvatar);
             return;
         }
         AccountRetrofit accountRetrofit = retrofitService.retrofit.create(AccountRetrofit.class);
@@ -411,5 +411,9 @@ public class UserFragment extends Fragment {
         });
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUser();
+    }
 }

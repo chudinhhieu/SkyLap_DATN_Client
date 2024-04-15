@@ -1,7 +1,9 @@
 package com.example.skylap_datn_md03.adapter;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.text.Layout;
@@ -24,6 +26,8 @@ import com.example.skylap_datn_md03.data.models.Message;
 import com.example.skylap_datn_md03.retrofitController.MessageRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 
+import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
+import com.example.skylap_datn_md03.ui.dialogs.CheckDialog;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -129,37 +133,33 @@ Context context;
        view_remove_message.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               AlertDialog.Builder builder = new AlertDialog.Builder(context);
-               View view = LayoutInflater.from(context).inflate(R.layout.dialog_err_remove_message, null);
-               builder.setView(view);
-
-
-               TextView txt_title_delete = view.findViewById(R.id.txt_title_delete);
-               Button btn_no_dialog = view.findViewById(R.id.btn_no_dialog);
-               Button btn_yes_dialog = view.findViewById(R.id.btn_yes_dialog);
-
-               txt_title_delete.setText("REMOVE MESSAGE");
-               AlertDialog alertDialog = builder.create();
-               btn_no_dialog.setOnClickListener(new View.OnClickListener() {
+               Dialog dialog = new Dialog(context);
+               dialog.setContentView(R.layout.dialog_check);
+               dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+               TextView tvNoiDung = dialog.findViewById(R.id.dal_noiDung);
+               TextView tvTieuDe = dialog.findViewById(R.id.dal_tieuDe);
+               Button btnHuy = dialog.findViewById(R.id.dal_btnHuy);
+               Button btnOk = dialog.findViewById(R.id.dal_btnOk);
+               tvTieuDe.setText("Thông báo");
+               tvNoiDung.setText("Bạn muốn thu hồi tin nhắn?");
+               btnHuy.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
+                       dialog.dismiss();
                        bottomSheetDialog.dismiss();
-                        alertDialog.dismiss();
-
                    }
                });
-
-               btn_yes_dialog.setOnClickListener(new View.OnClickListener() {
+               btnOk.setOnClickListener(new View.OnClickListener() {
                    @Override
                    public void onClick(View v) {
-                      messageRetrofit = retrofitService.retrofit.create(MessageRetrofit.class);
+                       messageRetrofit = retrofitService.retrofit.create(MessageRetrofit.class);
                        Call<Void> revokeMess  = messageRetrofit.revokeMess(message.getId());
                        revokeMess.enqueue(new Callback<Void>() {
                            @Override
                            public void onResponse(Call<Void> call, Response<Void> response) {
                                if(response.code() == 200){
+                                   dialog.dismiss();
                                    bottomSheetDialog.dismiss();
-                                   alertDialog.dismiss();
                                }
                            }
 
@@ -168,10 +168,10 @@ Context context;
                                Log.d("err", "onFailure: " +  t.getMessage());
                            }
                        });
+
                    }
                });
-
-              alertDialog.show();
+               dialog.show();
            }
        });
         bottomSheetDialog.show();
