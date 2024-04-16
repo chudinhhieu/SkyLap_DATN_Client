@@ -93,6 +93,8 @@
         <activity
             android:name=".ui.activities.ThemDiaChiActivity"
             android:exported="false" />
+        <activity android:name=".ui.activities.ChangePasswordActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.activities.DatHangActivity"
             android:exported="true"
