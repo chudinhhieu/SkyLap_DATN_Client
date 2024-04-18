@@ -292,7 +292,6 @@ public class FilterFragment extends Fragment {
             }
         });
         getHang();
-        getListSanPham();
     }
 
     private void getListSanPham() {
@@ -328,9 +327,12 @@ public class FilterFragment extends Fragment {
                 for (HangSX hangSx : hangSXList) {
                     listTenHang.add(hangSx.getTenHangSx());
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, listTenHang);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                spnHang.setAdapter(adapter);
+                if (isAdded()) {
+                    ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_item, listTenHang);
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spnHang.setAdapter(adapter);
+                    getListSanPham();
+                }
             }
 
             @Override

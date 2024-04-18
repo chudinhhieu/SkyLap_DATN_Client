@@ -43,9 +43,6 @@ import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private FirebaseAuth firebaseAuth;
-    private GoogleSignInClient googleSignInClient;
-    private LinearLayout btnLoginGoogle;
     private TextView tvLogin;
     private TextInputLayout iplUsername;
     private TextInputLayout iplPassword;
@@ -56,8 +53,6 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnRegister;
     private ImageView imgBack;
     private TextWatcher inputWatcher;
-    private static final int RQ_CODE_GG = 20;
-    private static final String TAG_ERROR_AUTH = "Error Auth";
     private AccountRetrofit accountRetrofit;
     private RetrofitService retrofitService;
     private MyAuth myAuth;
@@ -67,14 +62,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         initView();
         retrofitService = new RetrofitService();
-        firebaseAuth = FirebaseAuth.getInstance();
-
-        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions
-                .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail().build();
-        googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-
         inputWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -105,12 +92,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-            }
-        });
-        btnLoginGoogle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                handleGoogleSignIn();
             }
         });
         btnRegister.setOnClickListener(new View.OnClickListener() {
@@ -148,63 +129,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
-
-
-    }
-
-    private void handleGoogleSignIn() {
-        Intent intent = googleSignInClient.getSignInIntent();
-        startActivityForResult(intent, RQ_CODE_GG);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RQ_CODE_GG) {
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthGoogle(account.getIdToken());
-            } catch (Exception e) {
-                Log.e(TAG_ERROR_AUTH, "Google: " + e);
-            }
-        }
-    }
-
-    private void firebaseAuthGoogle(String idToken) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        firebaseAuth.signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-
-                    if (firebaseUser != null) {
-                        String uid = firebaseUser.getUid();
-                        saveUserIdToSharedPreferences(uid);
-                    }
-                    Toast.makeText(RegisterActivity.this, "Đăng nhập thành công!", Toast.LENGTH_SHORT).show();
-                    gotoHomeScreen();
-                } else {
-                    Toast.makeText(RegisterActivity.this, "Đăng nhập thất bại!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    private void gotoHomeScreen() {
-        Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
-        startActivity(intent);
-    }
-
-    private void saveUserIdToSharedPreferences(String userId) {
-        SharedPreferences sharedPreferences = getSharedPreferences("id_user_auth", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("uid", userId);
-        editor.apply();
     }
 
     private boolean validateForm() {
@@ -264,11 +191,7 @@ public class RegisterActivity extends AppCompatActivity {
         return isUsernameValid && isPasswordValid && isRePasswordValid;
     }
 
-
-
-
     void initView() {
-        btnLoginGoogle = findViewById(R.id.rg_btn_login_google);
         tvLogin = findViewById(R.id.rg_btn_login);
         iplUsername = findViewById(R.id.rg_ipl_username);
         iplPassword = findViewById(R.id.rg_ipl_password);

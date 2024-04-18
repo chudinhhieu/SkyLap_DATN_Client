@@ -35,6 +35,7 @@ import com.example.skylap_datn_md03.ui.activities.QuanLyDanhGiaActivity;
 import com.example.skylap_datn_md03.ui.activities.QuanLyDonHangActivity;
 import com.example.skylap_datn_md03.ui.activities.SetingActivity;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
+import com.example.skylap_datn_md03.ui.dialogs.CheckDialog;
 import com.example.skylap_datn_md03.utils.MessagePreferences;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -69,15 +70,6 @@ public class UserFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_user, container, false);
-
-        LinearLayout quanLyDanhGia = view.findViewById(R.id.fmu_qldg);
-        quanLyDanhGia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), QuanLyDanhGiaActivity.class);
-                startActivity(intent);
-            }
-        });
         return view;
     }
 
@@ -88,42 +80,57 @@ public class UserFragment extends Fragment {
         sharedPreferencesManager = new SharedPreferencesManager(getContext());
         retrofitService = new RetrofitService();
         messagePreferences = new MessagePreferences();
+
         getUser();
         logicChat();
         laySoLuongDonHang();
         btnGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 startActivity(new Intent(getContext(), GioHangActivity.class));
-            }
-        });
-        btnCaiDat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), SetingActivity.class));
             }
         });
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 getChat();
             }
         });
         btnTroTruyen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 getChat();
             }
         });
         btnQLDH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 startActivity(new Intent(getContext(), QuanLyDonHangActivity.class));
             }
         });
         btnYT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), DanhSachYeuThichActivity.class);
                 startActivity(intent);
             }
@@ -131,6 +138,10 @@ public class UserFragment extends Fragment {
         btnQLTK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), AccountManagementActivity.class);
                 startActivity(intent);
             }
@@ -138,40 +149,64 @@ public class UserFragment extends Fragment {
         btnCXN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 startActivity(new Intent(getContext(), QuanLyDonHangActivity.class));
             }
         });
         btnDGH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 startActivity(new Intent(getContext(), QuanLyDonHangActivity.class));
             }
         });
         btnCGH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 startActivity(new Intent(getContext(), QuanLyDonHangActivity.class));
             }
         });
         btnDG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 startActivity(new Intent(getContext(), QuanLyDanhGiaActivity.class));
             }
         });
         btnQLDG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 startActivity(new Intent(getContext(), QuanLyDanhGiaActivity.class));
             }
         });
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getContext());
                 huyDangKyTopicFirebase(sharedPreferencesManager.getUserId());
                 sharedPreferencesManager.clearUserId();
-                startActivity(new Intent(getContext(), LoginActivity.class));
+                CheckDialog.showCheckDialog(getContext(),"Thông báo","Bạn chắc chắn muốn đăng xuất?");
             }
         });
         btnKM.setOnClickListener(new View.OnClickListener() {
@@ -198,9 +233,7 @@ public class UserFragment extends Fragment {
         tvSLDangGH = view.findViewById(R.id.fmu_slDangGN);
         btnChat = view.findViewById(R.id.fmu_chat);
         btnGioHang = view.findViewById(R.id.fmu_gioHang);
-        btnCaiDat = view.findViewById(R.id.fmu_setting);
         imgAvatar = view.findViewById(R.id.fmu_avatar);
-        imgAvatar.setRotation(-90);
         tvHoTen = view.findViewById(R.id.fmu_hoTen);
         btnQLDH = view.findViewById(R.id.fmu_qldh);
         btnYT = view.findViewById(R.id.fmu_yt);
@@ -218,6 +251,9 @@ public class UserFragment extends Fragment {
     }
 
     private void laySoLuongDonHang() {
+        if (sharedPreferencesManager.getUserId().isEmpty()){
+            return;
+        }
         String userID = sharedPreferencesManager.getUserId();
         DonHangRetrofit donHangRetrofit = retrofitService.retrofit.create(DonHangRetrofit.class);
         DanhGiaRetrofit danhGiaRetrofit = retrofitService.retrofit.create(DanhGiaRetrofit.class);
@@ -292,6 +328,9 @@ public class UserFragment extends Fragment {
     }
 
     private void huyDangKyTopicFirebase(String userId) {
+        if (sharedPreferencesManager.getUserId().isEmpty()){
+            return;
+        }
         FirebaseMessaging.getInstance().unsubscribeFromTopic(userId)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -307,6 +346,9 @@ public class UserFragment extends Fragment {
     }
 
     private void logicChat() {
+        if (sharedPreferencesManager.getUserId().isEmpty()){
+            return;
+        }
         idChat = "";
         chatRetrofit = retrofitService.retrofit.create(ChatRetrofit.class);
         String userId = sharedPreferencesManager.getUserId();
@@ -329,6 +371,9 @@ public class UserFragment extends Fragment {
 
     }
     private void getChat(){
+        if (sharedPreferencesManager.getUserId().isEmpty()){
+            return;
+        }
         Intent intent = new Intent(getContext(), MessageActivity.class);
         intent.putExtra("conversation_key", idChat);
         messagePreferences.putSeeNAllwhenOnclick(idChat);
@@ -336,6 +381,14 @@ public class UserFragment extends Fragment {
     }
 
     private void getUser() {
+        if (sharedPreferencesManager.getUserId().isEmpty()){
+            CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+            btnDangXuat.setVisibility(View.GONE);
+            btnDMK.setVisibility(View.GONE);
+            tvHoTen.setText("");
+            Picasso.get().load(R.drawable.avatar_main).into(imgAvatar);
+            return;
+        }
         AccountRetrofit accountRetrofit = retrofitService.retrofit.create(AccountRetrofit.class);
 
         accountRetrofit.getAccountById(sharedPreferencesManager.getUserId()).enqueue(new Callback<Account>() {
@@ -351,7 +404,10 @@ public class UserFragment extends Fragment {
                     }
                     if (response.body().getAvatar() == null) {
                         Picasso.get().load(R.drawable.avatar_main).into(imgAvatar);
-                    } else {
+                    } else if(response.body().getAvatar().equals("https://cdn-icons-png.flaticon.com/128/3135/3135715.png")){
+                        Picasso.get().load(response.body().getAvatar()).into(imgAvatar);
+                    }else{
+                        imgAvatar.setRotation(-90);
                         Picasso.get().load(response.body().getAvatar()).into(imgAvatar);
                     }
                 }
@@ -363,5 +419,9 @@ public class UserFragment extends Fragment {
         });
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        getUser();
+    }
 }

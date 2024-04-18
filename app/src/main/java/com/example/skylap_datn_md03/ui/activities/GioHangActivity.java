@@ -83,7 +83,7 @@ public class GioHangActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<GioHang>> call, Response<List<GioHang>> response) {
                 listGioHang = response.body();
-                adapter = new GioHangAdapter(listGioHang , getApplicationContext());
+                adapter = new GioHangAdapter(listGioHang , GioHangActivity.this);
                 agh_recyclerView.setAdapter(adapter);
                 adapter.setOnTotalPriceChangedListener(new GioHangAdapter.OnTotalPriceChangedListener() {
                     @Override

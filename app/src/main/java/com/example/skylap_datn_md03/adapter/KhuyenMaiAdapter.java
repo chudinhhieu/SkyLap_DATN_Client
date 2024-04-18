@@ -1,5 +1,6 @@
 package com.example.skylap_datn_md03.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.KhuyenMai;
-import com.example.skylap_datn_md03.ui.activities.ChiTietKhuyenMaiActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
@@ -61,7 +61,7 @@ public class KhuyenMaiAdapter extends RecyclerView.Adapter<KhuyenMaiAdapter.Khuy
 
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        holder.item_giamgia_thoigian.setText(dateFormat.format(khuyenMai.getThoiGianKetThuc()));
+        holder.item_giamgia_thoigian.setText("Đến ngày: "+dateFormat.format(khuyenMai.getThoiGianKetThuc()));
         holder.btnDungNgay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,9 +74,23 @@ public class KhuyenMaiAdapter extends RecyclerView.Adapter<KhuyenMaiAdapter.Khuy
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ChiTietKhuyenMaiActivity.class);
-                intent.putExtra("khuyenMai", khuyenMai);
-                context.startActivity(intent);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm:ss dd/MM/yyyy", Locale.getDefault());
+                Dialog dialog = new Dialog(context);
+                dialog.setContentView(R.layout.dialog_chi_tiet_khuyen_mai);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                ImageView imageView = dialog.findViewById(R.id.imgChiTietKhuyenMai);
+                TextView moTa =  dialog.findViewById(R.id.tvMoTaChiTiet);
+                TextView code =  dialog.findViewById(R.id.tvCodeChiTiet);
+                TextView thoiGian =  dialog.findViewById(R.id.tvThoiGianBatDau);
+                TextView tienGiam =  dialog.findViewById(R.id.tvSoTienGiam);
+                TextView soLuong =  dialog.findViewById(R.id.tvSoLuong);
+                Picasso.get().load(khuyenMai.getAnh()).into(imageView);
+                moTa.setText(khuyenMai.getMoTa());
+                code.setText(khuyenMai.getCode());
+                soLuong.setText(khuyenMai.getSoLuong()+"");
+                thoiGian.setText(dateFormat.format(khuyenMai.getThoiGianBatDau())+" - "+dateFormat.format(khuyenMai.getThoiGianKetThuc()));
+                tienGiam.setText(String.format("%,.0f", khuyenMai.getSoTienGiam()) + "₫");
+                dialog.show();
             }
         });
     }

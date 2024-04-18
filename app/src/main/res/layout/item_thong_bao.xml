@@ -5,7 +5,7 @@
     android:layout_height="120dp"
     android:layout_marginTop="2dp"
     android:elevation="8dp"
-    android:background="@color/white">
+    android:background="@color/light_blue">
     <ImageView
         android:id="@+id/ittb_anh"
         android:layout_alignParentTop="true"

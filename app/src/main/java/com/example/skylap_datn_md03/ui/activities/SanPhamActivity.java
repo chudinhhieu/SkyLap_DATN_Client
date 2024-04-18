@@ -38,6 +38,7 @@ import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.retrofitController.SanPhamYTRetrofit;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
+import com.example.skylap_datn_md03.ui.dialogs.CheckDialog;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -52,7 +53,7 @@ import retrofit2.Response;
 public class SanPhamActivity extends AppCompatActivity {
     private TextView tvGiaGocSP, tvSlideSP, tvTenSP, tvGiaSP, tvSaoSP, tvDaBan, tvMoTaSP, tvStarSP, tvSLDG, tvXemDG;
     private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh;
-    private ImageView imgSildeSP, imgBack, imgGioHang, imgFavorite;
+    private ImageView imgBack, imgGioHang, imgFavorite;
     private RecyclerView rcvCTDG;
     private RelativeLayout view;
     private LinearLayout btnCTSP, btnCTDG, btnChat, btnThemGH, btnMua;
@@ -82,6 +83,10 @@ public class SanPhamActivity extends AppCompatActivity {
         btnMua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(SanPhamActivity.this, "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 Intent intent = new Intent(SanPhamActivity.this, DatHangActivity.class);
                 intent.putExtra("SanPham", sanPham);
                 startActivity(intent);
@@ -90,12 +95,20 @@ public class SanPhamActivity extends AppCompatActivity {
         imgGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(SanPhamActivity.this, "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 startActivity(new Intent(SanPhamActivity.this, GioHangActivity.class));
             }
         });
         btnThemGH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(SanPhamActivity.this, "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 showBottomSheet(sanPham);
             }
         });
@@ -118,12 +131,20 @@ public class SanPhamActivity extends AppCompatActivity {
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(SanPhamActivity.this, "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 logicChat();
             }
         });
         imgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(SanPhamActivity.this, "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
                 performAddFavorite(new SanPhamYeuThich(sanPham.get_id(), sharedPreferencesManager.getUserId()));
             }
         });
@@ -451,6 +472,10 @@ public class SanPhamActivity extends AppCompatActivity {
     }
 
     private void checkFavoriteStatus() {
+        if (sharedPreferencesManager.getUserId().isEmpty()){
+            imgFavorite.setImageResource(R.drawable.ic_chuathich);
+            return;
+        }
         SanPhamYTRetrofit sanPhamYTRetrofit = retrofitService.getRetrofit().create(SanPhamYTRetrofit.class);
         String userId = sharedPreferencesManager.getUserId();
         Call<FavoriteResponse> call = sanPhamYTRetrofit.checkSanPhamYeuThich(new SanPhamYeuThich(sanPham.get_id(), userId));
@@ -469,13 +494,16 @@ public class SanPhamActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<FavoriteResponse> call, Throwable t) {
-                Log.e("checkFavoriteStatus", "Error: " + t.getMessage());
+                imgFavorite.setImageResource(R.drawable.ic_chuathich);
             }
         });
     }
 
 
     private void performAddFavorite(SanPhamYeuThich sanPhamYeuThich) {
+        if (sharedPreferencesManager.getUserId().isEmpty()){
+            return;
+        }
         sanPhamYTRetrofit.addSanPhamYeuThich(sanPhamYeuThich).enqueue(new Callback<MyAuth>() {
             @Override
             public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {

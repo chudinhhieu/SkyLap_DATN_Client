@@ -73,6 +73,12 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
 
 
         retrofitService = new RetrofitService();
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
 
         khuyenMaiRetrofit = retrofitService.retrofit.create(KhuyenMaiRetrofit.class);
