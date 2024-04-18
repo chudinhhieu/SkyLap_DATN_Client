@@ -1,6 +1,7 @@
 package com.example.skylap_datn_md03.ui.activities;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,11 +31,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private SharedPreferencesManager sharedPreferencesManager;
     private RetrofitService retrofitService;
     private AccountRetrofit accountRetrofit;
+    private static final String TAG = "ChangePasswordActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+
 
         sharedPreferencesManager = new SharedPreferencesManager(this);
 
@@ -77,14 +80,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     Account account = response.body();
                     updateUIWithUserDetails(account);
                 } else {
-                    // Handle the case where response is not successful or data is null
                     Toast.makeText(ChangePasswordActivity.this, "Failed to load user details: " + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Account> call, Throwable t) {
-                // Handle failure such as network issues, server down, etc.
                 Toast.makeText(ChangePasswordActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
@@ -142,8 +143,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
         }
 
         // Check for minimum length
-        if (newPassStr.length() < 6) {
-            Toast.makeText(this, "Mật khẩu phải dài ít nhất 6 kí tự", Toast.LENGTH_SHORT).show();
+        if (newPassStr.length() < 6|| newPassStr.length() > 20) {
+            Toast.makeText(this, "Mật khẩu phải từ 6-20 kí tự", Toast.LENGTH_SHORT).show();
             return false;
         }
 
