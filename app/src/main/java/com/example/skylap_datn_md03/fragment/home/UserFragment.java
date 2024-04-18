@@ -22,6 +22,7 @@ import com.example.skylap_datn_md03.data.models.Account;
 import com.example.skylap_datn_md03.retrofitController.DanhGiaRetrofit;
 import com.example.skylap_datn_md03.retrofitController.DonHangRetrofit;
 import com.example.skylap_datn_md03.ui.activities.AccountManagementActivity;
+import com.example.skylap_datn_md03.ui.activities.ChangePasswordActivity;
 import com.example.skylap_datn_md03.ui.activities.DanhSachYeuThichActivity;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
@@ -213,6 +214,13 @@ public class UserFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), KhuyenMaiActivity.class);
                 intent.putExtra("isDatHang", false);
+                startActivity(intent);
+            }
+        });
+        btnDMK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChangePasswordActivity.class);
                 startActivity(intent);
             }
         });

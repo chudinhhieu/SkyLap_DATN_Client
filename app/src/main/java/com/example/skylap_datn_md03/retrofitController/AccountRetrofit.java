@@ -4,6 +4,8 @@ import com.example.skylap_datn_md03.data.models.Account;
 import com.example.skylap_datn_md03.data.models.DiaChi;
 import com.example.skylap_datn_md03.data.models.MyAuth;
 
+import java.util.Map;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -42,4 +44,6 @@ public interface AccountRetrofit {
 
     @PUT("api/account/edit-sdt/{id}")
     Call<MyAuth> themSDT(@Body Account account,@Path("id") String id );
+    @PUT("api/account/edit-mat-khau/{id}")
+    Call<MyAuth> updatePassword(@Path("id") String id, @Body Map<String, String> passwordData);
 }
