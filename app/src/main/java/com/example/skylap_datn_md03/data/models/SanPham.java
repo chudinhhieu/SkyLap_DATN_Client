@@ -6,13 +6,11 @@ import java.util.List;
 public class SanPham implements Serializable {
     private String _id;
     private String idHangSx;
-    private int soLuong;
     private String tenSanPham;
     private boolean trangThai;
-    private double giaTien;
     private String anhSanPham;
     private List<String> anh;
-
+    private List<BienThe> bienThe;
     private String cpu;
     private int soNhan;
     private int soLuongCPU;
@@ -20,11 +18,9 @@ public class SanPham implements Serializable {
     private String tocDoToiDa;
     private String boNhoDem;
 
-    private String ram;
     private String loaiRam;
     private String tocDoBusRam;
     private String hoTroRamToiDa;
-    private String rom;
 
     private String display;
     private String doPhanGiai;
@@ -77,12 +73,12 @@ public class SanPham implements Serializable {
         this.idHangSx = idHangSx;
     }
 
-    public int getSoLuong() {
-        return soLuong;
+    public List<BienThe> getBienThe() {
+        return bienThe;
     }
 
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
+    public void setBienThe(List<BienThe> bienThe) {
+        this.bienThe = bienThe;
     }
 
     public String getTenSanPham() {
@@ -101,13 +97,6 @@ public class SanPham implements Serializable {
         this.trangThai = trangThai;
     }
 
-    public double getGiaTien() {
-        return giaTien;
-    }
-
-    public void setGiaTien(double giaTien) {
-        this.giaTien = giaTien;
-    }
 
     public String getAnhSanPham() {
         return anhSanPham;
@@ -173,13 +162,6 @@ public class SanPham implements Serializable {
         this.boNhoDem = boNhoDem;
     }
 
-    public String getRam() {
-        return ram;
-    }
-
-    public void setRam(String ram) {
-        this.ram = ram;
-    }
 
     public String getLoaiRam() {
         return loaiRam;
@@ -203,14 +185,6 @@ public class SanPham implements Serializable {
 
     public void setHoTroRamToiDa(String hoTroRamToiDa) {
         this.hoTroRamToiDa = hoTroRamToiDa;
-    }
-
-    public String getRom() {
-        return rom;
-    }
-
-    public void setRom(String rom) {
-        this.rom = rom;
     }
 
     public String getDisplay() {

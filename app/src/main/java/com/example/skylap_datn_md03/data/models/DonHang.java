@@ -9,6 +9,7 @@ public class DonHang implements Serializable {
     private String _id;
     private ArrayList<TrangThai> trangThai;
     private String idSanPham;
+    private String idBienThe;
     private double tienShip;
     private String idAccount;
     private String idKhuyenMai;
@@ -38,8 +39,9 @@ public class DonHang implements Serializable {
         this._id = _id;
     }
 
-    public DonHang(String idSanPham, double tienShip, String idAccount, String idKhuyenMai, int soLuong, double tongTien, String ghiChu, boolean thanhToan) {
+    public DonHang(String idSanPham, String idBienThe, double tienShip, String idAccount, String idKhuyenMai, int soLuong, double tongTien, String ghiChu, boolean thanhToan) {
         this.idSanPham = idSanPham;
+        this.idBienThe = idBienThe;
         this.tienShip = tienShip;
         this.idAccount = idAccount;
         this.idKhuyenMai = idKhuyenMai;
@@ -49,19 +51,12 @@ public class DonHang implements Serializable {
         this.thanhToan = thanhToan;
     }
 
-    public DonHang(String _id, ArrayList<TrangThai> trangThai, String idSanPham, String idAccount, String idKhuyenMai,
-                   Date thoiGianMua, String idPttt, int soLuong, long tongTien, String ghiChu, boolean thanhToan) {
-        this._id = _id;
-        this.trangThai = trangThai;
-        this.idSanPham = idSanPham;
-        this.idAccount = idAccount;
-        this.idKhuyenMai = idKhuyenMai;
-        this.thoiGianMua = thoiGianMua;
-        this.idPttt = idPttt;
-        this.soLuong = soLuong;
-        this.tongTien = tongTien;
-        this.ghiChu = ghiChu;
-        this.thanhToan = thanhToan;
+    public String getIdBienThe() {
+        return idBienThe;
+    }
+
+    public void setIdBienThe(String idBienThe) {
+        this.idBienThe = idBienThe;
     }
 
     public double getTienShip() {

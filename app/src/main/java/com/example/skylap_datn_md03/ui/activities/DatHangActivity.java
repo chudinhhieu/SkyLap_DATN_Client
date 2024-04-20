@@ -25,6 +25,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.ZaloPay.CreateOrder;
 import com.example.skylap_datn_md03.data.models.Account;
+import com.example.skylap_datn_md03.data.models.BienThe;
 import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.KhuyenMai;
@@ -53,7 +54,7 @@ public class DatHangActivity extends AppCompatActivity {
     private SanPham sanPham;
     private KhuyenMai khuyenMai;
     private ImageView anhSP, btnTru, btnCong, btnBack;
-    private TextView tenSP, giaSP, tvTongTienSP, tvTongTienHang,
+    private TextView tenSP, giaSP, tvTongTienSP, tvTongTienHang,tvRamRom,
             hoTen, sdt, diaChi, tvTienVanChuyen, tvTienKhuyenMai, tvTongTien, tvTongCTTT, tvKM;
     private Spinner spinner;
     private Button btnDatHang;
@@ -74,6 +75,7 @@ public class DatHangActivity extends AppCompatActivity {
     String[] phuongThucThanhToan = {"Khi nhận hàng", "ZaloPay"};
     Boolean isZaloPay = false;
     int maxSL;
+    private BienThe bienThe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,9 +88,10 @@ public class DatHangActivity extends AppCompatActivity {
         if (intent != null) {
             if (intent.hasExtra("SanPham")) {
                 sanPham = (SanPham) intent.getSerializableExtra("SanPham");
+                    bienThe = (BienThe) intent.getSerializableExtra("BienThe");
                 fillDataToView();
                 getUser();
-                maxSL = sanPham.getSoLuong();
+                maxSL = bienThe.getSoLuong();
             }
             if (intent.hasExtra("GioHang")) {
                 gioHang = (GioHang) intent.getSerializableExtra("GioHang");
@@ -98,9 +101,14 @@ public class DatHangActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<SanPham> call, Response<SanPham> response) {
                         sanPham = response.body();
+                        for (int i = 0; i < sanPham.getBienThe().size(); i++) {
+                            if (sanPham.getBienThe().get(i).get_id().equals(gioHang.getIdBienThe())){
+                                bienThe = sanPham.getBienThe().get(i);
+                            }
+                        }
                         fillDataToView();
                         getUser();
-                        maxSL = sanPham.getSoLuong();
+                        maxSL = bienThe.getSoLuong();
                     }
 
                     @Override
@@ -249,7 +257,7 @@ public class DatHangActivity extends AppCompatActivity {
             return;
         }
         String idKhuyenMai = khuyenMai == null ? "" : khuyenMai.get_id();
-        DonHang donHang = new DonHang(sanPham.get_id(), tienVanChuyen, sharedPreferencesManager.getUserId(),
+        DonHang donHang = new DonHang(sanPham.get_id(),bienThe.get_id(), tienVanChuyen, sharedPreferencesManager.getUserId(),
                 idKhuyenMai, Integer.parseInt(ipSoLuong.getText().toString().trim()), tongThanhToan, ipGhiChu.getText().toString().trim(), isZaloPay);
         donHangRetrofit = retrofitService.retrofit.create(DonHangRetrofit.class);
         donHangRetrofit.addDonHang(donHang).enqueue(new Callback<MyAuth>() {
@@ -363,7 +371,7 @@ public class DatHangActivity extends AppCompatActivity {
 
     private void updateViewTongTienSP() {
         if (sanPham != null) {
-            tongTienSP = Integer.parseInt(ipSoLuong.getText().toString()) * sanPham.getGiaTien();
+            tongTienSP = Integer.parseInt(ipSoLuong.getText().toString()) * bienThe.getGiaTien();
             tongThanhToan = tongTienSP + tienVanChuyen - tienKhuyenMai;
             tvTongTienSP.setText(String.format("%,.0f", tongTienSP) + "₫");
             tvTongTienHang.setText(String.format("%,.0f", tongTienSP) + "₫");
@@ -377,7 +385,8 @@ public class DatHangActivity extends AppCompatActivity {
     private void fillDataToView() {
         Picasso.get().load(sanPham.getAnhSanPham()).into(anhSP);
         tenSP.setText(sanPham.getTenSanPham());
-        giaSP.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
+        giaSP.setText(String.format("%,.0f", bienThe.getGiaTien()) + "₫");
+        tvRamRom.setText(bienThe.getRam()+ " + "+bienThe.getRom());
         updateViewTongTienSP();
     }
 
@@ -393,6 +402,7 @@ public class DatHangActivity extends AppCompatActivity {
         giaSP = findViewById(R.id.adh_giaSP);
         tvTongTienSP = findViewById(R.id.adh_tvTongTienSP);
         tvTongTienHang = findViewById(R.id.adh_tvTongTienHang);
+        tvRamRom = findViewById(R.id.adh_ram_rom);
         ipSoLuong = findViewById(R.id.adh_SLSP);
         btnDatHang = findViewById(R.id.adh_btnDatHang);
         btnCong = findViewById(R.id.adh_themSP);

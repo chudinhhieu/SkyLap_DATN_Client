@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_bienThe"
+    android:layout_width="wrap_content"
+    android:layout_height="35dp"
+    android:paddingHorizontal="7dp"
+    android:layout_marginEnd="5dp"
+    android:elevation="3dp"
+    android:background="@drawable/border_width_button">
+    <TextView
+        android:id="@+id/value_bien_the"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</RelativeLayout>

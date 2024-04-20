@@ -40,7 +40,7 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
     private ImageView anhSP, btnBack;
     private Button btnDatHang;
     private EditText  edtGhiChu;
-    private TextView tenSP, giaSP, tvTongTienSP, tvTongTienHang,
+    private TextView tenSP, giaSP, tvTongTienSP, tvTongTienHang,tvRamRom,
             hoTen, sdt, diaChi, tvTienVanChuyen, tvTienKhuyenMai, tvPTTT,tvSL, tvTongCTTT, tvKM;
     private Account account;
 
@@ -52,7 +52,7 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
         hoTen = findViewById(R.id.actdh_hoTen);
         sdt = findViewById(R.id.actdh_sdt);
         diaChi = findViewById(R.id.actdh_diaChi);
-
+        tvRamRom = findViewById(R.id.actdh_ram_rom);
         anhSP = findViewById(R.id.actdh_anhSP);
         btnBack = findViewById(R.id.actdh_img_back);
         tenSP = findViewById(R.id.actdh_tenSP);
@@ -198,13 +198,18 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<SanPham> call, Response<SanPham> response) {
                 sanPham = response.body();
+                for (int i = 0; i < sanPham.getBienThe().size(); i++) {
+                    if (sanPham.getBienThe().get(i).get_id().equals(donHang.getIdBienThe())){
+                        giaSP.setText(String.format("%,.0f", sanPham.getBienThe().get(i).getGiaTien()) + "₫");
+                        Double tongTienSP = donHang.getSoLuong() * sanPham.getBienThe().get(i).getGiaTien();
+                        tvTongTienSP.setText(String.format("%,.0f", tongTienSP) + "₫");
+                        tvTongTienHang.setText(String.format("%,.0f", tongTienSP) + "₫");
+                        tvRamRom.setText(sanPham.getBienThe().get(i).getRam()+ " + "+sanPham.getBienThe().get(i).getRom());
+                    }
+                }
                 Picasso.get().load(sanPham.getAnhSanPham()).into(anhSP);
                 tenSP.setText(sanPham.getTenSanPham());
-                giaSP.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
                 tvSL.setText("x"+donHang.getSoLuong());
-                Double tongTienSP = donHang.getSoLuong() * sanPham.getGiaTien();
-                tvTongTienSP.setText(String.format("%,.0f", tongTienSP) + "₫");
-                tvTongTienHang.setText(String.format("%,.0f", tongTienSP) + "₫");
             }
 
             @Override

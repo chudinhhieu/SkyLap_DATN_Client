@@ -87,11 +87,17 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
             @Override
             public void onResponse(Call<SanPham> call, Response<SanPham> response) {
                 sanPham = response.body();
-                maxSL = sanPham.getSoLuong();
-                holder.tvGiaSP.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
+                for (int i = 0; i < sanPham.getBienThe().size(); i++) {
+                    if (sanPham.getBienThe().get(i).get_id().equals(gioHang.getIdBienThe())) {
+                        maxSL = sanPham.getBienThe().get(i).getSoLuong();
+                        holder.tvRamRom.setText(sanPham.getBienThe().get(i).getRam()+ " + "+sanPham.getBienThe().get(i).getRom());
+                        holder.tvGiaSP.setText(String.format("%,.0f", sanPham.getBienThe().get(i).getGiaTien()) + "₫");
+                    }
+                }
                 holder.tvTenSP.setText(sanPham.getTenSanPham());
                 Picasso.get().load(sanPham.getAnhSanPham()).into(holder.imgAnhSP);
             }
+
             @Override
             public void onFailure(Call<SanPham> call, Throwable t) {
             }
@@ -109,15 +115,15 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     // Tăng số lượng lên 1
                     currentSL++;
                     // Cập nhật số lượng mới vào EditText
-                    holder.suaSoLuong(gioHang.get_id(),currentSL, holder.ipSoLuong);
-                    if (list.get(index).isChecked()){
+                    holder.suaSoLuong(gioHang.get_id(), currentSL, holder.ipSoLuong);
+                    if (list.get(index).isChecked()) {
                         if (onTotalPriceChangedListener != null) {
                             GioHang gh = list.get(index);
                             Call<SanPham> getSanPham = sanPhamRetrofit.getSanPhamByID(gh.getIdSanPham());
                             getSanPham.enqueue(new Callback<SanPham>() {
                                 @Override
                                 public void onResponse(Call<SanPham> call, Response<SanPham> response) {
-                                    onTotalPriceChangedListener.onTotalPriceChanged(response.body().getGiaTien() * gh.getSoLuong(), gh);
+                                    onTotalPriceChangedListener.onTotalPriceChanged(response.body().getBienThe().get(0).getGiaTien() * gh.getSoLuong(), gh);
                                 }
 
                                 @Override
@@ -148,14 +154,14 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
 
                     // Cập nhật số lượng mới vào EditText
                     holder.suaSoLuong(gioHang.get_id(), currentSL, holder.ipSoLuong);
-                    if (list.get(index).isChecked()){
+                    if (list.get(index).isChecked()) {
                         if (onTotalPriceChangedListener != null) {
                             GioHang gh = list.get(index);
                             Call<SanPham> getSanPham = sanPhamRetrofit.getSanPhamByID(gh.getIdSanPham());
                             getSanPham.enqueue(new Callback<SanPham>() {
                                 @Override
                                 public void onResponse(Call<SanPham> call, Response<SanPham> response) {
-                                    onTotalPriceChangedListener.onTotalPriceChanged(response.body().getGiaTien() * gh.getSoLuong(), gh);
+                                    onTotalPriceChangedListener.onTotalPriceChanged(response.body().getBienThe().get(0).getGiaTien() * gh.getSoLuong(), gh);
                                 }
 
                                 @Override
@@ -194,7 +200,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                         getSanPham.enqueue(new Callback<SanPham>() {
                             @Override
                             public void onResponse(Call<SanPham> call, Response<SanPham> response) {
-                                onTotalPriceChangedListener.onTotalPriceChanged(response.body().getGiaTien() * gh.getSoLuong(), gh);
+                                onTotalPriceChangedListener.onTotalPriceChanged(response.body().getBienThe().get(0).getGiaTien() * gh.getSoLuong(), gh);
                             }
 
                             @Override
@@ -235,7 +241,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                         gioHangRetrofit.xoaGioHang(list.get(index).get_id()).enqueue(new Callback<MyAuth>() {
                             @Override
                             public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
-                                CustomToast.showToast(context,"Xóa giỏ hàng thành công!");
+                                CustomToast.showToast(context, "Xóa giỏ hàng thành công!");
                                 list.remove(index);
                                 notifyDataSetChanged();
                                 dialog.dismiss();
@@ -263,7 +269,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
         private CheckBox checkBox;
         private ImageView imgAnhSP, btnDelete, btnCongSL, btnTruSl;
         private EditText ipSoLuong;
-        private TextView tvTenSP, tvGiaSP;
+        private TextView tvTenSP, tvGiaSP, tvRamRom;
         private ProgressBar progressBar;
         private RelativeLayout views;
 
@@ -277,6 +283,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
             ipSoLuong = itemView.findViewById(R.id.item_gh_ip_soLuong);
             tvTenSP = itemView.findViewById(R.id.item_gh_ten);
             tvGiaSP = itemView.findViewById(R.id.item_gh_gia);
+            tvRamRom = itemView.findViewById(R.id.item_gh_ram_rom);
 
         }
 
@@ -286,7 +293,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
             suaSoLuong.enqueue(new Callback<GioHang>() {
                 @Override
                 public void onResponse(Call<GioHang> call, Response<GioHang> response) {
-                    textView.setText(soLuong+"");
+                    textView.setText(soLuong + "");
                 }
 
                 @Override

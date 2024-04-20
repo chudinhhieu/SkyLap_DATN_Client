@@ -162,10 +162,15 @@
                             android:textColor="@color/red"
                             android:textSize="14sp"
                             android:textStyle="bold" />
-
+                        <TextView
+                            android:id="@+id/actdh_ram_rom"
+                            android:layout_below="@+id/actdh_giaSP"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="14sp" />
                         <TextView
                             android:id="@+id/tvSL"
-                            android:layout_below="@id/actdh_giaSP"
+                            android:layout_below="@id/actdh_ram_rom"
                             android:textSize="14sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"/>

@@ -58,9 +58,9 @@ public class SanPhamAdapter extends RecyclerView.Adapter<SanPhamAdapter.SanPhamV
             holder.txt_card.setText(sanPham.getGpu());
         holder.txt_name.setText(sanPham.getTenSanPham());
         holder.txtBaoHanh.setText(sanPham.getBaohanh());
-        holder.txtRam.setText(sanPham.getRam());
-        holder.txtRom.setText(sanPham.getRom());
-            holder.txt_price.setText(formatPrice(sanPham.getGiaTien())+"₫");
+        holder.txtRam.setText(sanPham.getBienThe().get(0).getRam());
+        holder.txtRom.setText(sanPham.getBienThe().get(0).getRom());
+            holder.txt_price.setText(formatPrice(sanPham.getBienThe().get(0).getGiaTien())+"₫");
         RetrofitService retrofitService = new RetrofitService();
         DonHangRetrofit donHangRetrofit = retrofitService.retrofit.create(DonHangRetrofit.class);
         donHangRetrofit.layDaBan(sanPham.get_id()).enqueue(new Callback<Integer>() {

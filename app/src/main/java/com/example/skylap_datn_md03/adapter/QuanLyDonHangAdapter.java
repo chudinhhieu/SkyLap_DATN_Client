@@ -104,7 +104,7 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
             @Override
             public void onResponse(Call<SanPham> call, Response<SanPham> response) {
                 sanPham = response.body();
-                holder.gia.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
+                holder.gia.setText(String.format("%,.0f", sanPham.getBienThe().get(0).getGiaTien()) + "₫");
                 holder.tenSanPham.setText(sanPham.getTenSanPham());
                 Picasso.get().load(sanPham.getAnhSanPham()).into(holder.anhSanPham);
             }

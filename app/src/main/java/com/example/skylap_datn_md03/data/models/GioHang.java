@@ -8,6 +8,7 @@ import java.io.Serializable;
 public class GioHang implements Serializable {
     private String _id;
     private String idSanPham;
+    private String idBienThe;
     private String idAccount;
     private int soLuong;
     private boolean isChecked;
@@ -25,8 +26,9 @@ public class GioHang implements Serializable {
                 '}';
     }
 
-    public GioHang(String idSanPham, String idAccount, int soLuong) {
+    public GioHang(String idSanPham,String idBienThe, String idAccount, int soLuong) {
         this.idSanPham = idSanPham;
+        this.idBienThe = idBienThe;
         this.idAccount = idAccount;
         this.soLuong = soLuong;
     }
@@ -43,6 +45,13 @@ public class GioHang implements Serializable {
         soLuong = in.readInt();
     }
 
+    public String getIdBienThe() {
+        return idBienThe;
+    }
+
+    public void setIdBienThe(String idBienThe) {
+        this.idBienThe = idBienThe;
+    }
 
     public String get_id() {
         return _id;

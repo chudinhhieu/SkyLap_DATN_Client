@@ -9,10 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.skylap_datn_md03.R;
+import com.example.skylap_datn_md03.data.models.BienThe;
 import com.example.skylap_datn_md03.data.models.SanPham;
 
 public class ChiTietSanPhamActivity extends AppCompatActivity {
     private SanPham sanPham;
+    private BienThe bienThe;
     private ImageView imgBack;
     private TextView tvCongNgheCPU, tvSoNhan, tvSoLuong, tvTocDoCPU, tvTocDoToiDa, tvBoNhoDem;
     private TextView tvRam, tvLoaiRam, tvTocDoBusRam, tvHoTroRamToiDa, tvOCung;
@@ -33,6 +35,9 @@ public class ChiTietSanPhamActivity extends AppCompatActivity {
         if (intent != null) {
             if (intent.hasExtra("SanPham")) {
                 sanPham = (SanPham) intent.getSerializableExtra("SanPham");
+            }
+            if (intent.hasExtra("BienThe")) {
+                bienThe = (BienThe) intent.getSerializableExtra("BienThe");
             }
         }
         initView();
@@ -56,11 +61,11 @@ public class ChiTietSanPhamActivity extends AppCompatActivity {
             tvTocDoToiDa.setText(sanPham.getTocDoToiDa());
             tvBoNhoDem.setText(sanPham.getBoNhoDem());
 
-            tvRam.setText(sanPham.getRam());
+            tvRam.setText(bienThe.getRam());
             tvLoaiRam.setText(sanPham.getLoaiRam());
             tvTocDoBusRam.setText(sanPham.getTocDoBusRam());
             tvHoTroRamToiDa.setText(sanPham.getHoTroRamToiDa());
-            tvOCung.setText(sanPham.getRom());
+            tvOCung.setText(bienThe.getRom());
 
             tvManHinh.setText(sanPham.getDisplay());
             tvDoPhanGiai.setText(sanPham.getDoPhanGiai());

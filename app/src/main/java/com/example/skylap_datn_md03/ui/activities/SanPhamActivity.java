@@ -26,6 +26,8 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.example.skylap_datn_md03.R;
+import com.example.skylap_datn_md03.adapter.BienTheAdapter;
+import com.example.skylap_datn_md03.data.models.BienThe;
 import com.example.skylap_datn_md03.data.models.FavoriteResponse;
 import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.MyAuth;
@@ -45,6 +47,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,11 +57,10 @@ public class SanPhamActivity extends AppCompatActivity {
     private TextView tvGiaGocSP, tvSlideSP, tvTenSP, tvGiaSP, tvSaoSP, tvDaBan, tvMoTaSP, tvStarSP, tvSLDG, tvXemDG;
     private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh;
     private ImageView imgBack, imgGioHang, imgFavorite;
-    private RecyclerView rcvCTDG;
+    private RecyclerView rcvCTDG,rcvBienThe;
     private RelativeLayout view;
     private LinearLayout btnCTSP, btnCTDG, btnChat, btnThemGH, btnMua;
     private RatingBar rbSP;
-    private ViewFlipper viewFlipper;
     private ChatRetrofit chatRetrofit;
     private SanPham sanPham;
     private Handler slideHandler;
@@ -67,9 +69,9 @@ public class SanPhamActivity extends AppCompatActivity {
     private SanPhamYTRetrofit sanPhamYTRetrofit;
     private RetrofitService retrofitService;
     private ProgressBar progressBar;
-
     private SharedPreferencesManager sharedPreferencesManager;
     private MyAuth myAuth;
+    private BienThe bienTheChon;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +91,7 @@ public class SanPhamActivity extends AppCompatActivity {
                 }
                 Intent intent = new Intent(SanPhamActivity.this, DatHangActivity.class);
                 intent.putExtra("SanPham", sanPham);
+                intent.putExtra("BienThe", bienTheChon);
                 startActivity(intent);
             }
         });
@@ -122,9 +125,8 @@ public class SanPhamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SanPhamActivity.this, ChiTietSanPhamActivity.class);
-
                 intent.putExtra("SanPham", sanPham);
-
+                intent.putExtra("BienThe", bienTheChon);
                 startActivity(intent);
             }
         });
@@ -216,7 +218,7 @@ public class SanPhamActivity extends AppCompatActivity {
     }
 
     private void showBottomSheet(SanPham sanPham) {
-        int maxSL = sanPham.getSoLuong();
+        int maxSL = bienTheChon.getSoLuong();
 
         View view = getLayoutInflater().inflate(R.layout.bottom_sheet_sanpham, null);
 
@@ -227,21 +229,23 @@ public class SanPhamActivity extends AppCompatActivity {
         ImageView btnTru = view.findViewById(R.id.bssp_btn_truSL);
         EditText ipSoLuong = view.findViewById(R.id.bssp_ip_soLuong);
         TextView tvTen = view.findViewById(R.id.bssp_ten);
+        TextView tvRamRom = view.findViewById(R.id.bssp_ram_rom);
         TextView tvGia = view.findViewById(R.id.bssp_gia);
         TextView tvKho = view.findViewById(R.id.bssp_kho);
         Button btnThemGioHang = view.findViewById(R.id.bssp_btn_add);
 
 
         Picasso.get().load(sanPham.getAnhSanPham()).into(img_anhSP);
-        tvGia.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
+        tvGia.setText(String.format("%,.0f", bienTheChon.getGiaTien()) + "₫");
         tvKho.setText("Kho: " + maxSL);
         tvTen.setText(sanPham.getTenSanPham());
+        tvRamRom.setText(bienTheChon.getRam() +" + "+bienTheChon.getRom());
         btnThemGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
                 String userId = sharedPreferencesManager.getUserId();
-                Call<MyAuth> getGioHang = gioHangRetrofit.themGioHang(new GioHang(sanPham.get_id(), userId, Integer.parseInt(ipSoLuong.getText().toString().trim())));
+                Call<MyAuth> getGioHang = gioHangRetrofit.themGioHang(new GioHang(sanPham.get_id(),bienTheChon.get_id(), userId, Integer.parseInt(ipSoLuong.getText().toString().trim())));
                 getGioHang.enqueue(new Callback<MyAuth>() {
                     @Override
                     public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
@@ -359,6 +363,7 @@ public class SanPhamActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<SanPham> call, Response<SanPham> response) {
                     sanPham = response.body();
+                    bienTheChon = sanPham.getBienThe().get(0);
                     updateUIWithSanPham(sanPham);
                     hideLoading(); // Ẩn ProgressBar khi tải xong
                     view.setVisibility(View.VISIBLE); // Hiển thị view
@@ -417,12 +422,29 @@ public class SanPhamActivity extends AppCompatActivity {
 
 
     private void updateUIWithSanPham(SanPham sanPham) {
+        List<BienThe> listBienThe = sanPham.getBienThe();
+        for (int i = 0; i < listBienThe.size(); i++) {
+            if(listBienThe.get(i).getSoLuong()==0){
+                listBienThe.remove(i);
+            }
+        }
+        BienTheAdapter bienTheAdapter = new BienTheAdapter(listBienThe, SanPhamActivity.this, new BienTheAdapter.OnBienTheSelectedListener() {
+            @Override
+            public void onBienTheSelected(BienThe bienThe) {
+                bienTheChon = bienThe;
+                // Cập nhật giao diện dựa trên biến thể được chọn
+                tvGiaSP.setText(String.format("%,.0f", bienThe.getGiaTien()) + "₫");
+                tvRam.setText(bienThe.getRam());
+                tvRom.setText(bienThe.getRom());
+            }
+        });
+        rcvBienThe.setAdapter(bienTheAdapter);
         tvTenSP.setText(sanPham.getTenSanPham());
-        tvGiaSP.setText(String.format("%,.0f", sanPham.getGiaTien()) + "₫");
+        tvGiaSP.setText(String.format("%,.0f", sanPham.getBienThe().get(0).getGiaTien()) + "₫");
         tvCPU.setText(sanPham.getCpu());
         tvManHinh.setText(sanPham.getDisplay());
-        tvRam.setText(sanPham.getRam());
-        tvRom.setText(sanPham.getRom());
+        tvRam.setText(sanPham.getBienThe().get(0).getRam());
+        tvRom.setText(sanPham.getBienThe().get(0).getRom());
         tvBaoHanh.setText(sanPham.getBaohanh());
         tvMoTaSP.setText(sanPham.getMoTa());
         startSlideshow();
@@ -446,6 +468,7 @@ public class SanPhamActivity extends AppCompatActivity {
         tvStarSP = findViewById(R.id.asp_tv_star);
         tvSLDG = findViewById(R.id.asp_tv_sldg);
         rcvCTDG = findViewById(R.id.asp_rcv_dg);
+        rcvBienThe = findViewById(R.id.rcv_bienThe);
         tvXemDG = findViewById(R.id.asp_tv_xemdg);
         imgBack = findViewById(R.id.asp_img_back);
         imgGioHang = findViewById(R.id.asp_img_cart);
@@ -457,7 +480,6 @@ public class SanPhamActivity extends AppCompatActivity {
         tvRam = findViewById(R.id.asp_tv_ram);
         tvRom = findViewById(R.id.asp_tv_rom);
         tvBaoHanh = findViewById(R.id.asp_tv_bao_hanh);
-        viewFlipper = findViewById(R.id.viewFlipper);
         progressBar = findViewById(R.id.progressBar);
         view = findViewById(R.id.view);
         imgFavorite = findViewById(R.id.asp_img_favorite);
