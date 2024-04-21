@@ -449,7 +449,10 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/asp_rcv_dg"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        tools:itemCount="5"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        />
 
                     <View
                         android:layout_width="match_parent"
@@ -468,7 +471,6 @@
                             android:id="@+id/asp_tv_xemdg"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Xem tất cả (66)"
                             android:textColor="@color/main" />
 
                         <ImageView

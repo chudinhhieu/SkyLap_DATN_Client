@@ -57,7 +57,7 @@ public class DanhGiaFragment extends Fragment {
             public void onResponse(Call<List<DonHang>> call, Response<List<DonHang>> response) {
                 if(response.isSuccessful() && response.body() != null) {
                     List<DonHang> donHangs = response.body();
-                    danhGiaAdapter = new DanhGiaAdapter(donHangs, getContext(), accountRetrofit, sanPhamRetrofit);
+                    danhGiaAdapter = new DanhGiaAdapter(donHangs, getContext());
                     recyclerView.setAdapter(danhGiaAdapter);
                 }
             }

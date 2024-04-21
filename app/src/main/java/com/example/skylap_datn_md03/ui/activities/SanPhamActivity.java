@@ -27,26 +27,28 @@ import android.widget.ViewFlipper;
 
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.adapter.BienTheAdapter;
+import com.example.skylap_datn_md03.adapter.DanhGiaAdapter;
 import com.example.skylap_datn_md03.data.models.BienThe;
+import com.example.skylap_datn_md03.data.models.DanhGia;
+import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.data.models.FavoriteResponse;
 import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.data.models.SanPhamYeuThich;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
+import com.example.skylap_datn_md03.retrofitController.DanhGiaRetrofit;
 import com.example.skylap_datn_md03.retrofitController.DonHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.GioHangRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.retrofitController.SanPhamYTRetrofit;
-import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.example.skylap_datn_md03.ui.dialogs.CheckDialog;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -57,7 +59,7 @@ public class SanPhamActivity extends AppCompatActivity {
     private TextView tvGiaGocSP, tvSlideSP, tvTenSP, tvGiaSP, tvSaoSP, tvDaBan, tvMoTaSP, tvStarSP, tvSLDG, tvXemDG;
     private TextView tvCPU, tvManHinh, tvRam, tvRom, tvBaoHanh;
     private ImageView imgBack, imgGioHang, imgFavorite;
-    private RecyclerView rcvCTDG,rcvBienThe;
+    private RecyclerView rcvCTDG, rcvBienThe;
     private RelativeLayout view;
     private LinearLayout btnCTSP, btnCTDG, btnChat, btnThemGH, btnMua;
     private RatingBar rbSP;
@@ -72,6 +74,7 @@ public class SanPhamActivity extends AppCompatActivity {
     private SharedPreferencesManager sharedPreferencesManager;
     private MyAuth myAuth;
     private BienThe bienTheChon;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,7 +88,7 @@ public class SanPhamActivity extends AppCompatActivity {
         btnMua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sharedPreferencesManager.getUserId().isEmpty()){
+                if (sharedPreferencesManager.getUserId().isEmpty()) {
                     CheckDialog.showCheckDialog(SanPhamActivity.this, "Thông báo", "Vui lòng đăng nhập để mua hàng!");
                     return;
                 }
@@ -98,7 +101,7 @@ public class SanPhamActivity extends AppCompatActivity {
         imgGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sharedPreferencesManager.getUserId().isEmpty()){
+                if (sharedPreferencesManager.getUserId().isEmpty()) {
                     CheckDialog.showCheckDialog(SanPhamActivity.this, "Thông báo", "Vui lòng đăng nhập để mua hàng!");
                     return;
                 }
@@ -108,7 +111,7 @@ public class SanPhamActivity extends AppCompatActivity {
         btnThemGH.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sharedPreferencesManager.getUserId().isEmpty()){
+                if (sharedPreferencesManager.getUserId().isEmpty()) {
                     CheckDialog.showCheckDialog(SanPhamActivity.this, "Thông báo", "Vui lòng đăng nhập để mua hàng!");
                     return;
                 }
@@ -133,7 +136,7 @@ public class SanPhamActivity extends AppCompatActivity {
         btnChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sharedPreferencesManager.getUserId().isEmpty()){
+                if (sharedPreferencesManager.getUserId().isEmpty()) {
                     CheckDialog.showCheckDialog(SanPhamActivity.this, "Thông báo", "Vui lòng đăng nhập để mua hàng!");
                     return;
                 }
@@ -143,11 +146,19 @@ public class SanPhamActivity extends AppCompatActivity {
         imgFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sharedPreferencesManager.getUserId().isEmpty()){
+                if (sharedPreferencesManager.getUserId().isEmpty()) {
                     CheckDialog.showCheckDialog(SanPhamActivity.this, "Thông báo", "Vui lòng đăng nhập để mua hàng!");
                     return;
                 }
                 performAddFavorite(new SanPhamYeuThich(sanPham.get_id(), sharedPreferencesManager.getUserId()));
+            }
+        });
+        tvXemDG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SanPhamActivity.this, DanhSachDanhGia.class);
+                intent.putExtra("idSP", sanPham.get_id());
+                startActivity(intent);
             }
         });
 
@@ -158,8 +169,8 @@ public class SanPhamActivity extends AppCompatActivity {
         donHangRetrofit.laySaoTrungBinh(sanPham.get_id()).enqueue(new Callback<Double>() {
             @Override
             public void onResponse(Call<Double> call, Response<Double> response) {
-                tvSaoSP.setText("Đánh giá " + response.body()+"/5");
-                tvStarSP.setText(response.body()+"/5");
+                tvSaoSP.setText("Đánh giá " + response.body() + "/5");
+                tvStarSP.setText(response.body() + "/5");
                 rbSP.setRating(Float.parseFloat(response.body().toString()));
             }
 
@@ -172,7 +183,12 @@ public class SanPhamActivity extends AppCompatActivity {
         donHangRetrofit.layLanDanhGia(sanPham.get_id()).enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
-                tvSLDG.setText(response.body()+" đánh giá");
+                tvSLDG.setText(response.body() + " đánh giá");
+                if (response.body().equals(0)) {
+                    btnCTDG.setVisibility(View.GONE);
+                } else {
+                    tvXemDG.setText("Xem tất cả (" + response.body() + ")");
+                }
             }
 
             @Override
@@ -184,11 +200,24 @@ public class SanPhamActivity extends AppCompatActivity {
         donHangRetrofit.layDaBan(sanPham.get_id()).enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
-                tvDaBan.setText("Đã bán "+response.body());
+                tvDaBan.setText("Đã bán " + response.body());
             }
 
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
+        DanhGiaRetrofit danhGiaRetrofit = retrofitService.retrofit.create(DanhGiaRetrofit.class);
+        danhGiaRetrofit.getDaDanhGiaTheoSanPham(sanPham.get_id()).enqueue(new Callback<List<DonHang>>() {
+            @Override
+            public void onResponse(Call<List<DonHang>> call, Response<List<DonHang>> response) {
+                DanhGiaAdapter danhGiaAdapter = new DanhGiaAdapter(response.body(), SanPhamActivity.this);
+                rcvCTDG.setAdapter(danhGiaAdapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<DonHang>> call, Throwable t) {
 
             }
         });
@@ -239,13 +268,13 @@ public class SanPhamActivity extends AppCompatActivity {
         tvGia.setText(String.format("%,.0f", bienTheChon.getGiaTien()) + "₫");
         tvKho.setText("Kho: " + maxSL);
         tvTen.setText(sanPham.getTenSanPham());
-        tvRamRom.setText(bienTheChon.getRam() +" + "+bienTheChon.getRom());
+        tvRamRom.setText(bienTheChon.getRam() + " + " + bienTheChon.getRom());
         btnThemGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
                 String userId = sharedPreferencesManager.getUserId();
-                Call<MyAuth> getGioHang = gioHangRetrofit.themGioHang(new GioHang(sanPham.get_id(),bienTheChon.get_id(), userId, Integer.parseInt(ipSoLuong.getText().toString().trim())));
+                Call<MyAuth> getGioHang = gioHangRetrofit.themGioHang(new GioHang(sanPham.get_id(), bienTheChon.get_id(), userId, Integer.parseInt(ipSoLuong.getText().toString().trim())));
                 getGioHang.enqueue(new Callback<MyAuth>() {
                     @Override
                     public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
@@ -424,7 +453,7 @@ public class SanPhamActivity extends AppCompatActivity {
     private void updateUIWithSanPham(SanPham sanPham) {
         List<BienThe> listBienThe = sanPham.getBienThe();
         for (int i = 0; i < listBienThe.size(); i++) {
-            if(listBienThe.get(i).getSoLuong()==0){
+            if (listBienThe.get(i).getSoLuong() == 0) {
                 listBienThe.remove(i);
             }
         }
@@ -494,7 +523,7 @@ public class SanPhamActivity extends AppCompatActivity {
     }
 
     private void checkFavoriteStatus() {
-        if (sharedPreferencesManager.getUserId().isEmpty()){
+        if (sharedPreferencesManager.getUserId().isEmpty()) {
             imgFavorite.setImageResource(R.drawable.ic_chuathich);
             return;
         }
@@ -523,7 +552,7 @@ public class SanPhamActivity extends AppCompatActivity {
 
 
     private void performAddFavorite(SanPhamYeuThich sanPhamYeuThich) {
-        if (sharedPreferencesManager.getUserId().isEmpty()){
+        if (sharedPreferencesManager.getUserId().isEmpty()) {
             return;
         }
         sanPhamYTRetrofit.addSanPhamYeuThich(sanPhamYeuThich).enqueue(new Callback<MyAuth>() {

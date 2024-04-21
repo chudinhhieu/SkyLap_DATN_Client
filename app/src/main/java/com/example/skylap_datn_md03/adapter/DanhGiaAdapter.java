@@ -19,6 +19,7 @@ import com.example.skylap_datn_md03.data.models.Account;
 import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
+import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.google.android.play.integrity.internal.c;
@@ -36,14 +37,10 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
 
     private final List<DonHang> reviews;
     private final Context context;
-    private final AccountRetrofit accountRetrofit;
-    private final SanPhamRetrofit sanPhamRetrofit;
 
-    public DanhGiaAdapter(List<DonHang> reviews, Context context, AccountRetrofit accountRetrofit, SanPhamRetrofit sanPhamRetrofit) {
+    public DanhGiaAdapter(List<DonHang> reviews, Context context) {
         this.reviews = reviews;
         this.context = context;
-        this.accountRetrofit = accountRetrofit;
-        this.sanPhamRetrofit = sanPhamRetrofit;
     }
 
     @NonNull
@@ -56,7 +53,9 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
     @Override
     public void onBindViewHolder(@NonNull ReviewViewHolder holder, int position) {
         DonHang donHang = reviews.get(position);
-
+        RetrofitService retrofitService = new RetrofitService();
+        AccountRetrofit accountRetrofit = retrofitService.retrofit.create(AccountRetrofit.class);
+        SanPhamRetrofit sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
         // Fetch and display user name
         accountRetrofit.getAccountById(donHang.getIdAccount()).enqueue(new Callback<Account>() {
             @Override

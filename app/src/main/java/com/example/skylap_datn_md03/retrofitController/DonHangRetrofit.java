@@ -1,5 +1,6 @@
 package com.example.skylap_datn_md03.retrofitController;
 
+import com.example.skylap_datn_md03.data.models.DanhGia;
 import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.data.models.MyAuth;
 
@@ -39,6 +40,8 @@ public interface DonHangRetrofit {
     Call<Double>laySaoTrungBinh(@Path("id") String id);
     @GET("api/donHang/lan-danh-gia/{id}")
     Call<Integer>layLanDanhGia(@Path("id") String id);
+    @GET("api/donHang/danh-sach-danh-gia/{id}")
+    Call<List<DanhGia>>danhSachDanhGia(@Path("id") String id);
 
 
     @GET("api/donHang/sl-cho-xac-nhan/{id}")

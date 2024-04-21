@@ -133,6 +133,11 @@ public class ThemDiaChiActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (account.getSdt() == null) {
+                    if (!isValidPhoneNumber(ipSDT.getText().toString().trim())) {
+                        // Hiển thị thông báo lỗi về định dạng số điện thoại
+                        ipSDT.setError("Số điện thoại không hợp lệ");
+                        return;
+                    }
                     updateSDT();
                     updateDiaChi();
                 } else {
@@ -173,6 +178,7 @@ public class ThemDiaChiActivity extends AppCompatActivity {
     }
 
     private void updateSDT() {
+
         accountRetrofit.themSDT(new Account(ipSDT.getText().toString().trim()), sharedPreferencesManager.getUserId()).enqueue(new Callback<MyAuth>() {
             @Override
             public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
@@ -266,5 +272,10 @@ public class ThemDiaChiActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        // Sử dụng biểu thức chính quy để kiểm tra định dạng số điện thoại
+        // Ở đây, ví dụ đơn giản là kiểm tra xem số điện thoại có 10 hoặc 11 chữ số hay không
+        return phoneNumber.matches("^\\d{10,11}$");
     }
 }

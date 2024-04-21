@@ -104,7 +104,12 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
             @Override
             public void onResponse(Call<SanPham> call, Response<SanPham> response) {
                 sanPham = response.body();
-                holder.gia.setText(String.format("%,.0f", sanPham.getBienThe().get(0).getGiaTien()) + "₫");
+                for (int i = 0; i < sanPham.getBienThe().size(); i++) {
+                    if (sanPham.getBienThe().get(i).get_id().equals(donHang.getIdBienThe())) {
+                        holder.ramRom.setText(sanPham.getBienThe().get(i).getRam()+ " + "+sanPham.getBienThe().get(i).getRom());
+                        holder.gia.setText(String.format("%,.0f", sanPham.getBienThe().get(i).getGiaTien()) + "₫");
+                    }
+                }
                 holder.tenSanPham.setText(sanPham.getTenSanPham());
                 Picasso.get().load(sanPham.getAnhSanPham()).into(holder.anhSanPham);
             }
@@ -202,7 +207,7 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
     public static class ReviewViewHolder extends RecyclerView.ViewHolder {
         private ImageView anhSanPham;
         private Button button;
-        private TextView tenSanPham, soLuong, gia, tongTien, moTa;
+        private TextView tenSanPham, soLuong, gia, tongTien, moTa,ramRom;
 
         public ReviewViewHolder(View itemView) {
             super(itemView);
@@ -213,6 +218,7 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
             tongTien = itemView.findViewById(R.id.itdh_tv_tongTien);
             button = itemView.findViewById(R.id.itdh_button);
             moTa = itemView.findViewById(R.id.itdh_mota);
+            ramRom = itemView.findViewById(R.id.itdh_ram_rom);
         }
     }
 }

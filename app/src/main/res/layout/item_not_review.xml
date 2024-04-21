@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/itnrv_anh"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:text="Bạn còn 7 ngày để đánh giá"
+                android:text="Hãy đánh giá cảm nhận về sản phẩm nhé!"
                 android:textSize="13sp"/>
 
             <Button

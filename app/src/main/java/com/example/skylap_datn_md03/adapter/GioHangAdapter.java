@@ -25,6 +25,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.skylap_datn_md03.R;
+import com.example.skylap_datn_md03.data.models.BienThe;
 import com.example.skylap_datn_md03.data.models.GioHang;
 import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.data.models.SanPham;
@@ -52,6 +53,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
     private RetrofitService retrofitService;
     private SanPham sanPham;
     private int maxSL;
+    private BienThe bienThe;
     private OnTotalPriceChangedListener onTotalPriceChangedListener;
 
     // Interface để thông báo sự kiện khi checkbox thay đổi
@@ -89,6 +91,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                 sanPham = response.body();
                 for (int i = 0; i < sanPham.getBienThe().size(); i++) {
                     if (sanPham.getBienThe().get(i).get_id().equals(gioHang.getIdBienThe())) {
+                        bienThe = sanPham.getBienThe().get(i);
                         maxSL = sanPham.getBienThe().get(i).getSoLuong();
                         holder.tvRamRom.setText(sanPham.getBienThe().get(i).getRam()+ " + "+sanPham.getBienThe().get(i).getRom());
                         holder.tvGiaSP.setText(String.format("%,.0f", sanPham.getBienThe().get(i).getGiaTien()) + "₫");
@@ -123,7 +126,12 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                             getSanPham.enqueue(new Callback<SanPham>() {
                                 @Override
                                 public void onResponse(Call<SanPham> call, Response<SanPham> response) {
-                                    onTotalPriceChangedListener.onTotalPriceChanged(response.body().getBienThe().get(0).getGiaTien() * gh.getSoLuong(), gh);
+                                    for (int i = 0; i < response.body().getBienThe().size(); i++) {
+                                        if (response.body().getBienThe().get(i).get_id().equals(gioHang.getIdBienThe())) {
+                                            onTotalPriceChangedListener.onTotalPriceChanged(response.body().getBienThe().get(i).getGiaTien() * gh.getSoLuong(), gh);
+                                        }
+                                    }
+
                                 }
 
                                 @Override
@@ -161,8 +169,11 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                             getSanPham.enqueue(new Callback<SanPham>() {
                                 @Override
                                 public void onResponse(Call<SanPham> call, Response<SanPham> response) {
-                                    onTotalPriceChangedListener.onTotalPriceChanged(response.body().getBienThe().get(0).getGiaTien() * gh.getSoLuong(), gh);
-                                }
+                                    for (int i = 0; i < response.body().getBienThe().size(); i++) {
+                                        if (response.body().getBienThe().get(i).get_id().equals(gioHang.getIdBienThe())) {
+                                            onTotalPriceChangedListener.onTotalPriceChanged(response.body().getBienThe().get(i).getGiaTien() * gh.getSoLuong(), gh);
+                                        }
+                                    }                                }
 
                                 @Override
                                 public void onFailure(Call<SanPham> call, Throwable t) {
@@ -200,8 +211,11 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                         getSanPham.enqueue(new Callback<SanPham>() {
                             @Override
                             public void onResponse(Call<SanPham> call, Response<SanPham> response) {
-                                onTotalPriceChangedListener.onTotalPriceChanged(response.body().getBienThe().get(0).getGiaTien() * gh.getSoLuong(), gh);
-                            }
+                                for (int i = 0; i < response.body().getBienThe().size(); i++) {
+                                    if (response.body().getBienThe().get(i).get_id().equals(gioHang.getIdBienThe())) {
+                                        onTotalPriceChangedListener.onTotalPriceChanged(response.body().getBienThe().get(i).getGiaTien() * gh.getSoLuong(), gh);
+                                    }
+                                }                            }
 
                             @Override
                             public void onFailure(Call<SanPham> call, Throwable t) {

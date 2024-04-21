@@ -407,7 +407,7 @@ public class UserFragment extends Fragment {
                     } else if(response.body().getAvatar().equals("https://cdn-icons-png.flaticon.com/128/3135/3135715.png")){
                         Picasso.get().load(response.body().getAvatar()).into(imgAvatar);
                     }else{
-                        imgAvatar.setRotation(-90);
+//                        imgAvatar.setRotation(-90);
                         Picasso.get().load(response.body().getAvatar()).into(imgAvatar);
                     }
                 }

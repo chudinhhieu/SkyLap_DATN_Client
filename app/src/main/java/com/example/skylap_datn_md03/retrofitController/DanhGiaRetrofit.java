@@ -24,6 +24,8 @@ public interface DanhGiaRetrofit {
                              @Part List<MultipartBody.Part> image);
     @GET("api/danhGia/da-danh-gia/{idAccount}")
     Call<List<DonHang>> getDaDanhGia(@Path("idAccount") String idAccount);
+    @GET("api/danhGia/by-idSanPham/{id}")
+    Call<List<DonHang>> getDaDanhGiaTheoSanPham(@Path("id") String id);
 
     @GET("api/danhGia/chua-danh-gia/{idAccount}")
     Call<List<DonHang>> getChuaDanhGia(@Path("idAccount") String idAccount);

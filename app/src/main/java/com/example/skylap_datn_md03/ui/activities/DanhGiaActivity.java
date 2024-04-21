@@ -221,4 +221,5 @@ public class DanhGiaActivity extends AppCompatActivity {
             imageAdapter.notifyDataSetChanged();
         }
     }
+
 }

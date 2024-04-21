@@ -86,7 +86,6 @@ public class AccountManagementActivity extends AppCompatActivity {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextDiaChi = findViewById(R.id.editTextDiaChi);
         imgAvatar = findViewById(R.id.imgAvatar);
-        imgAvatar.setRotation(-90);
         btnAddAvatar = findViewById(R.id.addAvatar);
         btnExit = findViewById(R.id.aam_img_back);
         btnSave = findViewById(R.id.btnSave);
@@ -126,6 +125,22 @@ public class AccountManagementActivity extends AppCompatActivity {
         String hoTen = editTextHoTen.getText().toString();
         String sdt = editTextSdt.getText().toString();
         String email = editTextEmail.getText().toString();
+
+        if (!isValidPhoneNumber(sdt)) {
+            editTextSdt.setError("Số điện thoại không hợp lệ");
+            return;
+        }
+        if (hoTen.isEmpty()) {
+            editTextHoTen.setError("Họ tên không hợp lệ");
+            return;
+        }
+        if (!isValidEmail(email)) {
+            editTextEmail.setError("Email không hợp lệ");
+            return;
+        }
+
+// Nếu số điện thoại và email hợp lệ, tiếp tục thực hiện các hoạt động khác
+
         accountService.editAccount(sharedPreferencesManager.getUserId(),new Account(hoTen,sdt,email)).enqueue(new Callback<MyAuth>() {
             @Override
             public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
@@ -156,7 +171,12 @@ public class AccountManagementActivity extends AppCompatActivity {
         if (account.getHoTen() != null){
             editTextEmail.setText(account.getEmail());
         }
-        if (account.getAvatar() != null && !account.getAvatar().isEmpty()) {
+        if (account.getAvatar() == null) {
+            Picasso.get().load(R.drawable.avatar_main).into(imgAvatar);
+        } else if(account.getAvatar().equals("https://cdn-icons-png.flaticon.com/128/3135/3135715.png")){
+            Picasso.get().load(account.getAvatar()).into(imgAvatar);
+        }else{
+//            imgAvatar.setRotation(-90);
             Picasso.get().load(account.getAvatar()).into(imgAvatar);
         }
         // Thêm TextWatcher cho các EditText
@@ -241,6 +261,16 @@ public class AccountManagementActivity extends AppCompatActivity {
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+    private boolean isValidPhoneNumber(String phoneNumber) {
+        // Sử dụng biểu thức chính quy để kiểm tra định dạng số điện thoại
+        // Ở đây, ví dụ đơn giản là kiểm tra xem số điện thoại có 10 hoặc 11 chữ số hay không
+        return phoneNumber.matches("^\\d{10,11}$");
+    }
+    private boolean isValidEmail(String email) {
+        // Sử dụng biểu thức chính quy để kiểm tra định dạng email
+        // Đây là một biểu thức phức tạp hơn để kiểm tra định dạng email
+        return email.matches("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
     }
 
     @Override
