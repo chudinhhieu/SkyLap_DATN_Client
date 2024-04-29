@@ -31,7 +31,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private SharedPreferencesManager sharedPreferencesManager;
     private RetrofitService retrofitService;
     private AccountRetrofit accountRetrofit;
-    private static final String TAG = "ChangePasswordActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

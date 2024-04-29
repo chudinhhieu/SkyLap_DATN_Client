@@ -83,7 +83,7 @@ public class QuanLyDonHangAdapter extends RecyclerView.Adapter<QuanLyDonHangAdap
                             holder.moTa.setText("Đơn hàng của bạn đã giao hàng thành công!");
                         }else {
                             holder.button.setText("Đánh giá");
-                            holder.moTa.setText("Đơn hàng của bạn đã giao hàng thành công!\nHãy đánh giá cảm nhận về sản phẩm nhé!");
+                            holder.moTa.setText("Đơn hàng của bạn đã giao hàng thành công, hãy đánh giá cảm nhận về sản phẩm nhé!");
                         }
                         break;
                     case "Đã hủy":

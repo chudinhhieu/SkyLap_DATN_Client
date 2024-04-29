@@ -6,10 +6,15 @@ import com.example.skylap_datn_md03.data.models.MyAuth;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -34,6 +39,8 @@ public interface DonHangRetrofit {
 
     @GET("api/donHang/da-huy/{id}")
     Call<List<DonHang>>layDonHangDaHuy(@Path("id") String id);
+    @GET("api/donHang/tra-hang/{id}")
+    Call<List<DonHang>>layDonHangTraHang(@Path("id") String id);
     @GET("api/donHang/da-ban/{id}")
     Call<Integer>layDaBan(@Path("id") String id);
     @GET("api/donHang/sao/{id}")
@@ -51,4 +58,12 @@ public interface DonHangRetrofit {
     Call<Integer>laySLDonHangChoGiaoHang(@Path("id") String id);
     @GET("api/donHang/sl-dang-giao-hang/{id}")
     Call<Integer>laySLDonHangDangGiaoHang(@Path("id") String id);
+
+    @Multipart
+    @PUT("api/donHang/bao-hanh/{iddh}/{idbh}")
+    Call<MyAuth> putBaoHanh(@Path("iddh") String iddh,
+                            @Path("idbh") String idbh,
+                             @Part("lyDo") RequestBody lyDo,
+                             @Part("tinhTrang") RequestBody tinhTrang,
+                             @Part List<MultipartBody.Part> image);
 }

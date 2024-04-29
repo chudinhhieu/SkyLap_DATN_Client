@@ -7,6 +7,7 @@ import java.util.List;
 
 public class DonHang implements Serializable {
     private String _id;
+    private List<BaoHanh> baoHanh;
     private ArrayList<TrangThai> trangThai;
     private String idSanPham;
     private String idBienThe;
@@ -49,6 +50,14 @@ public class DonHang implements Serializable {
         this.tongTien = tongTien;
         this.ghiChu = ghiChu;
         this.thanhToan = thanhToan;
+    }
+
+    public List<BaoHanh> getBaoHanh() {
+        return baoHanh;
+    }
+
+    public void setBaoHanh(List<BaoHanh> baoHanh) {
+        this.baoHanh = baoHanh;
     }
 
     public String getIdBienThe() {

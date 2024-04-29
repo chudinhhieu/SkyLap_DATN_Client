@@ -32,7 +32,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/black500"
-                android:textSize="17dp"
+                android:textSize="16dp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -45,21 +45,21 @@
                     android:id="@+id/bssp_ram_rom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16dp" />
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/bssp_gia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/red"
-                    android:textSize="16dp" />
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/bssp_kho"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/gray"
-                    android:textSize="16dp" />
+                    android:textSize="14dp" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="Số lượng"
-            android:textSize="16sp" />
+            android:textSize="15sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
