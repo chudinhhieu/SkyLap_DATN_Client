@@ -1,5 +1,6 @@
 package com.example.skylap_datn_md03.retrofitController;
 
+import com.example.skylap_datn_md03.data.models.BaoHanh;
 import com.example.skylap_datn_md03.data.models.DanhGia;
 import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.data.models.MyAuth;
@@ -59,6 +60,7 @@ public interface DonHangRetrofit {
     @GET("api/donHang/sl-dang-giao-hang/{id}")
     Call<Integer>laySLDonHangDangGiaoHang(@Path("id") String id);
 
+
     @Multipart
     @PUT("api/donHang/bao-hanh/{iddh}/{idbh}")
     Call<MyAuth> putBaoHanh(@Path("iddh") String iddh,
@@ -66,4 +68,10 @@ public interface DonHangRetrofit {
                              @Part("lyDo") RequestBody lyDo,
                              @Part("tinhTrang") RequestBody tinhTrang,
                              @Part List<MultipartBody.Part> image);
+
+    @GET("api/donHang/bao-hanh-by-id/{id}")
+    Call<List<BaoHanh>>layBaoHanhTheoAccount(@Path("id") String id);
+
+    @GET("api/donHang/bao-hanh-by-id-bh/{id}")
+    Call<BaoHanh>layBaoHanhTheoID(@Path("id") String id);
 }

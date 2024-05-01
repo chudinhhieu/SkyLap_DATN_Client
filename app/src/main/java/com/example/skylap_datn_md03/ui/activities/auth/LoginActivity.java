@@ -141,13 +141,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
 //        Sự kiện ấn vào textview quên mật khẩu và chuyển sang màn hình ForgotPasswordActivity
-        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
-                startActivity(intent);
-            }
-        });
+//        tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 
     private void fillDataToInput() {
@@ -225,7 +225,6 @@ public class LoginActivity extends AppCompatActivity {
     void initView() {
         tvRegister = findViewById(R.id.lg_tv_register);
         tvKhongDangNhap = findViewById(R.id.lg_tv_dns);
-        tvForgotPassword = findViewById(R.id.lg_tv_forgot_password);
         iplUsername = findViewById(R.id.lg_ipl_username);
         iplPassword = findViewById(R.id.lg_ipl_password);
         ipUsername = findViewById(R.id.lg_ip_username);

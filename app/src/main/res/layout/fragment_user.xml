@@ -337,6 +337,40 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
+                    android:id="@+id/fmu_baoHanh"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1.5dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_bh" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Danh sách bảo hành"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/arrow_right_fmu" />
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
                     android:id="@+id/fmu_km"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -439,7 +473,40 @@
                             android:src="@drawable/arrow_right_fmu" />
                     </LinearLayout>
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/fmu_troGiup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1.5dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:padding="10dp">
 
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/tro_giup_fmu" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="Trung tâm trợ giúp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/arrow_right_fmu" />
+                    </LinearLayout>
+                </LinearLayout>
                 <LinearLayout
                     android:id="@+id/fmu_troTruyen"
                     android:layout_width="match_parent"

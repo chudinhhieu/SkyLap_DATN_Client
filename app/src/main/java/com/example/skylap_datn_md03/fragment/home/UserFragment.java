@@ -22,7 +22,10 @@ import com.example.skylap_datn_md03.data.models.Account;
 import com.example.skylap_datn_md03.retrofitController.DanhGiaRetrofit;
 import com.example.skylap_datn_md03.retrofitController.DonHangRetrofit;
 import com.example.skylap_datn_md03.ui.activities.AccountManagementActivity;
+import com.example.skylap_datn_md03.ui.activities.BaoHanhActivity;
 import com.example.skylap_datn_md03.ui.activities.ChangePasswordActivity;
+import com.example.skylap_datn_md03.ui.activities.ChiTietBaoHanhActivity;
+import com.example.skylap_datn_md03.ui.activities.DanhSachBaoHanhActivity;
 import com.example.skylap_datn_md03.ui.activities.DanhSachYeuThichActivity;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.ChatRetrofit;
@@ -59,7 +62,7 @@ public class UserFragment extends Fragment {
     private MessagePreferences messagePreferences;
     private RetrofitService retrofitService;
     private TextView txt_numberUnSeen_message_UserFrag;
-    private LinearLayout btnQLDH, btnCXN,btnDMK,btnKM, btnCGH, btnDGH, btnDG, btnQLDG, btnYT, btnTroTruyen, btnDangXuat,btnQLTK;
+    private LinearLayout btnQLDH,btnBaoHanh, btnCXN,btnDMK,btnKM, btnCGH, btnDGH, btnDG, btnQLDG, btnYT, btnTroTruyen, btnDangXuat,btnQLTK;
     private String idChat;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,6 +105,16 @@ public class UserFragment extends Fragment {
                     return;
                 }
                 getChat();
+            }
+        });
+        btnBaoHanh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (sharedPreferencesManager.getUserId().isEmpty()){
+                    CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
+                    return;
+                }
+                startActivity(new Intent(getContext(), DanhSachBaoHanhActivity.class));
             }
         });
         btnTroTruyen.setOnClickListener(new View.OnClickListener() {
@@ -228,6 +241,7 @@ public class UserFragment extends Fragment {
 
     private void initView(View view) {
         tvSLCDG = view.findViewById(R.id.fmu_slCDG);
+        btnBaoHanh = view.findViewById(R.id.fmu_baoHanh);
         tvSLCXN = view.findViewById(R.id.fmu_slCXN);
         tvSLCGH = view.findViewById(R.id.fmu_slCGH);
         tvSLDangGH = view.findViewById(R.id.fmu_slDangGN);

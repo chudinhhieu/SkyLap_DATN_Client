@@ -14,6 +14,7 @@ import com.example.skylap_datn_md03.data.models.Account;
 import com.example.skylap_datn_md03.data.models.MyAuth;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
+import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.example.skylap_datn_md03.R;
 
@@ -103,15 +104,12 @@ public class ChangePasswordActivity extends AppCompatActivity {
         call.enqueue(new Callback<MyAuth>() {
             @Override
             public void onResponse(Call<MyAuth> call, Response<MyAuth> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    if (response.body().isSuccess()) {
-                        Toast.makeText(ChangePasswordActivity.this, "Password updated successfully!", Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(ChangePasswordActivity.this, "Password update failed: " + response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(ChangePasswordActivity.this, "An error occurred, please try again later", Toast.LENGTH_SHORT).show();
+                MyAuth myAuth = response.body();
+                if(myAuth.isSuccess()){
+                    CustomToast.showToast(ChangePasswordActivity.this,myAuth.getMessage());
+                    finish();
+                }else{
+                    CustomToast.showToast(ChangePasswordActivity.this,myAuth.getMessage());
                 }
             }
 

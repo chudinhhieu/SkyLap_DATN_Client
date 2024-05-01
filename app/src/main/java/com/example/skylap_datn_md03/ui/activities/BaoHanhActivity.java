@@ -146,7 +146,9 @@ public class BaoHanhActivity extends AppCompatActivity {
                     baoHanhList = response.body().getBaoHanh();
                     ArrayList<String> bhList = new ArrayList<>();
                     for (BaoHanh bh : baoHanhList) {
-                        bhList.add(bh.getImei());
+                        if(bh.getTinhTrang()==0){
+                            bhList.add(bh.getImei());
+                        }
                     }
                     ArrayAdapter<String> adapter = new ArrayAdapter<>(BaoHanhActivity.this, android.R.layout.simple_spinner_item,bhList);
                     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

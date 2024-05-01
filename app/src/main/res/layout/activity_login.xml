@@ -93,20 +93,9 @@
                 android:id="@+id/lg_tv_dns"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="10dp"
-                android:text="Đăng nhập sau"
-                android:textColor="@color/main"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/lg_tv_forgot_password"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
-                android:text="Quên mật khẩu?"
+                android:text="Đăng nhập sau"
                 android:textColor="@color/main"
                 android:textSize="14sp"
                 android:textStyle="bold" />
