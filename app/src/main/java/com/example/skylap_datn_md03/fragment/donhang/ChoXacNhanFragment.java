@@ -70,6 +70,7 @@ public class ChoXacNhanFragment extends Fragment {
                     recyclerView.setVisibility(View.GONE);
                 } else {
                     adapter = new QuanLyDonHangAdapter(response.body(), getContext());
+                    adapter.reverseList();
                     recyclerView.setAdapter(adapter);
                 }
             }

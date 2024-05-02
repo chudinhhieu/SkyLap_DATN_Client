@@ -18,6 +18,7 @@ import com.example.skylap_datn_md03.data.models.KhuyenMai;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -114,5 +115,9 @@ public class KhuyenMaiAdapter extends RecyclerView.Adapter<KhuyenMaiAdapter.Khuy
             item_giamgia_thoigian = itemView.findViewById(R.id.item_giamgia_thoigian);
             btnDungNgay = itemView.findViewById(R.id.btn_dungngay);
         }
+    }
+    public void reverseList() {
+        Collections.reverse(list);
+        notifyDataSetChanged();
     }
 }

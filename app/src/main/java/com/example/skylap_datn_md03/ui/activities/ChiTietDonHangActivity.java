@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.Account;
+import com.example.skylap_datn_md03.data.models.BaoHanh;
 import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.data.models.KhuyenMai;
 import com.example.skylap_datn_md03.data.models.SanPham;
@@ -22,7 +23,11 @@ import com.example.skylap_datn_md03.retrofitController.KhuyenMaiRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.ui.dialogs.CustomToast;
+import com.example.skylap_datn_md03.utils.WarrantyCalculator;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -89,7 +94,7 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
             public void onResponse(Call<DonHang> call, Response<DonHang> response) {
                 donHang = response.body();
                 getUser();
-                getSanPham();
+                getSanPham(donHang);
                 if (donHang.isThanhToan()) {
                     tvPTTT.setText("ZaloPay");
                 } else {
@@ -202,7 +207,7 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
         });
     }
 
-    private void getSanPham() {
+    private void getSanPham(DonHang donHang) {
         sanPhamRetrofit.getSanPhamByID(donHang.getIdSanPham()).enqueue(new Callback<SanPham>() {
             @Override
             public void onResponse(Call<SanPham> call, Response<SanPham> response) {
@@ -215,6 +220,16 @@ public class ChiTietDonHangActivity extends AppCompatActivity {
                         tvTongTienHang.setText(String.format("%,.0f", tongTienSP) + "₫");
                         tvRamRom.setText(sanPham.getBienThe().get(i).getRam() + " + " + sanPham.getBienThe().get(i).getRom());
                     }
+                }
+                List<BaoHanh> baoHanhList = donHang.getBaoHanh();
+                ArrayList<String> bhList = new ArrayList<>();
+                for (BaoHanh bh : baoHanhList) {
+                    if(bh.getTinhTrang()==0 && WarrantyCalculator.remainingWarrantyTime(bh.getThoiGian(),sanPham.getBaohanh()) > 0){
+                        bhList.add(bh.getImei());
+                    }
+                }
+                if(bhList.size() != 0){
+                    btnDatHang.setVisibility(View.VISIBLE);
                 }
                 Picasso.get().load(sanPham.getAnhSanPham()).into(anhSP);
                 tenSP.setText(sanPham.getTenSanPham());

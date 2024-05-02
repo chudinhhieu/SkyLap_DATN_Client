@@ -1,14 +1,16 @@
 package com.example.skylap_datn_md03.data.models;
 
+import java.util.Date;
+
 public class TrangThai {
     private String  trangThai;
-    private String  thoiGian;
+    private Date thoiGian;
     private Boolean isNow;
 
-    public TrangThai(String trangThai, Boolean isNow, String thoiGian) {
+    public TrangThai(String trangThai, Date thoiGian, Boolean isNow) {
         this.trangThai = trangThai;
-        this.isNow = isNow;
         this.thoiGian = thoiGian;
+        this.isNow = isNow;
     }
 
     public String getTrangThai() {
@@ -27,11 +29,19 @@ public class TrangThai {
         this.isNow = isNow;
     }
 
-    public String getThoiGian() {
+    public Date getThoiGian() {
         return thoiGian;
     }
 
-    public void setThoiGian(String thoiGian) {
+    public void setThoiGian(Date thoiGian) {
         this.thoiGian = thoiGian;
+    }
+
+    public Boolean getNow() {
+        return isNow;
+    }
+
+    public void setNow(Boolean now) {
+        isNow = now;
     }
 }

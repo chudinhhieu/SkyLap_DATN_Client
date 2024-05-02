@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,12 +36,14 @@ public class GioHangActivity extends AppCompatActivity {
     SharedPreferencesManager sharedPreferencesManager;
     List<GioHang> listGioHang;
     private Button btn_muaHang;
+    private LinearLayout viewNext;
+    private RelativeLayout viewNull;
     private GioHang gioHangThanhToan;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gio_hang);
-        unitUI();
+        initUI();
         agh_recyclerView.setLayoutManager(new LinearLayoutManager(this));
         retrofitService = new RetrofitService();
         sharedPreferencesManager = new SharedPreferencesManager(this);
@@ -59,7 +63,7 @@ public class GioHangActivity extends AppCompatActivity {
     }
 
     private void clickMuaHang(GioHang gioHang) {
-        if (gioHang.get_id() ==  null){
+        if (gioHang == null){
             CustomToast.showToast(this,"Bạn cần chọn sản phẩm trước khi mua hàng !");
         }
         else{
@@ -69,11 +73,13 @@ public class GioHangActivity extends AppCompatActivity {
         }
     }
 
-    void unitUI (){
+    void initUI (){
         btn_muaHang = findViewById(R.id.agh_tv_muahang);
         agh_recyclerView = findViewById(R.id.agh_recyclerView);
         imgBack = findViewById(R.id.agh_img_back);
         tvTongTien = findViewById(R.id.agh_tv_totalPrice);
+        viewNext = findViewById(R.id.agh_ll_bottom);
+        viewNull = findViewById(R.id.view_null_gh);
     }
     private void getGioHang() {
         GioHangRetrofit gioHangRetrofit = retrofitService.retrofit.create(GioHangRetrofit.class);
@@ -83,7 +89,16 @@ public class GioHangActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<GioHang>> call, Response<List<GioHang>> response) {
                 listGioHang = response.body();
+                if (listGioHang.size() ==0){
+                    viewNext.setVisibility(View.GONE);
+                    viewNull.setVisibility(View.VISIBLE);
+                }else{
+                    viewNext.setVisibility(View.VISIBLE);
+                    viewNull.setVisibility(View.GONE);
+
+                }
                 adapter = new GioHangAdapter(listGioHang , GioHangActivity.this);
+                adapter.reverseList();
                 agh_recyclerView.setAdapter(adapter);
                 adapter.setOnTotalPriceChangedListener(new GioHangAdapter.OnTotalPriceChangedListener() {
                     @Override

@@ -40,6 +40,7 @@ public class DanhSachDanhGia extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<DonHang>> call, Response<List<DonHang>> response) {
                 DanhGiaAdapter danhGiaAdapter = new DanhGiaAdapter(response.body(),DanhSachDanhGia.this);
+                danhGiaAdapter.reverseList();
                 recyclerView.setAdapter(danhGiaAdapter);
             }
             @Override

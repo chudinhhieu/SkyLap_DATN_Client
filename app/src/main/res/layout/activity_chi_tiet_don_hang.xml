@@ -412,6 +412,7 @@
             android:orientation="horizontal">
             <Button
                 android:id="@+id/actdh_btnDatHang"
+                android:visibility="gone"
                 android:layout_width="0dp"
                 android:background="@color/main"
                 android:gravity="center"

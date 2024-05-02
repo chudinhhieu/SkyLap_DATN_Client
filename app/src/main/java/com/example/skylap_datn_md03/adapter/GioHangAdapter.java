@@ -40,6 +40,7 @@ import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
 
 import java.text.NumberFormat;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -193,7 +194,6 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
         holder.checkBox.setOnCheckedChangeListener(null);
 
         holder.checkBox.setChecked(list.get(index).isChecked());
-
         holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -224,7 +224,7 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                     }
                 } else {
                     if (onTotalPriceChangedListener != null) {
-                        onTotalPriceChangedListener.onTotalPriceChanged(0, new GioHang());
+                        onTotalPriceChangedListener.onTotalPriceChanged(0, null);
                     }
                 }
                 notifyDataSetChanged();
@@ -315,5 +315,9 @@ public class GioHangAdapter extends RecyclerView.Adapter<GioHangAdapter.GioHangV
                 }
             });
         }
+    }
+    public void reverseList() {
+        Collections.reverse(list);
+        notifyDataSetChanged();
     }
 }

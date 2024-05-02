@@ -26,6 +26,7 @@ import com.google.android.play.integrity.internal.c;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -132,6 +133,10 @@ public class DanhGiaAdapter extends RecyclerView.Adapter<DanhGiaAdapter.ReviewVi
             textViewLaptopModel = itemView.findViewById(R.id.textViewLaptopModel);
             recyclerView = itemView.findViewById(R.id.itrv_anhDG);
         }
+    }
+    public void reverseList() {
+        Collections.reverse(reviews);
+        notifyDataSetChanged();
     }
 }
 

@@ -22,11 +22,14 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.TrungTamTroGiupActivity"
+            android:exported="false"/>
+        <activity
             android:name=".ui.activities.ChiTietBaoHanhActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activities.DanhSachBaoHanhActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.activities.BaoHanhActivity"
             android:exported="false" />

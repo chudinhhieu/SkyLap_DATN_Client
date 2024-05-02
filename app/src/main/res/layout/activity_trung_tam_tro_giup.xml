@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    tools:context=".ui.activities.TrungTamTroGiupActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/white"
+        android:elevation="20dp"
+        android:paddingHorizontal="12dp">
+
+        <ImageView
+            android:id="@+id/atttg_img_back"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Điều khoản sử dụng"
+            android:textColor="@color/black"
+            android:textSize="22dp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:text="Điều khoản và Điều Kiện Sử Dụng"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Xin vui lòng đọc kỹ và hiểu rõ các điều khoản và điều kiện sau đây trước khi sử dụng ứng dụng di động của chúng tôi để mua laptop. Bằng cách truy cập hoặc sử dụng ứng dụng này, bạn đồng ý tuân theo các điều khoản và điều kiện này. Nếu bạn không đồng ý với bất kỳ điều khoản nào sau đây, xin vui lòng không sử dụng ứng dụng của chúng tôi."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                android:text="1. Mục Đích Sử Dụng:"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Ứng dụng này được cung cấp cho mục đích mua sắm laptop chỉ dành cho cá nhân. Bạn cam kết sử dụng ứng dụng này đúng mục đích và không sử dụng nó cho bất kỳ mục đích bất hợp pháp hoặc vi phạm các quy định pháp luật."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                android:text="2. Thông Tin Tài Khoản:"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Khi đăng ký tài khoản, bạn cam kết cung cấp thông tin cá nhân chính xác và đảm bảo tính bảo mật cho thông tin đăng nhập của mình. Bạn chịu trách nhiệm về mọi hoạt động được thực hiện dưới tên tài khoản của bạn."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                android:text="3. Quyền Sở Hữu: "
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Tất cả các quyền sở hữu trí tuệ liên quan đến ứng dụng và nội dung của nó đều thuộc sở hữu của chúng tôi hoặc các bên cấp phép của chúng tôi. Bạn cam kết không sao chép, sửa đổi, phân phối hoặc sử dụng bất kỳ phần nào của ứng dụng này mà không có sự cho phép trước bằng văn bản từ chúng tôi."
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                android:text="4. Thanh Toán: "
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Khi bạn mua sản phẩm thông qua ứng dụng, bạn cam kết thanh toán đúng số tiền được hiển thị và tuân thủ các quy định thanh toán của chúng tôi."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                android:text="5. Bảo Hành: "
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Bảo hành sẽ được áp dụng theo thời gian ghi trên laptop tính từ lúc nhận hàng. Chúng tôi chỉ bảo hành sản phẩm nếu lỗi đến từ sản phẩm chứ không bao gồm các lỗi do người dùng gây ra như rơi vỡ.Đảm bảo rằng các tem bảo hành cần phải còn nguyên vẹn."
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                android:text="6. Đánh Giá: "
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Trong vòng 15 ngày đầu tiên từ khi nhận hàng thành công, bạn sẽ được đánh giá về sản phẩm đó"
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                android:text="7. Bảo Mật Thông Tin: "
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Chúng tôi cam kết bảo vệ thông tin cá nhân của bạn và sử dụng nó chỉ cho mục đích được mô tả trong Chính sách Bảo mật của chúng tôi."
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                android:text="8. Thay Đổi Điều Khoản và Điều Kiện: "
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Chúng tôi có quyền thay đổi điều khoản và điều kiện này vào bất kỳ thời điểm nào và sẽ thông báo trước. Việc tiếp tục sử dụng ứng dụng này sau khi các thay đổi được áp dụng sẽ được xem xét là sự chấp nhận của bạn đối với các thay đổi đó."
+                android:textSize="14sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="3dp"
+                android:text="9. Liên Hệ: "
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="Nếu bạn có bất kỳ câu hỏi hoặc khiếu nại nào về điều khoản và điều kiện này, xin vui lòng liên hệ với chúng tôi qua email chudinhhieuytty@gmail.com hoặc số điện thoại 0837064386."
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="7dp"
+                android:text="Xin lưu ý rằng việc sử dụng ứng dụng này đồng nghĩa với việc bạn đã đồng ý và chấp nhận các điều khoản và điều kiện được mô tả ở trên. Cảm ơn bạn đã sử dụng ứng dụng của chúng tôi!"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

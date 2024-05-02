@@ -8,55 +8,49 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.skylap_datn_md03.R;
 import com.example.skylap_datn_md03.data.models.DonHang;
 import com.example.skylap_datn_md03.data.models.SanPham;
-import com.example.skylap_datn_md03.data.models.TrangThai;
 import com.example.skylap_datn_md03.retrofitController.AccountRetrofit;
+import com.example.skylap_datn_md03.retrofitController.RetrofitService;
 import com.example.skylap_datn_md03.retrofitController.SanPhamRetrofit;
 import com.example.skylap_datn_md03.ui.activities.DanhGiaActivity;
 import com.squareup.picasso.Picasso;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ChuaDanhGiaAdapter extends RecyclerView.Adapter<ChuaDanhGiaAdapter.ViewHolder> {
+public class ChuaDanhGiaAdapter extends RecyclerView.Adapter<ChuaDanhGiaAdapter.CDGViewHolder> {
 
     private Context context;
     private List<DonHang> donHangList;
-    private LayoutInflater inflater;
 
-    private AccountRetrofit accountRetrofit;
-    private SanPhamRetrofit sanPhamRetrofit;
-
-    public ChuaDanhGiaAdapter(Context context, List<DonHang> donHangList, AccountRetrofit accountRetrofit, SanPhamRetrofit sanPhamRetrofit) {
+    public ChuaDanhGiaAdapter(Context context, List<DonHang> donHangList) {
         this.context = context;
         this.donHangList = donHangList;
-        this.inflater = LayoutInflater.from(context);
-        this.accountRetrofit = accountRetrofit;
-        this.sanPhamRetrofit = sanPhamRetrofit;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item_not_review, parent, false);
-        return new ViewHolder(view);
+    public ChuaDanhGiaAdapter.CDGViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_not_review, parent, false);
+        return new ChuaDanhGiaAdapter.CDGViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CDGViewHolder holder, int position) {
         DonHang donHang = donHangList.get(position);
+        RetrofitService retrofitService = new RetrofitService();
+        SanPhamRetrofit sanPhamRetrofit = retrofitService.retrofit.create(SanPhamRetrofit.class);
         sanPhamRetrofit.getSanPhamByID(donHang.getIdSanPham()).enqueue(new Callback<SanPham>() {
             @Override
             public void onResponse(Call<SanPham> call, Response<SanPham> response) {
@@ -90,16 +84,20 @@ public class ChuaDanhGiaAdapter extends RecyclerView.Adapter<ChuaDanhGiaAdapter.
         return 0;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class CDGViewHolder extends RecyclerView.ViewHolder {
         ImageView anh;
         TextView ten;
         Button button;
-        public ViewHolder(View itemView) {
+        public CDGViewHolder(View itemView) {
             super(itemView);
             anh = itemView.findViewById(R.id.itnrv_anh);
             ten = itemView.findViewById(R.id.itnrv_ten);
             button = itemView.findViewById(R.id.itnrv_button);
         }
+    }
+    public void reverseList() {
+        Collections.reverse(donHangList);
+        notifyDataSetChanged();
     }
 }
 

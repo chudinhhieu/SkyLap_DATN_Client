@@ -213,6 +213,7 @@ public class SanPhamActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<DonHang>> call, Response<List<DonHang>> response) {
                 DanhGiaAdapter danhGiaAdapter = new DanhGiaAdapter(response.body(), SanPhamActivity.this);
+                danhGiaAdapter.reverseList();
                 rcvCTDG.setAdapter(danhGiaAdapter);
             }
 

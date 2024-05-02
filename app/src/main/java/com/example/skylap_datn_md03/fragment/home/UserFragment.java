@@ -1,5 +1,6 @@
 package com.example.skylap_datn_md03.fragment.home;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,6 +39,7 @@ import com.example.skylap_datn_md03.ui.activities.MessageActivity;
 import com.example.skylap_datn_md03.ui.activities.QuanLyDanhGiaActivity;
 import com.example.skylap_datn_md03.ui.activities.QuanLyDonHangActivity;
 import com.example.skylap_datn_md03.ui.activities.SetingActivity;
+import com.example.skylap_datn_md03.ui.activities.TrungTamTroGiupActivity;
 import com.example.skylap_datn_md03.ui.activities.auth.LoginActivity;
 import com.example.skylap_datn_md03.ui.dialogs.CheckDialog;
 import com.example.skylap_datn_md03.utils.MessagePreferences;
@@ -62,7 +65,7 @@ public class UserFragment extends Fragment {
     private MessagePreferences messagePreferences;
     private RetrofitService retrofitService;
     private TextView txt_numberUnSeen_message_UserFrag;
-    private LinearLayout btnQLDH,btnBaoHanh, btnCXN,btnDMK,btnKM, btnCGH, btnDGH, btnDG, btnQLDG, btnYT, btnTroTruyen, btnDangXuat,btnQLTK;
+    private LinearLayout btnDKSD,btnQLDH,btnBaoHanh, btnCXN,btnDMK,btnKM, btnCGH, btnDGH, btnDG, btnQLDG, btnYT, btnTroTruyen, btnDangXuat,btnQLTK;
     private String idChat;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -216,10 +219,32 @@ public class UserFragment extends Fragment {
                     CheckDialog.showCheckDialog(getContext(), "Thông báo", "Vui lòng đăng nhập để mua hàng!");
                     return;
                 }
-                SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getContext());
-                huyDangKyTopicFirebase(sharedPreferencesManager.getUserId());
-                sharedPreferencesManager.clearUserId();
-                CheckDialog.showCheckDialog(getContext(),"Thông báo","Bạn chắc chắn muốn đăng xuất?");
+                Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.dialog_check);
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                TextView tvNoiDung = dialog.findViewById(R.id.dal_noiDung);
+                TextView tvTieuDe = dialog.findViewById(R.id.dal_tieuDe);
+                Button btnHuy = dialog.findViewById(R.id.dal_btnHuy);
+                Button btnOk = dialog.findViewById(R.id.dal_btnOk);
+                tvTieuDe.setText("Thông báo");
+                tvNoiDung.setText("Bạn chắc chắn muốn đăng xuất?");
+                btnHuy.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+                btnOk.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        SharedPreferencesManager sharedPreferencesManager = new SharedPreferencesManager(getContext());
+                        huyDangKyTopicFirebase(sharedPreferencesManager.getUserId());
+                        sharedPreferencesManager.clearUserId();
+                        dialog.dismiss();
+                        getContext().startActivity(new Intent(getContext(), LoginActivity.class));
+                    }
+                });
+                dialog.show();
             }
         });
         btnKM.setOnClickListener(new View.OnClickListener() {
@@ -237,9 +262,17 @@ public class UserFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        btnDKSD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), TrungTamTroGiupActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initView(View view) {
+        btnDKSD = view.findViewById(R.id.fmu_troGiup);
         tvSLCDG = view.findViewById(R.id.fmu_slCDG);
         btnBaoHanh = view.findViewById(R.id.fmu_baoHanh);
         tvSLCXN = view.findViewById(R.id.fmu_slCXN);

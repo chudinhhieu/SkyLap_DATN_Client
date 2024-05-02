@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,8 +16,10 @@ import com.example.skylap_datn_md03.data.models.KhuyenMai;
 import com.example.skylap_datn_md03.data.models.SanPham;
 import com.example.skylap_datn_md03.retrofitController.KhuyenMaiRetrofit;
 import com.example.skylap_datn_md03.retrofitController.RetrofitService;
+import com.example.skylap_datn_md03.utils.DateUtils;
 import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -28,7 +31,7 @@ public class KhuyenMaiActivity extends AppCompatActivity {
     private KhuyenMaiAdapter adapter;
     private ImageView btnBack;
     private Boolean isDatHang;
-
+    private List<KhuyenMai> list;
     SharedPreferencesManager sharedPreferencesManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,8 @@ public class KhuyenMaiActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.akm_img_back);
         recyclerView = findViewById(R.id.akm_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-         isDatHang = getIntent().getBooleanExtra("isDatHang", true);
+        list = new ArrayList<>();
+        isDatHang = getIntent().getBooleanExtra("isDatHang", true);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +61,13 @@ public class KhuyenMaiActivity extends AppCompatActivity {
             public void onResponse(Call<List<KhuyenMai>> call, Response<List<KhuyenMai>> response) {
                 if (response.isSuccessful()) {
                     List<KhuyenMai> khuyenMaiList = response.body();
-                    displayKhuyenMaiList(khuyenMaiList);
+                    for (int i = 0; i < khuyenMaiList.size(); i++) {
+                        int conLai = DateUtils.getDaysDifference(khuyenMaiList.get(i).getThoiGianKetThuc());
+                        if(conLai > 0){
+                            list.add(khuyenMaiList.get(i));
+                        }
+                    }
+                    displayKhuyenMaiList(list);
                 } else {
                 }
             }
@@ -80,6 +90,7 @@ public class KhuyenMaiActivity extends AppCompatActivity {
                 finish();
             }
         });
+        adapter.reverseList();
         recyclerView.setAdapter(adapter);
     }
 

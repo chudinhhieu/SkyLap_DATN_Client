@@ -30,6 +30,7 @@ import com.example.skylap_datn_md03.utils.SharedPreferencesManager;
 import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -155,5 +156,9 @@ public class BaoHanhAdapter extends RecyclerView.Adapter<BaoHanhAdapter.BaoHanhV
             moTa = itemView.findViewById(R.id.itbh_mota);
             thoiGian = itemView.findViewById(R.id.itbh_thoiGian);
         }
+    }
+    public void reverseList() {
+        Collections.reverse(list);
+        notifyDataSetChanged();
     }
 }

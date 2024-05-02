@@ -62,8 +62,8 @@ public class DanhSachBaoHanhActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<BaoHanh>> call, Response<List<BaoHanh>> response) {
                List<BaoHanh> list = response.body();
-                Log.d("fffffffffff", ""+list.size());
                baoHanhAdapter = new BaoHanhAdapter(list,DanhSachBaoHanhActivity.this);
+               baoHanhAdapter.reverseList();
                recyclerView.setAdapter(baoHanhAdapter);
             }
 
